@@ -1,0 +1,36 @@
+﻿@inject IJSRuntime Javascript
+
+<div class="row border border-dark">
+    <div class="col border border-dark" id="wrapper-9cd199b9cc5410cd3b1ad21cab2e54d3">
+        <div class="border border-dark" id="map-9cd199b9cc5410cd3b1ad21cab2e54d3"></div>
+        <script>
+            windows.ejecutarMapa = () => {
+                var setting = { "query": "Plaza Irlanda, Avenida Gaona, Buenos Aires, Argentina", "width": 300, "height": 100, "satellite": false, "zoom": 15, "placeId": "ChIJz9QfqR7KvJUR3ySPoGl57ro", "cid": "0xbaee7969a08f24df", "coords": [-34.6146622, -58.4578676], "lang": "es", "queryString": "Plaza Irlanda, Avenida Gaona, Buenos Aires, Argentina", "centerCoord": [-34.6146622, -58.4578676], "id": "map-9cd199b9cc5410cd3b1ad21cab2e54d3", "embed_id": "1066343" };
+                var d = document;
+                var s = d.createElement('script');
+                s.src = 'https://1map.com/js/script-for-user.js?embed_id=1066343';
+                s.async = true;
+                s.onload = function (e) {
+                    window.OneMap.initMap(setting)
+                };
+                var to = d.getElementsByTagName('script')[0];
+                to.parentNode.insertBefore(s, to);
+            };
+        </script>
+        <a href="https://1map.com/es/map-embed">1 Map</a>
+    </div>
+</div>
+
+@code {
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await Javascript.InvokeAsync<object>("ejecutarMapa");
+            firstRender = false;
+
+        }
+    }
+}
+
+

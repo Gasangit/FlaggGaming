@@ -1,0 +1,14 @@
+﻿<div class="row">
+    <div class="col border border-dark">
+        <label class="border border-dark">@etiqueta</label>
+    </div>
+    <div class="col border border-dark">
+        <p class="mb-0 border border-dark">@info</p>
+    </div>
+</div>
+
+@code 
+{
+    [Parameter] public string etiqueta { get; set; }
+    [Parameter] public string info { get; set; }
+}

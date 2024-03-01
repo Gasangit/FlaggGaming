@@ -1,0 +1,32 @@
+@using FlaggGaming.Model
+@using FlaggGaming.Services
+@inject FlaggGaming.Services.juegosIndexService destacadosService
+
+@if(arrayDestacados[0] != null)
+{
+    <div class="row border border-dark p-3 m-1">
+        <div class="col-12 text-center"><h2>Destacados</h2></div>
+        <div class="col">
+            @for(int i = 0; i < 4; i++)
+            {
+                <div class="row mt-3 justify-content-between px-2">
+                    <CardJuego unJuego="@arrayDestacados[i]"/>
+                    <CardJuego unJuego="@arrayDestacados[i+1]"/>
+                </div>
+                i++;
+            }
+        </div>
+    </div>
+    
+}
+
+@code
+{
+        Juego[] arrayDestacados = new Juego[4];
+
+        protected override async Task<Juego[]> OnInitializedAsync()
+        {
+           return arrayDestacados = await destacadosService.obtenerJuegosDestacados();
+        }
+        
+}

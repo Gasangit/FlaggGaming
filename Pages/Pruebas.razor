@@ -1,0 +1,32 @@
+﻿@page "/prueba"
+
+@using FlaggGaming.Services.APISteam
+@using FlaggGaming.Model.apiSteamListaJuegosTotal
+@inject JuegosListaTotalService listaTotalService
+@inject NavigationManager navigationService
+
+@if (objetoJsonRecibido != null)
+{
+    <ul class="row row-cols-3 g-3">
+        @foreach (ItemListaJuegoSteam juego in objetoJsonRecibido.applist.apps)
+        {
+            @if(juego.name.StartsWith("C"))
+            {
+                <a href=@($"/prueba/juego/{juego.appid}")>
+                    <li class="col border border-dark p-2 rounded-3 text-center">@juego.appid // @juego.name</li>
+                </a>
+            }
+        }
+    </ul>
+}
+
+@code {
+
+    public ObjetoJsonListaJuegos objetoJsonRecibido { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        objetoJsonRecibido =  await listaTotalService.getListaJuegosSteam();
+    }
+
+}

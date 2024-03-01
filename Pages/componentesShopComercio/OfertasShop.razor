@@ -1,0 +1,51 @@
+﻿@using FlaggGaming.Model
+
+<div class="row">
+    <div class="col-12">
+        <h2>OFERTAS</h2>
+    </div>
+    <div class="col scroll-div">
+        @if (listaOfertas != null)
+        {
+            @foreach (Juego oferta in listaOfertas)
+            {
+                <div class="row">
+                    <div class="col">
+                        <img src=@oferta.urlImagen alt="" class="img-thumbnail" />
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <h3>@oferta.Name</h3>
+                        </div>
+                        <div class="row">
+                            <h4>10%</h4>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public int? idTienda { get; set; }
+    public List<Juego> listaOfertas = new List<Juego>();
+
+    private Juego AlanWake = new Juego("Alan Wake 2", "Un juego de terror", "/imagenes/AlanWake2.jpg");
+    private Juego Cs2 = new Juego("Counter Strike 2", "El pricipal shooter competitivo", "/imagenes/cs2.jpg");
+    private Juego TheFinals = new Juego("The Finals", "La pricipal novedad en shooters", "/imagenes/TheFinals.jpg");
+
+    protected override void OnInitialized()
+    {
+
+        listaOfertas.Add(AlanWake);
+        listaOfertas.Add(Cs2);
+        listaOfertas.Add(TheFinals);
+        listaOfertas.Add(AlanWake);
+        listaOfertas.Add(Cs2);
+        listaOfertas.Add(TheFinals);
+        listaOfertas.Add(AlanWake);
+        listaOfertas.Add(Cs2);
+        listaOfertas.Add(TheFinals);
+    }
+}

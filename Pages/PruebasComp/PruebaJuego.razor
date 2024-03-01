@@ -1,0 +1,421 @@
+﻿@page "/prueba/juego/{appid:int}"
+@using FlaggGaming.Model.apiSteamJuego
+@using FlaggGaming.Services.APISteam
+@using System.Reflection
+@inject JuegoSteamService juegoService
+
+<div class="row row-cols-3 mb-5 g-3">
+    @if (diccionarioJson != null)
+    {
+        @if(@diccionarioJson[gameId].success )
+        {
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo name :</h3>
+                <h4 class="border border-dark">El nombre del juego es : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.name</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo steam_appid :</h3>
+                <h4 class="border border-dark">El ID del juego es : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.steam_appid</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo required_age :</h3>
+                <h4 class="border border-dark">La edad requerida es : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.required_age</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo is_free :</h3>
+                <h4 class="border border-dark">¿Es gratis? : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.is_free</p>
+            </div>
+            @*<div class="col border border-dark">
+                <h3 class="border border-dark">Atributo dlc :</h3>
+                <h4 class="border border-dark">Tiene los dlc con ID :</h4>
+                if(@diccionarioJson[@gameId].data.dlc != null)
+                {
+                @foreach (int numeroDlc in @diccionarioJson[@gameId].data.dlc)
+                {
+                <p class="border border-dark">@numeroDlc</p>
+                }
+                }
+            </div> *@
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo detailed_description :</h3>
+                <h4 class="border border-dark">La descripción detallada es : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.detailed_description</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo about_the_game : </h3>
+                <h4 class="border border-dark">Sobre el juego : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.about_the_game</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo short_description : </h3>
+                <h4 class="border border-dark">La descripción corta es : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.short_description</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo supported_languages : </h3>
+                <h4 class="border border-dark">Soporta los idiomas : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.supported_lenguages</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo header_image : </h3>
+                <h4 class="border border-dark">Imagen de encabezado : </h4>
+                <img src=@diccionarioJson[@gameId].data.header_image class="img-fluid col border border-dark" />
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo capsule_image : </h3>
+                <h4 class="border border-dark">Imagen de capsula : </h4>
+                <img src=@diccionarioJson[@gameId].data.capsule_image class="border border-dark" />
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo capsule_imagev5 : </h3>
+                <h4 class="border border-dark">Imagen de capsula version 5 ¿? : </h4>
+                <img src=@diccionarioJson[@gameId].data.capsule_imagev5 class="border border-dark" />
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo website</h3>
+                <h4 class="border border-dark">Web del juego : </h4>
+                <a href=@diccionarioJson[@gameId].data.website class="btn btn-success">Web del Juego</a>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo pc_requirements : </h3>
+                <h4 class="border border-dark">Requrimientos mímimos para PC : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.pc_requirements.minimum</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo mac_requirements : </h3>
+                <h4 class="border border-dark">Requrimientos mímimos para MAC : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.mac_requirements.minimum</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo linux_requirements : </h3>
+                <h4 class="border border-dark">Requrimientos mímimos para LINUX : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.linux_requirements.minimum</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atribubto developers : </h3>
+                <h4 class="border border-dark">Desarrolladora : </h4>
+                @if (@diccionarioJson[@gameId].data.developers != null)
+                {
+                    @foreach(string dev in @diccionarioJson[@gameId].data.developers)
+                    {
+                        <p class="border border-dark">@dev</p>
+
+                    }
+                }
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo publishers : </h3>
+                <h4 class="border border-dark">Distribuidores : </h4>
+                <p class="border border-dark">@diccionarioJson[@gameId].data.publishers</p>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo packages : </h3>
+                <h4 class="border border-dark">Paquetes : </h4>
+                @if (@diccionarioJson[@gameId].data.packages != null)
+                {
+                    @foreach(int pack in @diccionarioJson[@gameId].data.packages)
+                    {
+                        <p class="border border-dark">@pack</p>
+
+                    }
+                }
+            </div>
+            <div class="col border border-dark colScroll">
+                <h3 class="border border-dark">Atributo package_groups : </h3>
+                <h4 class="border border-dark">Grupo de paquetes : </h4>
+                @if (@diccionarioJson[@gameId].data.package_groups != null)
+                {
+                    @foreach (PackageGroups packgroup in @diccionarioJson[@gameId].data.package_groups)
+                    {   
+                        <div class="row border border-dark">
+                            <h5 class="col-12">Objeto PackageGroup</h5>
+                            <h6 class="col-6 border border-dark">Atributo name : </h6><p class="col-6">@packgroup.name</p>
+                            <h6 class="col-6 border border-dark">Atributo title : </h6><p class="col-6">@packgroup.title</p>
+                            <h6 class="col-6 border border-dark">Atributo description : </h6><p class="col-6">@packgroup.description</p>
+                            <h6 class="col-6 border border-dark">Atributo selection_text : </h6><p class="col-6">@packgroup.selection_text</p>
+                            <h6 class="col-6 border border-dark">Atributo save_text : </h6><p class="col-6">@packgroup.save_text</p>
+                            <h6 class="col-6 border border-dark">Atributo display_type : </h6><p class="col-6">@packgroup.display_type</p>
+                            <h6 class="col-6 border border-dark">Atributo is_recurring_subscription : </h6><p class="col-6">@packgroup.is_recurring_subscription</p>
+                            <h6 class="col-12 border border-dark">Atributo subs : </h6>
+                        </div>
+                        
+                        @if (packgroup.subs != null)
+                        {
+                            foreach (Package packObjecto in packgroup.subs)
+                            {
+                                <div class="row ps-5 border border-dark">
+                                    <h5 class="col-12 border border-dark">Paquete : </h5>
+                                    <h6 class="col-6 border border-dark">Atributo packageid : </h6><p class="col-6">@packObjecto.packageid</p>
+                                    <h6 class="col-6 border border-dark">Atributo percent_savings_text : </h6><p class="col-6">@packObjecto.percent_savings_text</p>
+                                    <h6 class="col-6 border border-dark">Atributo percent_savings : </h6><p class="col-6">@packObjecto.percent_savings</p>
+                                    <h6 class="col-6 border border-dark">Atributo option_text : </h6><p class="col-6">@packObjecto.option_text</p>
+                                    <h6 class="col-6 border border-dark">Atributo option_description : </h6><p class="col-6">@packObjecto.option_description</p>
+                                    <h6 class="col-6 border border-dark">Atributo can_get_free_license : </h6><p class="col-6">@packObjecto.can_get_free_license</p>
+                                    <h6 class="col-6 border border-dark">Atributo is_free_license : </h6><p class="col-6">@packObjecto.is_free_license</p>
+                                    <h6 class="col-6 border border-dark">Atributo price_in_cents_with_discount : </h6><p class="col-6">@packObjecto.price_in_cents_with_discount</p>
+                                </div>
+                                
+                            }
+                        }
+                    }
+                }
+            </div>                                      @* <=== Seguir desde acá*@
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo platforms (objeto) : </h3>
+                <h4 class="border border-dark">Sistemas operativos soportados : </h4>
+                <div class="row border border-dark">
+                    <div class="col border border-dark">Atributo windows : </div>
+                    <p class="col">@diccionarioJson[@gameId].data.platforms.windows</p>
+                </div>
+                <div class="row border border-dark">
+                    <div class="col border border-dark">Atributo mac : </div>
+                    <p class="col">@diccionarioJson[@gameId].data.platforms.mac</p>
+                </div>
+                <div class="row border border-dark">
+                    <div class="col border border-dark">Atributo linux : </div>
+                    <p class="col">@diccionarioJson[@gameId].data.platforms.linux</p>
+                </div>
+                
+            </div>
+            <div class="col border border-dark colScroll">
+                <h3 class="border border-dark">Atributo categories (array)</h3>
+                <h4 class="border border-dark">Caracteristicas que posee el juego : </h4>
+                @if (diccionarioJson[@gameId].data.categories != null)
+                {
+                    int count = 0;
+                    foreach (Category caracteristica in diccionarioJson[@gameId].data.categories)
+                    {
+                        count++;
+                        <div class="row border border-dark ms-3">
+                            <h6>Objeto Category : </h6>
+                            <label class="col border border-dark" for=($"texto{@count}")>Atributo id : @caracteristica.id</label>
+                            <p id=($"texto{@count}") class="col">Atributo description : @caracteristica.description</p>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col border border-dark colScroll">
+                <h3 class="border border-dark">Atributo genres (array) : </h3>
+                <h4 class="border border-dark">Generos del juego : </h4>
+                @if (diccionarioJson[@gameId].data.genres != null)
+                {
+                    int count = 0;
+                    foreach (Genre genero in diccionarioJson[@gameId].data.genres)
+                    {
+                        count++;
+                        <div class="row border border-dark ms-3">
+                            <h6 class="col-12">Objeto Genre : </h6>
+                            <label class="col border border-dark" for=($"texto{@count}")>Atributo id : @genero.id</label>
+                            <p id=($"texto{@count}") class="col">Atributo description : @genero.description</p>
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col border border-dark colScroll">
+                <h3 class="border border-dark">Atributo screenshots : </h3>
+                <h4 class="border border-dark">Capturas de pantalla : </h4>
+                @if (diccionarioJson[@gameId].data.screenshots != null)
+                {
+                    int count = 0;
+                    foreach (Screenshot captura in diccionarioJson[@gameId].data.screenshots)
+                    {
+                        count++;
+                        <div class="row border border-dark">
+                            <label class="col-12 border border-dark" for=($"texto{@count}")>Atributo id : @captura.id</label>
+                            <h6 class="col-12">Atributo path_thumbnail : </h6>
+                            <img src="@captura.path_thumbnail" alt="" class="col-12"/>
+                            <h6>Atributo path_full : </h6>
+                            <img src="@captura.path_full" alt="" class="col-12" />
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col border border-dark colScroll">
+                <h3 class="border border-dark">Atributo movies : </h3>
+                <h4 class="border border-dark">Videos sobre el juego : </h4>
+                @if (diccionarioJson[gameId].data.movies != null)
+                {
+                    @foreach (Movie video in diccionarioJson[gameId].data.movies)
+                    {
+                        int count = 0;
+                        <div class="row">
+                            <h6>Objeto Movie : </h6>
+                            <label class="col-6" for=@($"movie{@count}")>Atributo id : </label><p id=@($"movie{@count}")>@video.id</p>
+                            @{count++;}
+                            <label class="col-6" for=@($"movie{@count}")>Atributo name : </label><p id=@($"movie{@count}")>@video.name</p>
+                            @{count++;}
+                            <label class="col-12" for=@($"movie{@count}")>Atributo thumbnail : </label><img id=@($"movie{@count}") src="@video.thumbnail" alt="" />
+                            @{count++;}
+                            <label class="col-12" for=@($"movie{@count}")>Atributo webm : </label>
+                                <video id=@($"movie{@count}") width="320" height="240" controls>
+                                    <source src=@video.webm.quality480 type="video/webm">
+                                    <source src=@video.webm.max type="video/webm">
+                                    Your browser does not support the video tag.
+                                </video>
+                            @{count++;}
+                            <label class="col-12" for=@($"movie{@count}")>Atributo mp4 : </label>
+                                <video id=@($"movie{@count}") width="320" height="240" controls>
+                                    <source src=@video.mp4.quality480 type="video/mp4">
+                                    <source src=@video.mp4.max type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                        </div>
+                        
+                    }
+                }
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo recommendations : </h3>
+                <h4 class="border border-dark">Cuantos jugadores recomiendan el juego : </h4>
+                @if(@diccionarioJson[@gameId].data.recommendations != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[@gameId].data.recommendations.total</p>
+                }
+                
+            </div>
+            <div class="col border border-dark colScroll">
+                <h3 class="border border-dark">Atributo achievements (objeto) : </h3>
+                <h4 class="border border-dark">Logros del juego : </h4>
+                <div class="row border border-dark">
+                    @if (diccionarioJson[@gameId].data.achievements.total !=null)
+                    {
+                        <p class="col">@($"Atributo total : {diccionarioJson[@gameId].data.achievements.total}")</p>                        
+                    }
+                </div>
+                <div class="row border border-dark">
+                    <p class="col-12">Atributo highlighted (array) : </p>
+                </div>
+                @if(diccionarioJson[@gameId].data.achievements.highlighted != null)
+                {
+                    @foreach(Highlighted destacado in diccionarioJson[gameId].data.achievements.highlighted)
+                    {
+                        <div class="row ms-3 border border-dark"><h6 class="col">Objeto Highlighted : </h6></div>
+                        <div class="row ms-3 border border-dark">
+                            <p class="col-12 border border-dark">
+                                @($"Atributo {destacado.name.GetType().Name} : {destacado.name}")
+                            </p>
+                            <div class="col-12 border border-dark">Atributo path : </div>
+                            <img src=@destacado.path class="col-12 border border-dark">
+                        </div>
+                    }
+                }
+            </div>
+            <div class="col border border-dark">
+                <h3 class="row border border-dark">Atributo release_date (objeto) : </h3>
+                <h4 class="row border border-dark">Fecha de lanzamiento : </h4>
+                @if (@diccionarioJson[gameId].data.release_date != null)
+                {
+                    <div class="row border border-dark">
+                        <label for="release1" class="col-6 border border-dark">Atributo coming_soon : </label>
+                        <p for="release1" class="col-6">@diccionarioJson[gameId].data.release_date.coming_soon</p>
+                        <label for="release2" class="col-6 border border-dark">Atributo date : </label>
+                        <p id="release2" class="col-6">@diccionarioJson[gameId].data.release_date.date</p>
+                    </div>
+                }
+                else{ <h4 class="row">Este objeto no se encuentra disponible</h4> }
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo support_info : </h3>
+                <h4 class="border border-dark">Información de contacto : </h4>
+                @if (@diccionarioJson[gameId].data.support_info != null)
+                {
+                    <div class="row border border-dark">
+                        <label for="support1" class="col-6 border border-dark">Atributo url : </label>
+                        <p for="support1" class="col-6">@diccionarioJson[gameId].data.support_info.url</p>
+                        <label for="support2" class="col-6 border border-dark">Atributo email : </label>
+                        <p id="support2" class="col-6">@diccionarioJson[gameId].data.support_info.email</p>
+                    </div>
+                }
+                else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo background : </h3>
+                <h4 class="border border-dark">Fondo de pantalla : </h4>
+                <img src="@diccionarioJson[@gameId].data.background" alt="" class="img-fluid"/>
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo background_raw : </h3>
+                <h4 class="border border-dark">Fondo crudo : </h4>
+                <img src="@diccionarioJson[@gameId].data.background_raw" alt="" class="img-fluid" />
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo content_descriptors : </h3>
+                <h4 class="border border-dark">Descripción del contenido : </h4>
+                @if (@diccionarioJson[gameId].data.content_descriptors != null)
+                {
+                    <div class="row border border-dark">
+                        <label for="content1" class="col-6 border border-dark">Atributo ids : </label>
+                        @foreach (int id in @diccionarioJson[gameId].data.content_descriptors.ids)
+                        {
+                            <p for="content1" class="col-12 ms-3">Id : @id</p>
+                        }
+                        <label for="content2" class="col-6 border border-dark">Atributo notes : </label>
+                        <p id="content2" class="col-6">@diccionarioJson[gameId].data.content_descriptors.notes</p>
+                    </div>
+                }
+                else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo ratings : </h3>
+                <h4 class="border border-dark">Calificaciones : </h4>
+                @if(diccionarioJson[gameId].data.ratings != null)
+                {
+                    @if (diccionarioJson[gameId].data.ratings.usk != null) 
+                    {   
+                        <h6 class="row">Atributo usk (objeto) : </h6>
+                        <div class="row border border-dark">
+                            <p class="col-12 border border-dark">@($"Atributo rating : {diccionarioJson[gameId].data.ratings.usk.rating}")</p>
+                            <p class="col border border-dark">@($"Atributo descriptors : {diccionarioJson[gameId].data.ratings.usk.descriptors}")</p>
+                        </div> 
+                    }else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
+                    @if (diccionarioJson[gameId].data.ratings.agcom != null)
+                    {
+                        <h6 class="row">Atributo agcom (objeto) : </h6>
+                        <div class="row border border-dark">
+                            <p class="col-12 border border-dark">@($"Atributo rating : {diccionarioJson[gameId].data.ratings.agcom.rating}")</p>
+                            <p class="col border border-dark">@($"Atributo descriptors : {diccionarioJson[gameId].data.ratings.agcom.descriptors}")</p>
+                        </div>
+                    }else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
+                    @if (diccionarioJson[gameId].data.ratings.cadpa != null)
+                    {
+                        <h6 class="row">Atributo cadpa (objeto) : </h6>
+                        <div class="row border border-dark">
+                            <p class="col-12 border border-dark">@($"Atributo rating : {diccionarioJson[gameId].data.ratings.cadpa.rating}")</p>
+                            <p class="col border border-dark">@($"Atributo descriptors : {diccionarioJson[gameId].data.ratings.cadpa.descriptors}")</p>
+                        </div>
+                    }else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
+                    @if (diccionarioJson[gameId].data.ratings.dejus != null)
+                    {
+                        <h6 class="row">Atributo dejus (objeto) : </h6>
+                        <div class="row border border-dark">
+                            <p class="col-12 border border-dark">@($"Atributo rating : {diccionarioJson[gameId].data.ratings.dejus.rating}")</p>
+                            <p class="col border border-dark">@($"Atributo descriptors: {diccionarioJson[gameId].data.ratings.dejus.descriptors}")</p>
+                        </div>
+                    }else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
+                }else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
+            </div>
+        }
+        else
+        {
+            <h2 class="text-center">El juego no tiene información asociada</h2>   
+        }
+
+    }
+</div>
+
+
+@code {
+    public Dictionary<string, JuegoSteam> diccionarioJson { get; set; }
+    [Parameter] public int appid { get; set; }
+    public string gameId;
+
+    protected override async Task OnInitializedAsync()
+    {        
+        gameId = Convert.ToString(appid);
+        diccionarioJson = await juegoService.getJuegoSteam(gameId);
+    }
+}

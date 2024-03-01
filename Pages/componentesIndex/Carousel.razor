@@ -1,0 +1,58 @@
+@page "/carousel"
+
+@inject IJSRuntime Javascript;
+
+<div class="row mx-2 mb-5 border border-dark">
+    <div class="col border border-dark rounded-3">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner active">
+                <div class="carousel-item">
+                    <img src="/imagenes/cs2.jpg" class="d-block w-100" alt="..." width="600" height="300">
+                </div>
+                <div class="carousel-item active">
+                    <img src="/imagenes/TheFinals.jpg" class="d-block w-100" alt="..." width="600" height="300">
+                </div>
+                <div class="carousel-item">
+                    <img src="/imagenes/AlanWake2.jpg" class="d-block w-100" alt="..." width="600" height="300">
+                </div>
+            </div>
+            <a id="myCarousel-prev" class="carousel-control-prev" role="button" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon hoverCarousel" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </a>
+            <a id="myCarousel-next" class="carousel-control-next" role="button" data-bs-slide="next">
+                <span class="carousel-control-next-icon hoverCarousel" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+@functions {
+    
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+      
+      if (firstRender) 
+      {
+        await Javascript.InvokeAsync<object>("initializeCarousel");
+        firstRender=false;
+      }
+    }
+}
+  
+<script>
+    window.initializeCarousel = () => {
+        $('#myCarousel').carousel({ interval: 2000 });
+
+        //see step 2 to understand these news id's:
+        $('#myCarousel-prev').click(
+            () => $('#myCarousel').carousel('prev'));
+        $('#myCarousel-next').click(
+            () => $('#myCarousel').carousel('next'));
+    }
+</script>
+
+
+       
+

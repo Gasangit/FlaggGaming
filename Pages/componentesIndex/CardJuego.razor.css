@@ -1,0 +1,12 @@
+﻿.cardHover:hover {
+    background-color: rgba(30,30,30,0.5);
+    border: 0.3em solid black;
+    animation: mymove 5s infinite;
+}
+
+
+@keyframes mymove {
+    50% {
+        border: 15px solid lightblue;
+    }
+}

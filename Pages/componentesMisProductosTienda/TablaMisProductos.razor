@@ -1,0 +1,45 @@
+﻿@using FlaggGaming.Model
+
+<div class="row mt-5">
+    <div class="col">
+        <table class="table table-hover table-striped table-danger text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Imagen</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (Juego unJuego in juegos)
+                {
+                    <tr>
+                        <td class="rounded-start-3 p-3">@unJuego.Name</td>
+                        <td>@unJuego.Description</td>
+                        <td><img class="img-thumbnail" src="@unJuego.urlImagen" width="120" height="75" /></td>
+                        <td><a>Boton Editar</a></td>
+                        <td class="rounded-end-3"><a>Boton Borrar</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code 
+{
+    private Juego AlanWake = new Juego("Alan Wake 2", "Un juego de terror", "/imagenes/AlanWake2.jpg");
+    private Juego Cs2 = new Juego("Counter Strike 2", "El pricipal shooter competitivo", "/imagenes/cs2.jpg");
+    private Juego TheFinals = new Juego("The Finals", "La pricipal novedad en shooters", "/imagenes/TheFinals.jpg");
+
+    private List<Juego> juegos = new List<Juego>();
+
+    protected override void OnInitialized()
+    {
+        juegos.Add(AlanWake);
+        juegos.Add(Cs2);
+        juegos.Add(TheFinals);
+    }
+}

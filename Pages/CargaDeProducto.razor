@@ -1,0 +1,11 @@
+﻿@page "/cargarproductos"
+@page "/editarproductos/{idProducto?}"
+@using FlaggGaming.Pages.componentesCargaDeProductos
+
+<Encabezado/>
+<RecuadroCargaDeProductos/>
+
+@code 
+{
+    [Parameter] public int idProducto { get; set; }
+}

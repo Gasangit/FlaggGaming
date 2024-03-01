@@ -1,0 +1,28 @@
+﻿@using FlaggGaming.Model
+
+<div class="row mb-4 align-items-center border border-dark">
+    <div class="col text-center border border-dark">
+        <img src=@unHardware.urlImagen alt="" class="img-fluid border border-dark" />
+    </div>
+    <div class="col p-5 text-center border border-dark">
+        <div class="row mb-3 border border-dark">
+            <div class="col border border-dark">
+                <h2>@unHardware.Name</h2>
+            </div>
+        </div>
+        <div class="row mb-3 border border-dark">
+            <div class="col border border-dark">
+                <h3 class="border border-dark">$ @unHardware.Price</h3>
+            </div>
+        </div>
+        <div class="row border border-dark">
+            <div class="col border border-dark">
+                <NavLink href="" class="btn btn-dark border border-dark">Comprar</NavLink>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Hardware unHardware { get; set; } = new Hardware();
+}

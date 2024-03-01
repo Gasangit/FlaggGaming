@@ -1,0 +1,15 @@
+﻿@page "/producto"
+@using FlaggGaming.Pages.componentesProducto
+@using FlaggGaming.Model
+
+<DatosComprar unHardware=@objetoHardware />
+
+<DescripcionProducto unHardware=@objetoHardware />
+
+<Grafico />
+
+
+@code {
+
+    private Hardware objetoHardware { get; set; } = new Hardware("Memoria Generica","/imagenes/memorias.jpg",120000);
+}

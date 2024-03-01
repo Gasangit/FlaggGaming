@@ -1,0 +1,76 @@
+﻿@using FlaggGaming.Model
+
+<div class="row justify-content-center">
+    <div class="col-12 mb-5">
+        <a href="/" class="row mx-5 py-3 justify-content-center border border-dark">
+            <div class="col-3 py-4 rounded-3 border border-dark">
+                <div class="row">
+                    <div class="col-12 text-center"><img src="/favicon.png" /></div>
+                    <div class="col text-center">SUBIR FOTO</div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="col-5 mb-3 p-5 rounded-3 border border-dark">
+        <EditForm Model="unJuego" OnSubmit="@metodoParaProcesarElFormulario">
+            <div class="row mb-3">
+                <div class="col"><label>ID PRODUCTO : </label></div>
+                <div class="col"><input type="text"/></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col"><label>DESCRIPCIÓN : </label></div>
+                <div class="col"><input type="text" /></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col"><label>CATEGORÍA : </label></div>
+                <div class="col">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown button
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col"><label>MARCA : </label></div>
+                <div class="col"><input type="text" /></div>
+            </div>
+            <div class="row mb-3">
+                <div class="col"><label>PRECIO VENTA : </label></div>
+                <div class="col"><input type="text" /></div>
+            </div>
+            <div class="row">
+                <div class="col"><label>ESTADO : </label></div>
+                <div class="col">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Dropdown button
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    </div> 
+    <div class="col-12 text-center pb-5">
+        <a class="btn btn-info" href="">Cargar Producto</a>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Juego unJuego { get; set; }  = new Juego();
+
+    private void metodoParaProcesarElFormulario()
+    {
+        
+    }
+}

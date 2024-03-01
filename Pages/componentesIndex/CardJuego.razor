@@ -1,0 +1,23 @@
+@using FlaggGaming.Model
+
+
+<div class="col-5 card cardHover border border-dark">
+    <a href="/juego" class="text-decoration-none text-dark">
+        <div class="row border border-dark">
+            <div class="col-md-6 card-body border border-dark">
+                <h2 class="card-title">T�tulo del juego</h2>
+                <p class="card-text">Descripci�n del juego con algo de texto para rellenar el espacio</p>
+            </div>
+            <div class="col-md-6 border border-dark d-flex align-content-center p-0">
+                <img class="img-fluid" src="/imagenes/cs2.webp" />
+            </div>
+        </div>
+    </a>
+</div>
+
+
+@code
+{
+    [Parameter]
+    public Juego? unJuego { get; set; }
+}
