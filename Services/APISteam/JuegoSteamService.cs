@@ -39,7 +39,7 @@ namespace FlaggGaming.Services.APISteam
                         Console.WriteLine(jsonDeApi().Result);
 
                         JSchemaGenerator generador = new JSchemaGenerator();
-                        JSchema schema = generador.Generate(typeof(JuegoSteam));
+                        JSchema schema = generador.Generate(typeof(Dictionary<int, JuegoSteam>));
 
                         Console.WriteLine($"Esquema : \r\n{schema.ToString()}");
                             JObject jsonJuegoSteam = JObject.Parse(jsonDeApi().Result);

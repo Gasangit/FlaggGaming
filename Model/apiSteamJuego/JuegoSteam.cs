@@ -2,7 +2,7 @@
 {
     public class JuegoSteam
     {
-        public bool success { get; set; }
-        public JuegoSteamData data { get; set; }
+        public bool? success { get; set; }
+        public JuegoSteamData? data { get; set; }
     }
 }
