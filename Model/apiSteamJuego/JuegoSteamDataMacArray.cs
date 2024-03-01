@@ -1,6 +1,6 @@
 ﻿namespace FlaggGaming.Model.apiSteamJuego
 {
-    public class JuegoSteamDataMacArray: IDataJuegoSteam
+    public class JuegoSteamDataMacArray
     {
         public string? type { get; set; }
         public string? name { get; set; }
