@@ -1,7 +1,9 @@
 ﻿@page "/prueba/juego/{appid:int}"
-@using FlaggGaming.Model.apiSteamJuego
-@using FlaggGaming.Services.APISteam
-@using System.Reflection
+
+@    using FlaggGaming.Model.apiSteamJuego
+@    using FlaggGaming.Model.apiSteamJuego.VariantesJuegoSteam
+@    using FlaggGaming.Services.APISteam
+@    using System.Reflection
 @inject JuegoSteamService juegoService
 
 <div class="row row-cols-3 mb-5 g-3">
@@ -12,89 +14,161 @@
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo name :</h3>
                 <h4 class="border border-dark">El nombre del juego es : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.name</p>
+                @if(diccionarioJson[gameId].data.name != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.name</p>
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo steam_appid :</h3>
                 <h4 class="border border-dark">El ID del juego es : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.steam_appid</p>
+                @if (diccionarioJson[gameId].data.steam_appid != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.steam_appid</p>                    
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo required_age :</h3>
                 <h4 class="border border-dark">La edad requerida es : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.required_age</p>
+                @if (diccionarioJson[gameId].data.required_age != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.required_age</p>                    
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo is_free :</h3>
                 <h4 class="border border-dark">¿Es gratis? : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.is_free</p>
+                @if (diccionarioJson[gameId].data.is_free != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.is_free</p>                    
+                }
             </div>
-            @*<div class="col border border-dark">
-                <h3 class="border border-dark">Atributo dlc :</h3>
-                <h4 class="border border-dark">Tiene los dlc con ID :</h4>
-                if(@diccionarioJson[@gameId].data.dlc != null)
+            <div class="col border border-dark">
+                <h3 class="row border border-dark">Atributo dlc :</h3>
+                <h4 class="row border border-dark">Tiene los dlc con ID :</h4>
+                @if(diccionarioJson[gameId].data.dlc != null)
                 {
-                @foreach (int numeroDlc in @diccionarioJson[@gameId].data.dlc)
-                {
-                <p class="border border-dark">@numeroDlc</p>
+                    @foreach (int numeroDlc in @diccionarioJson[gameId].data.dlc)
+                    {
+                        <p class="row border border-dark">@numeroDlc</p>
+                    }
                 }
-                }
-            </div> *@
+            </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo detailed_description :</h3>
                 <h4 class="border border-dark">La descripción detallada es : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.detailed_description</p>
+                @if (diccionarioJson[gameId].data.detailed_description != null)
+                {
+                    <div class="row">
+                        <div class="col border border-dark colScroll">
+                            <p>@diccionarioJson[gameId].data.detailed_description</p>
+                        </div>
+                    </div>
+                }
             </div>
-            <div class="col border border-dark">
+            <div class="col border border-dark colScroll">
                 <h3 class="border border-dark">Atributo about_the_game : </h3>
                 <h4 class="border border-dark">Sobre el juego : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.about_the_game</p>
+                @if (diccionarioJson[gameId].data.about_the_game != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.about_the_game</p>                    
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo short_description : </h3>
                 <h4 class="border border-dark">La descripción corta es : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.short_description</p>
+                @if (diccionarioJson[gameId].data.short_description != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.short_description</p>                    
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo supported_languages : </h3>
                 <h4 class="border border-dark">Soporta los idiomas : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.supported_lenguages</p>
+                @if(diccionarioJson[gameId].data.supported_lenguages != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.supported_lenguages</p>
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo header_image : </h3>
                 <h4 class="border border-dark">Imagen de encabezado : </h4>
-                <img src=@diccionarioJson[@gameId].data.header_image class="img-fluid col border border-dark" />
+                @if (diccionarioJson[gameId].data.header_image != null)
+                {
+                    <img src=@diccionarioJson[@gameId].data.header_image class="img-fluid col border border-dark" />                    
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo capsule_image : </h3>
                 <h4 class="border border-dark">Imagen de capsula : </h4>
-                <img src=@diccionarioJson[@gameId].data.capsule_image class="border border-dark" />
+                @if (diccionarioJson[gameId].data.capsule_image != null)
+                {
+                    <img src=@diccionarioJson[@gameId].data.capsule_image class="border border-dark" />                    
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo capsule_imagev5 : </h3>
                 <h4 class="border border-dark">Imagen de capsula version 5 ¿? : </h4>
-                <img src=@diccionarioJson[@gameId].data.capsule_imagev5 class="border border-dark" />
+                @if (diccionarioJson[gameId].data.capsule_imagev5 != null)
+                {
+                    <img src=@diccionarioJson[@gameId].data.capsule_imagev5 class="border border-dark" />                    
+                }
             </div>
             <div class="col border border-dark">
-                <h3 class="border border-dark">Atributo website</h3>
-                <h4 class="border border-dark">Web del juego : </h4>
-                <a href=@diccionarioJson[@gameId].data.website class="btn btn-success">Web del Juego</a>
+                <h3 class="row border border-dark">Atributo website</h3>
+                <h4 class="row border border-dark">Web del juego : </h4>
+                @if (diccionarioJson[gameId].data.website != null)
+                {
+                    <a href=@diccionarioJson[@gameId].data.website class="btn btn-success">Web del Juego</a>                    
+                }else{ <p>El juego no tiene una WEB registrada</p>}
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo pc_requirements : </h3>
                 <h4 class="border border-dark">Requrimientos mímimos para PC : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.pc_requirements.minimum</p>
+                @if (diccionarioJson[@gameId].data.pc_requirements != null)
+                {
+                    Console.Write(diccionarioJson[@gameId].data.pc_requirements.GetType());
+                    Console.WriteLine("------------>" + diccionarioJson[@gameId].data.pc_requirements.GetType());
+                    @if (diccionarioJson[@gameId].data.pc_requirements.GetType().ToString().Equals("Newtonsoft.Json.Linq.JArray"))
+                    {
+                            @foreach (PcRequirements requisitos in diccionarioJson[gameId].data.pc_requirements)
+                            {
+                            @if (requisitos.minimum != null){<p class="border border-dark row">@requisitos.minimum</p>}
+                            @if (requisitos.recommended != null){<p class="border border-dark row">@requisitos.recommended</p>}
+                        }
+                    }
+                }
             </div>
-            <div class="col border border-dark">
+           <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo mac_requirements : </h3>
                 <h4 class="border border-dark">Requrimientos mímimos para MAC : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.mac_requirements.minimum</p>
+                @if (diccionarioJson[@gameId].data.mac_requirements != null)
+                {
+                    @if (diccionarioJson[@gameId].data.mac_requirements.GetType().ToString().Equals("Newtonsoft.Json.Linq.JArray"))
+                    {
+                        @foreach (MacRequirements requisitos in diccionarioJson[gameId].data.mac_requirements)
+                        {
+                            @if (requisitos.minimum != null){<p class="border border-dark row">@requisitos.minimum</p>}
+                            @if (requisitos.recommended != null){<p class="border border-dark row">@requisitos.recommended</p>}
+                        }
+                    }
+                }
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo linux_requirements : </h3>
                 <h4 class="border border-dark">Requrimientos mímimos para LINUX : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.linux_requirements.minimum</p>
-            </div>
+                @if (diccionarioJson[@gameId].data.linux_requirements != null)
+                {
+                    @if (diccionarioJson[@gameId].data.linux_requirements.GetType().ToString().Equals("Newtonsoft.Json.Linq.JArray"))
+                    {
+                        @foreach (LinuxRequirements requisitos in diccionarioJson[gameId].data.linux_requirements)
+                        {
+                            @if (requisitos.minimum != null){<p class="border border-dark row">@requisitos.minimum</p>}
+                            @if (requisitos.recommended != null){<p class="border border-dark row">@requisitos.recommended</p>}
+                        }
+                    }
+                }
+    </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atribubto developers : </h3>
                 <h4 class="border border-dark">Desarrolladora : </h4>
@@ -110,7 +184,13 @@
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo publishers : </h3>
                 <h4 class="border border-dark">Distribuidores : </h4>
-                <p class="border border-dark">@diccionarioJson[@gameId].data.publishers</p>
+                @if (diccionarioJson[gameId].data.publishers != null)
+                {
+                    @foreach (string publisher in diccionarioJson[@gameId].data.publishers)
+                    {
+                        <p class="border border-dark">@publisher</p>                        
+                    }
+                }else{<p>No hay DISTRIBUIDORES registrados para este juego</p>}
             </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo packages : </h3>
@@ -163,21 +243,39 @@
                         }
                     }
                 }
-            </div>                                      @* <=== Seguir desde acá*@
+            </div>
             <div class="col border border-dark">
                 <h3 class="border border-dark">Atributo platforms (objeto) : </h3>
                 <h4 class="border border-dark">Sistemas operativos soportados : </h4>
                 <div class="row border border-dark">
                     <div class="col border border-dark">Atributo windows : </div>
-                    <p class="col">@diccionarioJson[@gameId].data.platforms.windows</p>
+                    @if (diccionarioJson[gameId].data.platforms != null)
+                    {
+                        @if (diccionarioJson[gameId].data.platforms.windows != null)
+                        {
+                            <p class="col">@diccionarioJson[@gameId].data.platforms.windows</p>
+                        }
+                    }
                 </div>
                 <div class="row border border-dark">
                     <div class="col border border-dark">Atributo mac : </div>
-                    <p class="col">@diccionarioJson[@gameId].data.platforms.mac</p>
+                    @if (diccionarioJson[gameId].data.platforms != null)
+                    {
+                        @if (diccionarioJson[gameId].data.platforms.mac != null)
+                        {
+                            <p class="col">@diccionarioJson[@gameId].data.platforms.mac</p>
+                        }
+                    }
                 </div>
                 <div class="row border border-dark">
                     <div class="col border border-dark">Atributo linux : </div>
-                    <p class="col">@diccionarioJson[@gameId].data.platforms.linux</p>
+                    @if (diccionarioJson[gameId].data.platforms != null)
+                    {
+                        @if (diccionarioJson[gameId].data.platforms.linux != null)
+                        {
+                            <p class="col">@diccionarioJson[@gameId].data.platforms.linux</p>                            
+                        }
+                    }
                 </div>
                 
             </div>
@@ -252,15 +350,15 @@
                             @{count++;}
                             <label class="col-12" for=@($"movie{@count}")>Atributo webm : </label>
                                 <video id=@($"movie{@count}") width="320" height="240" controls>
-                                    <source src=@video.webm.quality480 type="video/webm">
-                                    <source src=@video.webm.max type="video/webm">
+                                    <source src=@video.webm["480"] type="video/webm">
+                                    <source src=@video.webm["max"] type="video/webm">
                                     Your browser does not support the video tag.
                                 </video>
                             @{count++;}
                             <label class="col-12" for=@($"movie{@count}")>Atributo mp4 : </label>
                                 <video id=@($"movie{@count}") width="320" height="240" controls>
-                                    <source src=@video.mp4.quality480 type="video/mp4">
-                                    <source src=@video.mp4.max type="video/mp4">
+                                    <source src=@video.mp4["480"] type="video/mp4">
+                                    <source src=@video.mp4["max"] type="video/mp4">
                                     Your browser does not support the video tag.
                                 </video>
                         </div>
@@ -281,28 +379,33 @@
                 <h3 class="border border-dark">Atributo achievements (objeto) : </h3>
                 <h4 class="border border-dark">Logros del juego : </h4>
                 <div class="row border border-dark">
-                    @if (diccionarioJson[@gameId].data.achievements.total !=null)
+                    @if(diccionarioJson[gameId].data.achievements != null)
                     {
-                        <p class="col">@($"Atributo total : {diccionarioJson[@gameId].data.achievements.total}")</p>                        
+                        @if (diccionarioJson[@gameId].data.achievements.total != null)
+                        {
+                            <p class="col">@($"Atributo total : {diccionarioJson[@gameId].data.achievements.total}")</p>
+
+                            <div class="row border border-dark">
+                                <p class="col-12">Atributo highlighted (array) : </p>
+                            </div>
+                            @if (diccionarioJson[@gameId].data.achievements.highlighted != null)
+                            {
+                                @foreach (Highlighted destacado in diccionarioJson[gameId].data.achievements.highlighted)
+                                {
+                                    <div class="row ms-3 border border-dark"><h6 class="col">Objeto Highlighted : </h6></div>
+                                    <div class="row ms-3 border border-dark">
+                                        <p class="col-12 border border-dark">
+                                            @($"Atributo {destacado.name.GetType().Name} : {destacado.name}")
+                                        </p>
+                                        <div class="col-12 border border-dark">Atributo path : </div>
+                                        <img src=@destacado.path class="col-12 border border-dark">
+                                    </div>
+                                }
+                            }
+                        }
                     }
                 </div>
-                <div class="row border border-dark">
-                    <p class="col-12">Atributo highlighted (array) : </p>
-                </div>
-                @if(diccionarioJson[@gameId].data.achievements.highlighted != null)
-                {
-                    @foreach(Highlighted destacado in diccionarioJson[gameId].data.achievements.highlighted)
-                    {
-                        <div class="row ms-3 border border-dark"><h6 class="col">Objeto Highlighted : </h6></div>
-                        <div class="row ms-3 border border-dark">
-                            <p class="col-12 border border-dark">
-                                @($"Atributo {destacado.name.GetType().Name} : {destacado.name}")
-                            </p>
-                            <div class="col-12 border border-dark">Atributo path : </div>
-                            <img src=@destacado.path class="col-12 border border-dark">
-                        </div>
-                    }
-                }
+               
             </div>
             <div class="col border border-dark">
                 <h3 class="row border border-dark">Atributo release_date (objeto) : </h3>
@@ -384,8 +487,17 @@
                     {
                         <h6 class="row">Atributo cadpa (objeto) : </h6>
                         <div class="row border border-dark">
-                            <p class="col-12 border border-dark">@($"Atributo rating : {diccionarioJson[gameId].data.ratings.cadpa.rating}")</p>
-                            <p class="col border border-dark">@($"Atributo descriptors : {diccionarioJson[gameId].data.ratings.cadpa.descriptors}")</p>
+                            @if (diccionarioJson[gameId].data.ratings != null)
+                            {
+                                @if (diccionarioJson[gameId].data.ratings.cadpa.rating != null)
+                                {
+                                    <p class="col-12 border border-dark">@($"Atributo rating : {diccionarioJson[gameId].data.ratings.cadpa.rating}")</p>                                    
+                                }
+                                @if (diccionarioJson[gameId].data.ratings.cadpa.descriptors != null)
+                                {
+                                    <p class="col border border-dark">@($"Atributo descriptors : {diccionarioJson[gameId].data.ratings.cadpa.descriptors}")</p>
+                                }
+                            }                            
                         </div>
                     }else{<h4 class="row">Este objeto no se encuentra disponible</h4>}
                     @if (diccionarioJson[gameId].data.ratings.dejus != null)
@@ -409,12 +521,12 @@
 
 
 @code {
-    public Dictionary<string, JuegoSteam> diccionarioJson { get; set; }
+    public Dictionary<string, JuegoSteam>? diccionarioJson { get; set; }
     [Parameter] public int appid { get; set; }
-    public string gameId;
+    public string? gameId;
 
-    protected override async Task OnInitializedAsync()
-    {        
+    protected override async Task OnParametersSetAsync()
+    {           
         gameId = Convert.ToString(appid);
         diccionarioJson = await juegoService.getJuegoSteam(gameId);
     }

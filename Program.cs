@@ -10,8 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<juegosIndexService>();
-builder.Services.AddScoped<JuegosListaTotalService>();
-builder.Services.AddScoped<JuegoSteamService>();
+builder.Services.AddSingleton<JuegosListaTotalService>();
+builder.Services.AddSingleton<JuegoSteamService>();
 builder.Services.AddHttpClient();
 //builder.Services.AddScoped<IJSRuntime>();
 

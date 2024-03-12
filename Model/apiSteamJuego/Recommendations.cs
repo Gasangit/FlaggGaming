@@ -2,6 +2,6 @@
 {
     public class Recommendations
     {
-        public int total {  get; set; }
+        public int? total {  get; set; }
     }
 }

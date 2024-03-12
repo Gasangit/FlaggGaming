@@ -1,0 +1,44 @@
+﻿@page "/minima/{appid:int}"
+
+@    using FlaggGaming.Model.apiSteamJuego.VariantesJuegoSteam
+@    using FlaggGaming.Model.apiSteamJuego
+@    using FlaggGaming.Services.APISteam
+@inject JuegoSteamService juegoService
+
+<div class="row row-cols-3 mb-5 g-3">
+
+    @if (diccionarioJson != null)
+    {
+        @if (@diccionarioJson[gameId].success)
+        {
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo mac_requirements : </h3>
+                <h4 class="border border-dark">Requrimientos mímimos para MAC : </h4>
+                @if (diccionarioJson[@gameId].data.mac_requirements != null)
+                {
+                    <h2>@(diccionarioJson[@gameId].data.mac_requirements.GetType()));</h2>
+
+                    
+                }
+            </div>
+        }
+    }
+</div>
+
+
+
+
+
+@code
+{
+    public Dictionary<string, JuegoSteam>? diccionarioJson { get; set; }
+    [Parameter] public int appid { get; set; }
+    public string? gameId;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        gameId = Convert.ToString(appid);
+        diccionarioJson = await juegoService.getJuegoSteam(gameId);
+    }
+
+}

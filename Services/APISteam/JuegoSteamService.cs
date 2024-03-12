@@ -12,10 +12,11 @@ namespace FlaggGaming.Services.APISteam
 {
     public class JuegoSteamService
     {
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly HttpClient _httpClient;
-        public JuegoSteamService(HttpClient httpClient)
+        public JuegoSteamService(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
         }
 
 
@@ -25,6 +26,7 @@ namespace FlaggGaming.Services.APISteam
                 (
                     () =>
                     {
+                    var _httpClient = _httpClientFactory.CreateClient("clienteJuegoSteam");
                     string urlJuego = $"https://store.steampowered.com/api/appdetails?appids={gameId}&cc=ar";
                     Dictionary<string, JuegoSteam> diccionarioJson = new Dictionary<string, JuegoSteam>();
                     _httpClient.BaseAddress = new Uri(urlJuego);
@@ -38,30 +40,24 @@ namespace FlaggGaming.Services.APISteam
                         var jsonDeApi = async Task<String> () => { return await respuestaDeApi().Result.Content.ReadAsStringAsync(); };
                         Console.WriteLine(jsonDeApi().Result);
 
-                        JSchemaGenerator generador = new JSchemaGenerator();
-                        JSchema schema = generador.Generate(typeof(Dictionary<int, JuegoSteam>));
+                        JObject objetoJson = JObject.Parse(jsonDeApi().Result);
+                        Console.WriteLine("Prueba de atributo de objeto json : " + objetoJson[$"{gameId}"]["name"]);
+    
+                        //JSchemaGenerator generador = new JSchemaGenerator();
+                        //JSchema schema = generador.Generate(typeof(Dictionary<string, JuegoSteam>));
 
-                        Console.WriteLine($"Esquema : \r\n{schema.ToString()}");
+                        //Console.WriteLine($"Esquema : \r\n{schema.ToString()}");
                             JObject jsonJuegoSteam = JObject.Parse(jsonDeApi().Result);
 
-                            Console.WriteLine($"El json coincide con el objeto  : {jsonJuegoSteam.IsValid(schema)}");
+                            //Console.WriteLine($"El json coincide con el objeto  : {jsonJuegoSteam.IsValid(schema)}");
 
-                            /*JsonTextReader lecturaPrevia = new JsonTextReader(new StringReader(jsonDeApi().Result));
-
-                            while (lecturaPrevia.Read())
+                            /*if (jsonJuegoSteam.IsValid(schema))
                             {
-                                if (lecturaPrevia.Value != null)
-                                {
-                                    Console.WriteLine("Token: {0}, Value: {1}", lecturaPrevia.TokenType, lecturaPrevia.Value);
-                                    if (lecturaPrevia.Value.ToString() == "mac_requirements")
-                                    { 
-                                        
-                                    }
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Token: {0}", lecturaPrevia.TokenType);
-                                }
+                                diccionarioJson = JsonConvert.DeserializeObject<Dictionary<string, JuegoSteam>>(jsonDeApi().Result);
+                            }
+                            else 
+                            {
+                                diccionarioJson = JsonConvert.DeserializeObject<Dictionary<string, JuegoSteam>>(jsonDeApi().Result);
                             }*/
 
                             diccionarioJson = JsonConvert.DeserializeObject<Dictionary<string, JuegoSteam>>(jsonDeApi().Result);

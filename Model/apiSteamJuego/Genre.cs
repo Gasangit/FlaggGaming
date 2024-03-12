@@ -2,7 +2,7 @@
 {
     public class Genre
     {
-        public int id {  get; set; }
-        public string description {  get; set; }
+        public string? id {  get; set; }
+        public string? description {  get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Mp4
     {
-        public string quality480 { get; set; }
-        public string max { get; set; }
+        public string? quality480 { get; set; }
+        public string? max { get; set; }
     }
 }

@@ -10,20 +10,23 @@ namespace FlaggGaming.Services.APISteam
 
     public class JuegosListaTotalService
     {
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly HttpClient _httpClient;
-        public JuegosListaTotalService(HttpClient httpClient)
+
+        public JuegosListaTotalService(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
+             _httpClientFactory = httpClientFactory;
         }
         
-
         public async Task<ObjetoJsonListaJuegos> getListaJuegosSteam()
         {
             Task<ObjetoJsonListaJuegos> tareaAppList = Task<ObjetoJsonListaJuegos>.Factory.StartNew
                 (
                     () =>
                     {
+                        var _httpClient = _httpClientFactory.CreateClient("apiListaJuegos");
                         ObjetoJsonListaJuegos objetoJson = new();
+
                         _httpClient.BaseAddress = new Uri("https://api.steampowered.com/ISteamApps/GetAppList/v2/");
                         _httpClient.DefaultRequestHeaders.Clear();
                         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -37,12 +40,14 @@ namespace FlaggGaming.Services.APISteam
                             objetoJson = JsonConvert.DeserializeObject<ObjetoJsonListaJuegos>(jsonDeApi().Result);
 
                         }
-                        
+
                         return objetoJson;
                     }
                 );
 
             return await tareaAppList;
         }
+
+        
     }
 }
