@@ -1,4 +1,4 @@
-﻿using FlaggGaming.Model.apiSteamJuego.VariantesJuegoSteamData;
+﻿using FlaggGaming.Model.apiSteamJuego;
 
 namespace FlaggGaming.Model.apiSteamJuego
 {

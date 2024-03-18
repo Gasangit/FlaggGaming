@@ -1,10 +1,21 @@
 using FlaggGaming.Services;
 using FlaggGaming.Services.APISteam;
+using FlaggGaming.Entity;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.JSInterop;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using FlaggGaming.Model.apiSteamListaJuegosTotal;
+using Microsoft.IdentityModel.Tokens;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DatosContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("UserContext"));
+});
 
 // Add services to the container.
 builder.Services.AddRazorPages();

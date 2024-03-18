@@ -1,9 +1,8 @@
 ﻿@page "/prueba/juego/{appid:int}"
 
-@    using FlaggGaming.Model.apiSteamJuego
-@    using FlaggGaming.Model.apiSteamJuego.VariantesJuegoSteam
-@    using FlaggGaming.Services.APISteam
-@    using System.Reflection
+@using FlaggGaming.Model.apiSteamJuego
+@using FlaggGaming.Services.APISteam
+@using System.Reflection
 @inject JuegoSteamService juegoService
 
 <div class="row row-cols-3 mb-5 g-3">
@@ -17,6 +16,14 @@
                 @if(diccionarioJson[gameId].data.name != null)
                 {
                     <p class="border border-dark">@diccionarioJson[gameId].data.name</p>
+                }
+            </div>
+            <div class="col border border-dark">
+                <h3 class="border border-dark">Atributo type :</h3>
+                <h4 class="border border-dark">El tipo es : </h4>
+                @if(diccionarioJson[gameId].data.type != null)
+                {
+                    <p class="border border-dark">@diccionarioJson[gameId].data.type</p>
                 }
             </div>
             <div class="col border border-dark">
@@ -83,9 +90,9 @@
                 }
             </div>
             <div class="col border border-dark">
-                <h3 class="border border-dark">Atributo supported_languages : </h3>
+                <h3 class="border border-dark">Atributo supported_lenguages : </h3>
                 <h4 class="border border-dark">Soporta los idiomas : </h4>
-                @if(diccionarioJson[gameId].data.supported_lenguages != null)
+                @if (diccionarioJson[gameId].data.supported_lenguages != null)
                 {
                     <p class="border border-dark">@diccionarioJson[gameId].data.supported_lenguages</p>
                 }
@@ -127,9 +134,9 @@
                 <h4 class="border border-dark">Requrimientos mímimos para PC : </h4>
                 @if (diccionarioJson[@gameId].data.pc_requirements != null)
                 {
-                    Console.Write(diccionarioJson[@gameId].data.pc_requirements.GetType());
-                    Console.WriteLine("------------>" + diccionarioJson[@gameId].data.pc_requirements.GetType());
-                    @if (diccionarioJson[@gameId].data.pc_requirements.GetType().ToString().Equals("Newtonsoft.Json.Linq.JArray"))
+                    //Console.Write(diccionarioJson[@gameId].data.pc_requirements.GetType());
+                    //Console.WriteLine("------------>" + diccionarioJson[@gameId].data.pc_requirements.GetType());
+                    @if (diccionarioJson[@gameId].data.pc_requirements != null)
                     {
                             @foreach (PcRequirements requisitos in diccionarioJson[gameId].data.pc_requirements)
                             {
@@ -144,7 +151,7 @@
                 <h4 class="border border-dark">Requrimientos mímimos para MAC : </h4>
                 @if (diccionarioJson[@gameId].data.mac_requirements != null)
                 {
-                    @if (diccionarioJson[@gameId].data.mac_requirements.GetType().ToString().Equals("Newtonsoft.Json.Linq.JArray"))
+                    @if (diccionarioJson[@gameId].data.mac_requirements != null)
                     {
                         @foreach (MacRequirements requisitos in diccionarioJson[gameId].data.mac_requirements)
                         {
@@ -159,7 +166,7 @@
                 <h4 class="border border-dark">Requrimientos mímimos para LINUX : </h4>
                 @if (diccionarioJson[@gameId].data.linux_requirements != null)
                 {
-                    @if (diccionarioJson[@gameId].data.linux_requirements.GetType().ToString().Equals("Newtonsoft.Json.Linq.JArray"))
+                    @if (diccionarioJson[@gameId].data.linux_requirements != null)
                     {
                         @foreach (LinuxRequirements requisitos in diccionarioJson[gameId].data.linux_requirements)
                         {

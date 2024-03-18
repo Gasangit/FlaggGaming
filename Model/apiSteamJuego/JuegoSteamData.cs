@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace FlaggGaming.Model.apiSteamJuego.VariantesJuegoSteamData
+namespace FlaggGaming.Model.apiSteamJuego
 {
     public class JuegoSteamData
     {

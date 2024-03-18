@@ -2,6 +2,6 @@
 {
     public class AppList
     {
-        public ItemListaJuegoSteam[] apps = Array.Empty<ItemListaJuegoSteam>();
+        public List<ItemListaJuegoSteam> apps = new List<ItemListaJuegoSteam>();
     }
 }
