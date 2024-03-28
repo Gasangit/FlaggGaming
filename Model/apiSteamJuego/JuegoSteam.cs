@@ -4,7 +4,7 @@ namespace FlaggGaming.Model.apiSteamJuego
 {
     public class JuegoSteam
     {
-        public bool success { get; }
-        public JuegoSteamData? data { get; }
+        public bool success { get; set; }
+        public JuegoSteamData? data { get; set; }
     }
 }

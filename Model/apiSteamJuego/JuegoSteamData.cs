@@ -4,45 +4,45 @@ namespace FlaggGaming.Model.apiSteamJuego
 {
     public class JuegoSteamData
     {
-        public string? type { get; }
-        public string? name { get; }
-        public int? steam_appid { get; }
-        public int? required_age { get; }
-        public bool? is_free { get; }
-        public int[]? dlc { get; }
-        public string? detailed_description { get; }
-        public string? about_the_game { get; }
-        public string? short_description { get; } 
-        public string? supported_lenguages {  get; }
-        public string? header_image { get; }
-        public string? capsule_image { get; }
-        public string? capsule_imagev5 { get; }
-        public string? website { get; }
+        public string? type { get; set; }
+        public string? name { get; set; }
+        public int? steam_appid { get; set; }
+        public int? required_age { get; set; }
+        public bool? is_free { get; set; }
+        public int[]? dlc { get; set; }
+        public string? detailed_description { get; set; }
+        public string? about_the_game { get; set; }
+        public string? short_description { get; set; } 
+        public string? supported_lenguages {  get; set; }
+        public string? header_image { get; set; }
+        public string? capsule_image { get; set; }
+        public string? capsule_imagev5 { get; set; }
+        public string? website { get; set; }
         [JsonProperty("pc_requirements")]
         [JsonConverter(typeof(SingleOrArrayConverter<PcRequirements>))]
-        public List<PcRequirements>? pc_requirements { get; }
+        public List<PcRequirements>? pc_requirements { get; set; }
         [JsonProperty("mac_requirements")]
         [JsonConverter(typeof(SingleOrArrayConverter<MacRequirements>))]
-        public List<MacRequirements>? mac_requirements { get; }
+        public List<MacRequirements>? mac_requirements { get; set; }
         [JsonProperty("linux_requirements")]
         [JsonConverter(typeof(SingleOrArrayConverter<LinuxRequirements>))]
-        public List<LinuxRequirements>? linux_requirements { get; }
-        public string[]? developers { get; }
-        public string[]? publishers { get; }
-        public int[]? packages { get; }
-        public PackageGroups[]? package_groups { get; }
-        public Platforms? platforms { get; }
-        public Category[]? categories { get; }
-        public Genre[]? genres { get; }
-        public Screenshot[]? screenshots { get; }
-        public Movie[]? movies { get; }
-        public Recommendations? recommendations { get; }
-        public Achievements? achievements { get; }
-        public ReleaseDate? release_date { get; }
-        public SupportInfo? support_info { get; }
-        public string? background { get; }
-        public string? background_raw { get; }
-        public ContentDescriptors? content_descriptors { get; }
-        public Ratings? ratings { get; }
-   }
+        public List<LinuxRequirements>? linux_requirements { get; set; }
+        public string[]? developers { get; set; }
+        public string[]? publishers { get; set; }
+        public int[]? packages { get; set; }
+        public PackageGroups[]? package_groups { get; set; }
+        public Platforms? platforms { get; set; }
+        public Category[]? categories { get; set; }
+        public Genre[]? genres { get; set; }
+        public Screenshot[]? screenshots { get; set; }
+        public Movie[]? movies { get; set; }
+        public Recommendations? recommendations { get; set; }
+        public Achievements? achievements { get; set; }
+        public ReleaseDate? release_date { get; set; }
+        public SupportInfo? support_info { get; set; }
+        public string? background { get; set; }
+        public string? background_raw { get; set; }
+        public ContentDescriptors? content_descriptors { get; set; }
+        public Ratings? ratings { get; set; }
+    }
 }
