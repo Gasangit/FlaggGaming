@@ -1,0 +1,34 @@
+﻿@page "/scrap"
+@using EpicGamesStoreNET.Models
+@inject FlaggGaming.Services.ScrapEpic.ScrapWebEpicService servicioScrap
+@inject FlaggGaming.Services.EpicGameStoreNet.EpicGameStoreNetService serviceEpicNet
+
+<h3>Scrapeando como loco</h3>
+
+@if (arrayJuegos != null)
+{
+    @foreach (Element juego in arrayJuegos)
+    {
+
+        @($"{juego.Title} -> {juego.Price.TotalPrice.FmtPrice.OriginalPrice.ToString()}")
+        <br />
+
+    }
+
+}
+else
+{
+    <h3>No hay juegos para mostrar</h3>
+}
+
+
+@code {
+    //public List<string> listaJuegos = new List<string>();
+    public Element[] arrayJuegos;
+
+    protected async override Task OnInitializedAsync()
+    {
+        // listaJuegos = servicioScrap.getListaJuegosEpic();
+        arrayJuegos = await serviceEpicNet.obtenerJuegosEpic("sim");
+    }
+}

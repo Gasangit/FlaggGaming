@@ -6,7 +6,7 @@ namespace FlaggGaming.Entity
 {
     public class DatosContext: DbContext
     {
-        public DbSet<ItemListaJuegoSteam> listaJuegosMinima { get; set; }
+        public DbSet<ItemListaJuegoSteam> listaJuegos { get; set; }
 
         public DatosContext() { } //Constructor vacio
         public DatosContext(DbContextOptions<DatosContext> optionsBuilder) : base(optionsBuilder) 

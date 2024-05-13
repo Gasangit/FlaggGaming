@@ -1,5 +1,5 @@
 ﻿using System;
-using FlaggGaming.Services.APISteam;
+//using FlaggGaming.Services.APISteam;
 using FlaggGaming.Model.apiSteamListaJuegosTotal;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Net.Http.Headers;

@@ -19,7 +19,6 @@ namespace FlaggGaming.Services.APISteam
             _httpClientFactory = httpClientFactory;
         }
 
-
         public async Task<Dictionary<string, JuegoSteam>> getJuegoSteam(string gameId)
         {
             Task<Dictionary<string, JuegoSteam>> tareaJuego = Task<Dictionary<string, JuegoSteam>>.Factory.StartNew
@@ -43,22 +42,7 @@ namespace FlaggGaming.Services.APISteam
                         JObject objetoJson = JObject.Parse(jsonDeApi().Result);
                         Console.WriteLine("Prueba de atributo de objeto json : " + objetoJson[$"{gameId}"]["name"]);
     
-                        //JSchemaGenerator generador = new JSchemaGenerator();
-                        //JSchema schema = generador.Generate(typeof(Dictionary<string, JuegoSteam>));
-
-                        //Console.WriteLine($"Esquema : \r\n{schema.ToString()}");
-                            JObject jsonJuegoSteam = JObject.Parse(jsonDeApi().Result);
-
-                            //Console.WriteLine($"El json coincide con el objeto  : {jsonJuegoSteam.IsValid(schema)}");
-
-                            /*if (jsonJuegoSteam.IsValid(schema))
-                            {
-                                diccionarioJson = JsonConvert.DeserializeObject<Dictionary<string, JuegoSteam>>(jsonDeApi().Result);
-                            }
-                            else 
-                            {
-                                diccionarioJson = JsonConvert.DeserializeObject<Dictionary<string, JuegoSteam>>(jsonDeApi().Result);
-                            }*/
+                            //JObject jsonJuegoSteam = JObject.Parse(jsonDeApi().Result);
 
                             diccionarioJson = JsonConvert.DeserializeObject<Dictionary<string, JuegoSteam>>(jsonDeApi().Result);
                         }

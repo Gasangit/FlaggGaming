@@ -1,39 +1,40 @@
-namespace FlaggGaming.Services;
-using FlaggGaming.Model;
+using FlaggGaming.Model.Juegos;
 
-public class juegosIndexService
+namespace FlaggGaming.Services
 {
-    private Juego unJuego1 = new Juego();
-    private Juego unJuego2 = new Juego();
-    private Juego unJuego3 = new Juego();
-    private Juego unJuego4 = new Juego();
-
-
-    public async Task<Juego[]> obtenerJuegosDestacados()
+    public class juegosIndexService
     {
-        unJuego1.Name = "Counter Strike 2";
-        unJuego1.Description = "Descripci�n de este juego para llenar un p�rrafo para contar algo";
-        unJuego1.urlImagen = "/imagenes/cs2.webp";
-
-        unJuego2.Name = unJuego1.Name; unJuego2.Description = unJuego1.Description;
-        unJuego3.Name = unJuego1.Name; unJuego3.Description = unJuego1.Description;
-        unJuego4.Name = unJuego1.Name; unJuego4.Description = unJuego1.Description;
-
-        unJuego2.urlImagen = unJuego1.urlImagen;
-        unJuego3.urlImagen = unJuego1.urlImagen;
-        unJuego4.urlImagen = unJuego1.urlImagen;
+        private Juego unJuego1 = new Juego();
+        private Juego unJuego2 = new Juego();
+        private Juego unJuego3 = new Juego();
+        private Juego unJuego4 = new Juego();
 
 
-        Task<Juego[]> taskJuegosIndex = Task<Juego[]>.Factory.StartNew
-        (() =>
-            {
-                Juego[] arrayJuegosDestacados = { unJuego1,unJuego2,unJuego3, unJuego4 };
-                return arrayJuegosDestacados;
-            }  
-        );
+        public async Task<Juego[]> obtenerJuegosDestacados()
+        {
+            unJuego1.nombre = "Counter Strike 2";
+            unJuego1.descripcion = "Descripci�n de este juego para llenar un p�rrafo para contar algo";
+            unJuego1.imagen = "/imagenes/cs2.webp";
 
-        return await taskJuegosIndex;
+            unJuego2.nombre = unJuego1.nombre; unJuego2.descripcion = unJuego1.descripcion;
+            unJuego3.nombre = unJuego1.nombre; unJuego3.descripcion = unJuego1.descripcion;
+            unJuego4.nombre = unJuego1.nombre; unJuego4.descripcion = unJuego1.descripcion;
+
+            unJuego2.imagen = unJuego1.imagen;
+            unJuego3.imagen = unJuego1.imagen;
+            unJuego4.imagen = unJuego1.imagen;
+
+
+            Task<Juego[]> taskJuegosIndex = Task<Juego[]>.Factory.StartNew
+            (() =>
+                {
+                    Juego[] arrayJuegosDestacados = { unJuego1, unJuego2, unJuego3, unJuego4 };
+                    return arrayJuegosDestacados;
+                }
+            );
+
+            return await taskJuegosIndex;
+        }
+
     }
-
-
 }
