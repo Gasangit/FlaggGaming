@@ -13,6 +13,7 @@ namespace FlaggGaming.Services.APISteam
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly HttpClient _httpClient;
 
+        public JuegosListaTotalService() { }
         public JuegosListaTotalService(IHttpClientFactory httpClientFactory)
         {
              _httpClientFactory = httpClientFactory;

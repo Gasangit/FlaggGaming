@@ -1,10 +1,10 @@
-﻿@    using FlaggGaming.Model
+﻿@using FlaggGaming.Model
 
 <div class="row">
     <div class="col-12">
         <h2>OFERTAS</h2>
     </div>
-    <div class="col scroll-div">
+    @*<div class="col scroll-div">
         @if (listaOfertas != null)
         {
             @foreach (Juego oferta in listaOfertas)
@@ -24,12 +24,12 @@
                 </div>
             }
         }
-    </div>
+    </div>*@
 </div>
 
 @code {
     [Parameter] public int? idTienda { get; set; }
-    public List<Juego> listaOfertas = new List<Juego>();
+    /*public List<Juego> listaOfertas = new List<Juego>();
 
     private Juego AlanWake = new Juego("Alan Wake 2", "Un juego de terror", "/imagenes/AlanWake2.jpg");
     private Juego Cs2 = new Juego("Counter Strike 2", "El pricipal shooter competitivo", "/imagenes/cs2.jpg");
@@ -47,5 +47,5 @@
         listaOfertas.Add(AlanWake);
         listaOfertas.Add(Cs2);
         listaOfertas.Add(TheFinals);
-    }
+    }*/
 }

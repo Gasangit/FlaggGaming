@@ -7,7 +7,7 @@
         public double Price { get; set; }
         public string urlImagen {  get; set; }
         public string href { get; set; }
-        public TipoHardware tipoHardware { get; set; }
+        //public TipoHardware tipoHardware { get; set; }
 
         public Hardware() { }
         public Hardware(string nombre, string url) 

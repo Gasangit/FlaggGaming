@@ -4,12 +4,14 @@ using FlaggGaming.Model.apiSteamListaJuegosTotal;
 
 namespace FlaggGaming.Services.CargaBaseDeDatos
 {
-    public class CargarListaSteamEnBaseDeDatos
+    public class CargaListaSteamEnBaseDeDatos
     {
         private readonly DatosContext _context;
         private readonly JuegosListaTotalService _listaTotal;
 
-        public CargarListaSteamEnBaseDeDatos(DatosContext context, JuegosListaTotalService listaTotal)
+        public CargaListaSteamEnBaseDeDatos() { }
+
+        public CargaListaSteamEnBaseDeDatos(DatosContext context, JuegosListaTotalService listaTotal)
         { 
             this._context = context;
             this._listaTotal = listaTotal;
@@ -17,9 +19,10 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
 
         //ver como hacer funcionar este método en la clase Program para que se ejecute periodicamente.La primera
         //idea es pasarlo estatico para ver si se puede llamar desde Program
-        public static void insertListaSteamEnBD()
+        public void insertListaSteamEnBD()
         {
-            List<ItemListaJuegoSteam> lista = JuegosListaTotalService.getListaJuegosSteam().Result.applist.apps;
+            var _listaTotal = new JuegosListaTotalService();
+            List<ItemListaJuegoSteam> lista = _listaTotal.getListaJuegosSteam().Result.applist.apps;
 
             if (lista != null)
             {

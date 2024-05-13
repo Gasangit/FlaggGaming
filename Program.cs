@@ -13,6 +13,8 @@ using FlaggGaming.Services.EpicGameStoreNet;
 using FlaggGaming.Services.APIEpic;
 using FlaggGaming.Services.CargaBaseDeDatos;
 using Microsoft.IdentityModel.Tokens;
+using FluentScheduler;
+using System.Runtime.Serialization.DataContracts;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +33,7 @@ builder.Services.AddSingleton<JuegoSteamService>();
 builder.Services.AddSingleton<ScrapWebEpicService>();
 builder.Services.AddSingleton<EpicGameStoreNetService>();
 builder.Services.AddSingleton<JuegosEpicListaParcialService>();
-builder.Services.AddSingleton<CargarListaSteamEnBaseDeDatos>();
+builder.Services.AddScoped<CargaListaSteamEnBaseDeDatos>();
 builder.Services.AddHttpClient("scrapWebEpic");
 //builder.Services.AddScoped<IJSRuntime>();
 
@@ -45,6 +47,17 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+JobManager.Initialize();
+
+JobManager.AddJob(
+    () =>
+    {
+        CargaListaSteamEnBaseDeDatos carga = new CargaListaSteamEnBaseDeDatos();
+        carga.insertListaSteamEnBD();
+        Console.WriteLine("Ingreso de datos");
+    },
+    s => s.ToRunEvery(30).Seconds()
+);
 
 app.UseHttpsRedirection();
 

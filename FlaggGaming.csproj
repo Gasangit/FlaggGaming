@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <PackageReference Include="EpicGamesStoreNET" Version="1.0.2" />
+    <PackageReference Include="FluentScheduler" Version="5.5.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.60" />
     <PackageReference Include="Microsoft.AspNet.WebHelpers" Version="3.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.17" />

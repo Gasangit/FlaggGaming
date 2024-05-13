@@ -1,5 +1,5 @@
-@    using FlaggGaming.Model
-@    using FlaggGaming.Services
+@using FlaggGaming.Model
+@using FlaggGaming.Services
 @inject FlaggGaming.Services.juegosIndexService destacadosService
 
 @if(arrayDestacados[0] != null)
@@ -24,9 +24,9 @@
 {
         Juego[] arrayDestacados = new Juego[4];
 
-        protected override async Task<Juego[]> OnInitializedAsync()
+        /*protected override async Task<Juego[]> OnInitializedAsync()
         {
            return arrayDestacados = await destacadosService.obtenerJuegosDestacados();
-        }
+        }*/
         
 }
