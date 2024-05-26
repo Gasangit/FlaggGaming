@@ -19,9 +19,8 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
 
         //ver como hacer funcionar este método en la clase Program para que se ejecute periodicamente.La primera
         //idea es pasarlo estatico para ver si se puede llamar desde Program
-        public void insertListaSteamEnBD()
-        {
-            var _listaTotal = new JuegosListaTotalService();
+        public async void insertListaSteamEnBD()
+        {            
             List<ItemListaJuegoSteam> lista = _listaTotal.getListaJuegosSteam().Result.applist.apps;
 
             if (lista != null)

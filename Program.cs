@@ -27,12 +27,12 @@ builder.Services.AddDbContext<DatosContext>(options =>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<juegosIndexService>();
-builder.Services.AddSingleton<JuegosListaTotalService>();
-builder.Services.AddSingleton<JuegoSteamService>();
-builder.Services.AddSingleton<ScrapWebEpicService>();
-builder.Services.AddSingleton<EpicGameStoreNetService>();
-builder.Services.AddSingleton<JuegosEpicListaParcialService>();
+builder.Services.AddScoped<juegosIndexService>();
+builder.Services.AddScoped<JuegosListaTotalService>();
+builder.Services.AddScoped<JuegoSteamService>();
+builder.Services.AddScoped<ScrapWebEpicService>();
+builder.Services.AddScoped<EpicGameStoreNetService>();
+builder.Services.AddScoped<JuegosEpicListaParcialService>();
 builder.Services.AddScoped<CargaListaSteamEnBaseDeDatos>();
 builder.Services.AddHttpClient("scrapWebEpic");
 //builder.Services.AddScoped<IJSRuntime>();
@@ -47,18 +47,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-JobManager.Initialize();
-
-JobManager.AddJob(
-    () =>
-    {
-        CargaListaSteamEnBaseDeDatos carga = new CargaListaSteamEnBaseDeDatos();
-        carga.insertListaSteamEnBD();
-        Console.WriteLine("Ingreso de datos");
-    },
-    s => s.ToRunEvery(30).Seconds()
-);
-
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -67,5 +55,17 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
+
+/*JobManager.Initialize();
+
+JobManager.AddJob(
+    () =>
+    {
+        CargaListaSteamEnBaseDeDatos carga = new CargaListaSteamEnBaseDeDatos();
+        carga.insertListaSteamEnBD();
+        Console.WriteLine("Ingreso de datos");
+    },
+    s => s.ToRunEvery(5).Seconds()
+);*/
 
 app.Run();

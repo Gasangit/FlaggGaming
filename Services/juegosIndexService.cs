@@ -1,4 +1,4 @@
-using FlaggGaming.Model.Juegos;
+using FlaggGaming.Model;
 
 namespace FlaggGaming.Services
 {
@@ -23,7 +23,6 @@ namespace FlaggGaming.Services
             unJuego2.imagen = unJuego1.imagen;
             unJuego3.imagen = unJuego1.imagen;
             unJuego4.imagen = unJuego1.imagen;
-
 
             Task<Juego[]> taskJuegosIndex = Task<Juego[]>.Factory.StartNew
             (() =>
