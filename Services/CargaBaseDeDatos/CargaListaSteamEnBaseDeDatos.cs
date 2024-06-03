@@ -1,4 +1,4 @@
-﻿using FlaggGaming.Services.APISteam;
+﻿using FlaggGaming.Services.ServiciosAPISteam;
 using FlaggGaming.Entity;
 using FlaggGaming.Model.apiSteamListaJuegosTotal;
 using static System.Formats.Asn1.AsnWriter;
@@ -23,8 +23,6 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
         public async Task insertListaSteamEnBD(object? state)
         {            
             List<ItemListaJuegoSteam> lista = _listaTotal.getListaJuegosSteam().Result.applist.apps;
-            List<ItemListaJuegoSteam> listaUpdate = new List<ItemListaJuegoSteam>();
-            List<ItemListaJuegoSteam> listaInsert = new List<ItemListaJuegoSteam>();
             List<ItemListaJuegoSteam> listaContexto = _context.listaJuegos.AsNoTracking().ToList();
 
             if (lista != null)

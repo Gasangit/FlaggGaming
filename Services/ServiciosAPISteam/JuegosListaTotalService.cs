@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
-namespace FlaggGaming.Services.APISteam
+namespace FlaggGaming.Services.ServiciosAPISteam
 {
 
     public class JuegosListaTotalService

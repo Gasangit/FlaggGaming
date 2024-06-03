@@ -1,8 +1,7 @@
 using FlaggGaming.Model.apiSteamJuego;
-using FlaggGaming.Model.juegoFlagg;
 using System.ComponentModel;
 
-namespace FlaggGaming.Model.Juegos
+namespace FlaggGaming.Model.juegoFlagg
 {
     public class Juego
     {

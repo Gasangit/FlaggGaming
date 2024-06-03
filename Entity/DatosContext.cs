@@ -1,5 +1,6 @@
 ﻿using FlaggGaming.Model.apiSteamJuego;
 using FlaggGaming.Model.apiSteamListaJuegosTotal;
+using FlaggGaming.Model.juegoFlagg;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlaggGaming.Entity
@@ -28,6 +29,10 @@ namespace FlaggGaming.Entity
                 .ToTable("ItemListaJuegoSteam")
                 .HasKey(juego => juego.appid);
 
+            modelBuilder.Entity<Juego>()
+                .ToTable('juegos')
+                .HasKey(juego => juego.idFlagg);
+
             modelBuilder.Entity<ItemListaJuegoSteam>(
                     juego =>
                     {
@@ -35,6 +40,24 @@ namespace FlaggGaming.Entity
                     }                
                 );
 
+            modelBuilder.Entity<Juego>(
+                    juego =>
+                    {
+                        juego.Property(j => j.idFlagg).HasColumnType("uniqueidentifier");
+                        juego.Property(j => j.idJuegoTienda).HasColumnType("varchar(max)");
+                        juego.Property(j => j.nombre).HasColumnType("varchar(max)");
+                        juego.Property(j => j.descripcionCorta).HasColumnType("varchar(max)");
+                        juego.Property(j => j.tienda).HasColumnType("varchar(max)");
+                        juego.Property(j => j.imagen).HasColumnType("varchar(max)");
+                        juego.Property(j => j.imagenMini).HasColumnType("varchar(max)");
+                        juego.Property(j => j.urlTienda).HasColumnType("varchar(max)");
+                        juego.Property(j => j.precio).HasColumnType("varchar(max)");
+                        juego.Property(j => j.contadorVistas).HasColumnType("varchar(max)");
+                        juego.Property(j => j.idOferta).HasColumnType("varchar(max)");
+                        juego.Property(j => j.estudio).HasColumnType("varchar(max)");
+                        juego.Property(j => j.requisitos).HasColumnType("varchar(max)");
+                    }
+                );
 
         }
     }

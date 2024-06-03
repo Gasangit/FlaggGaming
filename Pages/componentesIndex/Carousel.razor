@@ -2,8 +2,8 @@
 
 @inject IJSRuntime Javascript;
 
-<div class="row mx-2 mb-5 border border-dark">
-    <div class="col border border-dark rounded-3">
+<div class="row mx-2 mb-5">
+    <div class="col">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner active">
                 <div class="carousel-item">
@@ -29,18 +29,18 @@
 </div>
 
 @functions {
-    
+
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-      
-      if (firstRender) 
-      {
-        await Javascript.InvokeAsync<object>("initializeCarousel");
-        firstRender=false;
-      }
+
+        if (firstRender)
+        {
+            await Javascript.InvokeAsync<object>("initializeCarousel");
+            firstRender = false;
+        }
     }
 }
-  
+
 <script>
     window.initializeCarousel = () => {
         $('#myCarousel').carousel({ interval: 2000 });

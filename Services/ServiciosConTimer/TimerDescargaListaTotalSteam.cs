@@ -1,5 +1,4 @@
-﻿
-using FlaggGaming.Entity;
+﻿using FlaggGaming.Entity;
 using FlaggGaming.Services.CargaBaseDeDatos;
 using static System.Formats.Asn1.AsnWriter;
 
@@ -18,7 +17,7 @@ namespace FlaggGaming.Services.ServiciosConTimer
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             DoWork(stoppingToken);
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromDays(1));
             return Task.CompletedTask;
         }
 

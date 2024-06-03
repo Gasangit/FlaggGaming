@@ -1,13 +1,13 @@
 ﻿<div class="row">
-    <div class="col border border-dark">
-        <label class="border border-dark">@etiqueta</label>
+    <div class="col-4 align-content-center">
+        <label class="container fs-6">@etiqueta</label>
     </div>
-    <div class="col border border-dark">
-        <p class="mb-0 border border-dark">@info</p>
+    <div class="col-8 fs-6">
+        <p class="mb-0">@info</p>
     </div>
 </div>
 
-@code 
+@code
 {
     [Parameter] public string etiqueta { get; set; }
     [Parameter] public string info { get; set; }

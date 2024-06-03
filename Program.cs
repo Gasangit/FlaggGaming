@@ -1,5 +1,5 @@
 using FlaggGaming.Services;
-using FlaggGaming.Services.APISteam;
+using FlaggGaming.Services.ServiciosAPISteam;
 using FlaggGaming.Entity;
 //using Microsoft.AspNetCore.Components;
 //using Microsoft.AspNetCore.Components.Web;
@@ -36,6 +36,7 @@ builder.Services.AddScoped<ScrapWebEpicService>();
 builder.Services.AddScoped<EpicGameStoreNetService>();
 builder.Services.AddScoped<JuegosEpicListaParcialService>();
 builder.Services.AddScoped<CargaListaSteamEnBaseDeDatos>();
+builder.Services.AddScoped<CargaInfoJuegoSteamEnBAseDeDatos>();
 //builder.Services.AddTransient<BackgroundService, CargaListaSteamEnBaseDeDatos>();
 builder.Services.AddHttpClient("scrapWebEpic");
 //builder.Services.AddScoped<IJSRuntime>();

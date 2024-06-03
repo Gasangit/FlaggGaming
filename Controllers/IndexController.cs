@@ -1,5 +1,5 @@
 ﻿using System;
-using FlaggGaming.Services.APISteam;
+using FlaggGaming.Services.ServiciosAPISteam;
 using Microsoft.AspNetCore.Mvc;
 
 public class IndexController: Controller

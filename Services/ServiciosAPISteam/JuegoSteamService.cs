@@ -8,7 +8,7 @@ using System.Net.Http.Headers;
 using System.Reflection;
 using System.Reflection.PortableExecutable;
 
-namespace FlaggGaming.Services.APISteam
+namespace FlaggGaming.Services.ServiciosAPISteam
 {
     public class JuegoSteamService
     {
