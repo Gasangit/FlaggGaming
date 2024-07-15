@@ -31,8 +31,6 @@ namespace FlaggGaming.Entity
                 .HasKey(juego => juego.appid);
 
             modelBuilder.Entity<FechaLanzamiento>()
-                .HasMany(fecha => fecha.idFlagg)
-                .WithOne()
                 .ToTable("release_date")
                 .HasKey(fecha => fecha.idFecha);
 
@@ -83,7 +81,7 @@ namespace FlaggGaming.Entity
                 oferta =>
                 {
                     oferta.Property(o => o.idOferta).HasColumnType("uniqueidentifier");
-                    oferta.Property(o => o.idFlagg).HasColumnType("uniqueidentifier");
+                    /*oferta.Property(o => o.idFlagg).HasColumnType("uniqueidentifier");*/
                     oferta.Property(o => o.discount_percent).HasColumnType("int");
                 }
                 );
