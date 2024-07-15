@@ -1,4 +1,6 @@
-﻿namespace FlaggGaming.Model.apiSteamJuego
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FlaggGaming.Model.apiSteamJuego
 {
     public class ReleaseDate
     {

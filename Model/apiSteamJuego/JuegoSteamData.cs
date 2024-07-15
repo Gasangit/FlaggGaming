@@ -18,15 +18,19 @@ namespace FlaggGaming.Model.apiSteamJuego
         public string? capsule_image { get; set; }
         public string? capsule_imagev5 { get; set; }
         public string? website { get; set; }
+        
         [JsonProperty("pc_requirements")]
         [JsonConverter(typeof(SingleOrArrayConverter<PcRequirements>))]
         public List<PcRequirements>? pc_requirements { get; set; }
+
         [JsonProperty("mac_requirements")]
         [JsonConverter(typeof(SingleOrArrayConverter<MacRequirements>))]
         public List<MacRequirements>? mac_requirements { get; set; }
+        
         [JsonProperty("linux_requirements")]
         [JsonConverter(typeof(SingleOrArrayConverter<LinuxRequirements>))]
         public List<LinuxRequirements>? linux_requirements { get; set; }
+        
         public string[]? developers { get; set; }
         public string[]? publishers { get; set; }
         public int[]? packages { get; set; }

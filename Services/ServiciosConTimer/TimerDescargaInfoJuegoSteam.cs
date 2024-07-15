@@ -4,20 +4,20 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace FlaggGaming.Services.ServiciosConTimer
 {
-    public class TimerDescargaListaTotalSteam : BackgroundService
+    public class TimerDescargaInfoJuegoSteam : BackgroundService
     {
         private Timer? _timer;
         private readonly IServiceProvider _serviceProvider;
 
-        public TimerDescargaListaTotalSteam(IServiceProvider serviceProvider)
+        public TimerDescargaInfoJuegoSteam(IServiceProvider serviceProvider)
         {
-            _serviceProvider = serviceProvider; 
+            _serviceProvider = serviceProvider;
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             DoWork(stoppingToken);
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(20));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
             return Task.CompletedTask;
         }
 
@@ -33,8 +33,8 @@ namespace FlaggGaming.Services.ServiciosConTimer
         private async void DoWork(object? state)
         {
             using var scope = _serviceProvider.CreateScope();
-            var scopedProcessingService = scope.ServiceProvider.GetRequiredService<CargaListaSteamEnBaseDeDatos>();
-            await scopedProcessingService.insertListaSteamEnBD(state);
+            var scopedProcessingService = scope.ServiceProvider.GetRequiredService<CargaInfoJuegoSteamEnBAseDeDatos>();
+            await scopedProcessingService.insertJuegosSteamEnBD(state);
         }
     }
 }

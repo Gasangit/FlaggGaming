@@ -8,6 +8,7 @@ namespace FlaggGaming.Entity
     public class DatosContext: DbContext
     {
         public DbSet<ItemListaJuegoSteam> listaJuegos { get; set; }
+        public DbSet<JuegoFlagg> listaJuegosData { get; set; }
 
         public DatosContext() { } //Constructor vacio
         public DatosContext(DbContextOptions<DatosContext> optionsBuilder) : base(optionsBuilder) 
@@ -29,9 +30,19 @@ namespace FlaggGaming.Entity
                 .ToTable("ItemListaJuegoSteam")
                 .HasKey(juego => juego.appid);
 
-            modelBuilder.Entity<Juego>()
-                .ToTable('juegos')
+            modelBuilder.Entity<FechaLanzamiento>()
+                .HasMany(fecha => fecha.idFlagg)
+                .WithOne()
+                .ToTable("release_date")
+                .HasKey(fecha => fecha.idFecha);
+
+            modelBuilder.Entity<JuegoFlagg>()
+                .ToTable("juegos")
                 .HasKey(juego => juego.idFlagg);
+
+            modelBuilder.Entity<Oferta>()
+                .ToTable("ofertas")
+                .HasKey(oferta => oferta.idOferta);
 
             modelBuilder.Entity<ItemListaJuegoSteam>(
                     juego =>
@@ -40,7 +51,7 @@ namespace FlaggGaming.Entity
                     }                
                 );
 
-            modelBuilder.Entity<Juego>(
+            modelBuilder.Entity<JuegoFlagg>(
                     juego =>
                     {
                         juego.Property(j => j.idFlagg).HasColumnType("uniqueidentifier");
@@ -59,6 +70,23 @@ namespace FlaggGaming.Entity
                     }
                 );
 
+            modelBuilder.Entity<FechaLanzamiento>(
+                   fecha =>
+                   {
+                       fecha.Property(j => j.idFecha).HasColumnType("uniqueidentifier");
+                       fecha.Property(j => j.proximamente).HasColumnType("BIT");
+                       fecha.Property(j => j.fecha).HasColumnType("varchar(max)");
+                   }
+               );
+
+            modelBuilder.Entity<Oferta>(
+                oferta =>
+                {
+                    oferta.Property(o => o.idOferta).HasColumnType("uniqueidentifier");
+                    oferta.Property(o => o.idFlagg).HasColumnType("uniqueidentifier");
+                    oferta.Property(o => o.discount_percent).HasColumnType("int");
+                }
+                );
         }
     }
 }
