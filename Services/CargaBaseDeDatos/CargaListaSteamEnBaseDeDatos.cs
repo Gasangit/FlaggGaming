@@ -31,6 +31,7 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                 int count = 0;
                 foreach (ItemListaJuegoSteam juegoDeTienda in lista)
                 {
+                    juegoDeTienda.created_at = DateTime.Now;
                     actualizar = false;
                     count++;
                     foreach (ItemListaJuegoSteam unJuegoBd in listaContexto)

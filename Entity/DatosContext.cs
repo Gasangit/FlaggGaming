@@ -27,7 +27,7 @@ namespace FlaggGaming.Entity
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ItemListaJuegoSteam>()
-                .ToTable("ItemListaJuegoSteam")
+                .ToTable("EpicList")
                 .HasKey(juego => juego.appid);
 
             modelBuilder.Entity<FechaLanzamiento>()
@@ -46,6 +46,7 @@ namespace FlaggGaming.Entity
                     juego =>
                     {
                         juego.Property(j => j.name).HasColumnType("varchar(500)");
+                        juego.Property(j => j.created_at).HasColumnType("datetime");
                     }                
                 );
 
