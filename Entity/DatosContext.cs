@@ -27,7 +27,7 @@ namespace FlaggGaming.Entity
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<ItemListaJuegoSteam>()
-                .ToTable("EpicList")
+                .ToTable("SteamList")
                 .HasKey(juego => juego.appid);
 
             modelBuilder.Entity<FechaLanzamiento>()

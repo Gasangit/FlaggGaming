@@ -45,9 +45,9 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                     if(actualizar) _context.listaJuegos.Update(juegoDeTienda);
                     else _context.listaJuegos.Add(juegoDeTienda);
 
-                    _context.SaveChanges();
-
                     if (count > 9) break;
+
+                    _context.SaveChanges();
                 }
             }
         }
