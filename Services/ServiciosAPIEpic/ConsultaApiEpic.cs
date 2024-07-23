@@ -4,7 +4,7 @@ using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 
-namespace FlaggGaming.Services.APIEpic
+namespace FlaggGaming.Services.ServiciosAPIEpic
 {
     public class ConsultaApiEpic
     {    

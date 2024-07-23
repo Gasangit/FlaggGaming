@@ -3,8 +3,9 @@
 
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary mt-3 mx-3 rounded-3 border border-dark">
-  <div class="container">
-    <a class="navbar-brand" href="#">FLAGG GAMING</a>
+  <div class="container navbar-custom">
+    <a class="navbar-brand" href="#"><img class="logo_nav" src="/imagenes/logoflagg90x90p.png" alt="Nueva Imagen"></a>
+    <div class="navbar-divider"></div>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -14,20 +15,23 @@
           <a class="nav-link dropdown-toggle" @href="/ofertasJuegos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Juegos
           </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">OFERTAS</a></li>
-            <li><a class="dropdown-item" href="#">NOVEDADES</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">PRECIO FUTURO</a></li>
-          </ul>
+           <div class="dropdown-content">  
+                        <!-- Agrega más elementos de menú aquí -->
+                       <a href="/Producto">Producto</a>
+                        <a href="/Registro">Registro</a>
+                        <a href="/Login">Login</a>
+          </div>
         </li>
       </ul>
     </div>
+        <div class="d-flex justify-content-end">
+            <a class="bi bi-star-fill" href="/Login"><img clases="logo_usuario" src="/imagenes/logousuario.png" alt="Logo usuario"></a>
+        </div>
   </div>
 </nav>
 
 
-@functions
+@functions  
 {
     @functions {
 

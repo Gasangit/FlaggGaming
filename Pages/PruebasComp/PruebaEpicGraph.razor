@@ -1,16 +1,16 @@
 ﻿@page "/listaGraph"
 @using FlaggGaming.Model.apiEpic
-@inject FlaggGaming.Services.APIEpic.JuegosEpicListaParcialService serviceListaEpic
+@inject FlaggGaming.Services.ServiciosAPIEpic.JuegosEpicListaParcialService serviceListaEpic
 
 <h3>PruebaEpicGraph</h3>
 <ul>
     @if (listaJuegos != null)
     {
-        @foreach (Element juego in listaJuegos)
+        @*@foreach (Element juego in listaJuegos)
         {
 
             <li>@($"{juego.title} {juego.price.totalPrice.fmtPrice.discountPrice}")</li>
-        }
+        }*@
     }
 </ul>
 
@@ -19,6 +19,6 @@
 
     protected async override Task OnInitializedAsync()
     {
-        listaJuegos = await serviceListaEpic.getListaJuegosEpic();
+        //listaJuegos = await serviceListaEpic.getListaJuegosEpic();
     }
 }

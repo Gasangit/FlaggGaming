@@ -1,27 +1,27 @@
-﻿using FlaggGaming.Services.ServiciosAPISteam;
+﻿using FlaggGaming.Services.ServiciosAPIEpic;
 using FlaggGaming.Entity;
-using FlaggGaming.Model.apiSteamListaJuegosTotal;
+using FlaggGaming.Model.apiEpic;
 using static System.Formats.Asn1.AsnWriter;
 using Microsoft.EntityFrameworkCore;
 
 namespace FlaggGaming.Services.CargaBaseDeDatos
 {
-    public class CargaListaSteamEnBaseDeDatos
+    public class CargaListaEpicEnBaseDeDatos
     {
         private readonly DatosContext _context;
-        private readonly JuegosListaTotalService _listaTotal;
+        private readonly JuegosEpicListaParcialService _listaTotalEpic;
         private readonly IServiceProvider _serviceProvider;
-        public CargaListaSteamEnBaseDeDatos() { }
-        public CargaListaSteamEnBaseDeDatos(DatosContext context, JuegosListaTotalService listaTotal)
-        { 
+        public CargaListaEpicEnBaseDeDatos() { }
+        public CargaListaEpicEnBaseDeDatos(DatosContext context, JuegosEpicListaParcialService listaTotal)
+        {
             this._context = context;
-            this._listaTotal = listaTotal;
+            this._listaTotalEpic = listaTotal;
         }
-        
-        public async Task insertListaSteamEnBD(object? state)
-        {            
-            List<ItemListaJuegoSteam> lista = _listaTotal.getListaJuegosSteam().Result.applist.apps;
-            List<ItemListaJuegoSteam> listaContexto = _context.listaJuegos.AsNoTracking().ToList();
+
+       /* public async Task insertListaEpicEnBD(object? state)
+        {
+            List<Element> lista = _listaTotalEpic.getListaJuegosEpic().Result.applist.apps;
+            List<Element> listaContexto = _context.listaJuegos.AsNoTracking().ToList();
 
             if (lista != null)
             {
@@ -39,8 +39,8 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                             actualizar = true;
                         }
                     }
-                    
-                    if(actualizar) _context.listaJuegos.Update(juegoDeTienda);
+
+                    if (actualizar) _context.listaJuegos.Update(juegoDeTienda);
                     else _context.listaJuegos.Add(juegoDeTienda);
 
                     if (count > 9) break;
@@ -48,6 +48,6 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                     _context.SaveChanges();
                 }
             }
-        }
+        }*/
     }
 }

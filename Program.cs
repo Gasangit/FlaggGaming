@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 //using Microsoft.IdentityModel.Tokens;
 using FlaggGaming.Services.ScrapEpic;
 using FlaggGaming.Services.EpicGameStoreNet;
-using FlaggGaming.Services.APIEpic;
+using FlaggGaming.Services.ServiciosAPIEpic;
 using FlaggGaming.Services.CargaBaseDeDatos;
 using Microsoft.IdentityModel.Tokens;
 using FluentScheduler;
@@ -28,12 +28,14 @@ builder.Services.AddDbContext<DatosContext>(options =>
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddHostedService<TimerDescargaListaTotalSteam>();
+//builder.Services.AddHostedService<TimerDescargaListaTotalSteam>();
+builder.Services.AddHostedService<TimerDescargaListaTotalEpic>();
 builder.Services.AddScoped<juegosIndexService>();
 builder.Services.AddScoped<JuegosListaTotalService>();
 builder.Services.AddScoped<JuegoSteamService>();
 builder.Services.AddScoped<ScrapWebEpicService>();
 builder.Services.AddScoped<EpicGameStoreNetService>();
+builder.Services.AddScoped<JuegosEpicListaParcialService>();
 builder.Services.AddScoped<JuegosEpicListaParcialService>();
 builder.Services.AddScoped<CargaListaSteamEnBaseDeDatos>();
 builder.Services.AddScoped<CargaInfoJuegoSteamEnBAseDeDatos>();
@@ -71,5 +73,8 @@ JobManager.AddJob(
     },
     s => s.ToRunEvery(5).Seconds()
 );*/
+
+/*JuegosEpicListaParcialService claseLista = new JuegosEpicListaParcialService();
+await claseLista.getListaJuegosEpic();*/
 
 app.Run();
