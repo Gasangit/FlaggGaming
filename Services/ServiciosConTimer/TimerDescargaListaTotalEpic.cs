@@ -1,13 +1,13 @@
 ﻿using FlaggGaming.Entity;
 using FlaggGaming.Services.CargaBaseDeDatos;
-using FlaggGaming.Services.ServiciosAPIEpic;
+using FlaggGaming.Services.CargaBaseDeDatos;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace FlaggGaming.Services.ServiciosConTimer
 {
-    public class TimerDescargaListaTotalEpic : BackgroundService
+    public class TimerDescargaListaTotalEpic //: BackgroundService
     {
-        private Timer? _timer;
+        /*private Timer? _timer;
         private readonly IServiceProvider _serviceProvider;
 
         public TimerDescargaListaTotalEpic(IServiceProvider serviceProvider)
@@ -34,9 +34,9 @@ namespace FlaggGaming.Services.ServiciosConTimer
         private async void DoWork(object? state)
         {
             using var scope = _serviceProvider.CreateScope();
-            var scopedProcessingService = scope.ServiceProvider.GetRequiredService<JuegosEpicListaParcialService>();
-            await scopedProcessingService.getListaJuegosEpic(state);
-        }
+            var scopedProcessingService = scope.ServiceProvider.GetRequiredService<CargaInfoJuegoEpicEnBAseDeDatos>();
+            await scopedProcessingService.insertJuegosEpicEnBD(state);
+        }*/
     }
 }
 

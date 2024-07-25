@@ -34,7 +34,7 @@ nav.navbar-custom {
 
 /* Estilos para el botón del menú */
 .container {
-    display: inline-block;
+    /*display: inline-block;*/
     padding-left: 0;
     padding-right: 0;
     width: 100%;

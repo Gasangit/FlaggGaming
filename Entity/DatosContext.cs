@@ -1,5 +1,6 @@
 ﻿using FlaggGaming.Model.apiSteamJuego;
 using FlaggGaming.Model.apiSteamListaJuegosTotal;
+using FlaggGaming.Model.apiEpic.apiEpicListaJuegosTotal;
 using FlaggGaming.Model.juegoFlagg;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +31,10 @@ namespace FlaggGaming.Entity
                 .ToTable("SteamList")
                 .HasKey(juego => juego.appid);
 
+            modelBuilder.Entity<ItemListaJuegoEpic>()
+                .ToTable("EpicList")
+                .HasKey(juego => juego.appid);
+
             modelBuilder.Entity<FechaLanzamiento>()
                 .ToTable("release_date")
                 .HasKey(fecha => fecha.idFecha);
@@ -48,6 +53,14 @@ namespace FlaggGaming.Entity
                         juego.Property(j => j.name).HasColumnType("varchar(500)");
                         juego.Property(j => j.created_at).HasColumnType("datetime");
                     }                
+                );
+
+            modelBuilder.Entity<ItemListaJuegoEpic>(
+                    juego =>
+                    {
+                        juego.Property(j => j.name).HasColumnType("varchar(500)");
+                        juego.Property(j => j.created_at).HasColumnType("datetime");
+                    }
                 );
 
             modelBuilder.Entity<JuegoFlagg>(

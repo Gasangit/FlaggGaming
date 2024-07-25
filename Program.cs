@@ -29,7 +29,7 @@ builder.Services.AddDbContext<DatosContext>(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 //builder.Services.AddHostedService<TimerDescargaListaTotalSteam>();
-builder.Services.AddHostedService<TimerDescargaListaTotalEpic>();
+//builder.Services.AddHostedService<TimerDescargaListaTotalEpic>();
 builder.Services.AddScoped<juegosIndexService>();
 builder.Services.AddScoped<JuegosListaTotalService>();
 builder.Services.AddScoped<JuegoSteamService>();
