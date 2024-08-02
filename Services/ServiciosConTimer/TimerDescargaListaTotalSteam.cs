@@ -17,7 +17,7 @@ namespace FlaggGaming.Services.ServiciosConTimer
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             DoWork(stoppingToken);
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(60));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(30));
             return Task.CompletedTask;
         }
 
@@ -32,6 +32,7 @@ namespace FlaggGaming.Services.ServiciosConTimer
 
         private async void DoWork(object? state)
         {
+            Console.WriteLine("COMIENZO INGRESO DE JUEGOS STEAM: " + DateTime.Now);
             using var scope = _serviceProvider.CreateScope();
             var scopedProcessingService = scope.ServiceProvider.GetRequiredService<CargaListaSteamEnBaseDeDatos>();
             await scopedProcessingService.insertListaSteamEnBD(state);

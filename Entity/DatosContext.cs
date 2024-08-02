@@ -35,17 +35,17 @@ namespace FlaggGaming.Entity
                 .ToTable("EpicList")
                 .HasKey(juego => juego.appid);
 
-            modelBuilder.Entity<FechaLanzamiento>()
+            /*modelBuilder.Entity<FechaLanzamiento>()
                 .ToTable("release_date")
-                .HasKey(fecha => fecha.idFecha);
+                .HasKey(fecha => fecha.idFecha);*/
 
             modelBuilder.Entity<JuegoFlagg>()
                 .ToTable("juegos")
                 .HasKey(juego => juego.idFlagg);
 
-            modelBuilder.Entity<Oferta>()
+            /*modelBuilder.Entity<Oferta>()
                 .ToTable("ofertas")
-                .HasKey(oferta => oferta.idOferta);
+                .HasKey(oferta => oferta.idOferta);*/
 
             modelBuilder.Entity<ItemListaJuegoSteam>(
                     juego =>
@@ -67,22 +67,22 @@ namespace FlaggGaming.Entity
                     juego =>
                     {
                         juego.Property(j => j.idFlagg).HasColumnType("uniqueidentifier");
-                        juego.Property(j => j.idJuegoTienda).HasColumnType("varchar(max)");
+                        juego.Property(j => j.idJuegoTienda).HasColumnType("int");
                         juego.Property(j => j.nombre).HasColumnType("varchar(max)");
                         juego.Property(j => j.descripcionCorta).HasColumnType("varchar(max)");
                         juego.Property(j => j.tienda).HasColumnType("varchar(max)");
                         juego.Property(j => j.imagen).HasColumnType("varchar(max)");
                         juego.Property(j => j.imagenMini).HasColumnType("varchar(max)");
                         juego.Property(j => j.urlTienda).HasColumnType("varchar(max)");
-                        juego.Property(j => j.precio).HasColumnType("varchar(max)");
-                        juego.Property(j => j.contadorVistas).HasColumnType("varchar(max)");
-                        juego.Property(j => j.idOferta).HasColumnType("varchar(max)");
+                        //juego.Property(j => j.precio).HasColumnType("varchar(max)");
+                        juego.Property(j => j.contadorVistas).HasColumnType("int");
+                        //juego.Property(j => j.idOferta).HasColumnType("varchar(max)");
                         juego.Property(j => j.estudio).HasColumnType("varchar(max)");
                         juego.Property(j => j.requisitos).HasColumnType("varchar(max)");
                     }
                 );
 
-            modelBuilder.Entity<FechaLanzamiento>(
+            /*modelBuilder.Entity<FechaLanzamiento>(
                    fecha =>
                    {
                        fecha.Property(j => j.idFecha).HasColumnType("uniqueidentifier");
@@ -95,10 +95,10 @@ namespace FlaggGaming.Entity
                 oferta =>
                 {
                     oferta.Property(o => o.idOferta).HasColumnType("uniqueidentifier");
-                    /*oferta.Property(o => o.idFlagg).HasColumnType("uniqueidentifier");*/
+                    oferta.Property(o => o.idFlagg).HasColumnType("uniqueidentifier");
                     oferta.Property(o => o.discount_percent).HasColumnType("int");
                 }
-                );
+                );*/
         }
     }
 }

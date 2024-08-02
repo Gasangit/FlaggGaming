@@ -3,9 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FlaggGaming.Model.juegoFlagg;
 public class Oferta{
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [Key]
-    public Guid idOferta { get; set; }
+    //public Guid idOferta { get; set; }
 
    /* [ForeignKey("idFlagg")]
     public Guid idFlagg { get; set; } */

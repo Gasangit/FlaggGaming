@@ -18,7 +18,7 @@ public class JuegosEpicListaParcialService
 	public JuegosEpicListaParcialService() { }
 
     //sobrecarga del método que recibe object para poder ser usado en servicio con timer
-	public async Task<List<JuegoFlagg>> getListaJuegosEpic(object? state)
+	public async Task<List<JuegoFlagg>> getListaJuegosEpic()
 	{
 		Console.WriteLine("<< getListaJuegosEpic >>");
 		List<JuegoFlagg> flaggGamesList = new List<JuegoFlagg>();
@@ -46,10 +46,10 @@ public class JuegosEpicListaParcialService
                     flaggGame.nombre = juego.title;
                     flaggGame.descripcionCorta = juego.description;
                     flaggGame.tienda = "Epic";
-                    flaggGame.precio = Decimal.Parse(juego.price.totalPrice.fmtPrice.discountPrice);
+                    //flaggGame.precio = Decimal.Parse(juego.price.totalPrice.fmtPrice.discountPrice);
                     flaggGame.estudio = juego.seller.name;
 
-                    if (juego.keyImages != null)
+                    if (juego.keyImages != null && juego.keyImages.Count > 0)
                     {
                         foreach (KeyImage image in juego.keyImages)
                         {
@@ -75,7 +75,7 @@ public class JuegosEpicListaParcialService
 	}
 
 
-    public async Task<List<Element>> getListaJuegosEpic()
+    public async Task<List<Element>> getListaJuegosEpicPrueba()
     {
         Console.WriteLine("<< getListaJuegosEpic >>");
         List<Element> elements = new List<Element>();
