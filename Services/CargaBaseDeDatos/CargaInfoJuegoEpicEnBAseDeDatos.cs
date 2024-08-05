@@ -19,18 +19,29 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
 
         public async Task insertJuegosEpicEnBD(object? state)
         {
-            List<JuegoFlagg> listaJuegosInsertBD = _context.listaJuegosData.ToList();
+            List<JuegoFlagg> listaJuegosEnBD = _context.listaJuegosData.ToList();
             List<JuegoFlagg> listaDesdeEpic = _juegosEpicService.getListaJuegosEpic().Result;
+            bool juegoEncontrado;
 
             foreach (JuegoFlagg juegoDesdeEpic in listaDesdeEpic)
             {
-                juegoDesdeEpic.idFlagg = Guid.NewGuid();
-                juegoDesdeEpic.contadorVistas = 0; //quitar esto después
-                juegoDesdeEpic.idJuegoTienda = 0; //quitar esto después
-                Console.WriteLine("Juego desde getListaJuegosEpic(): " + juegoDesdeEpic.nombre + " GUID: " + juegoDesdeEpic.idFlagg + " TIENDA: " + juegoDesdeEpic.tienda);
-                _context.listaJuegosData.Add(juegoDesdeEpic);
-            }
+                juegoEncontrado = false;
 
+                foreach (JuegoFlagg juegoFlaggEnBD in listaJuegosEnBD)
+                {
+                    if (juegoDesdeEpic.nombre == juegoFlaggEnBD.nombre) juegoEncontrado = true;
+                }
+
+                if (!juegoEncontrado)
+                {
+                    juegoDesdeEpic.idFlagg = Guid.NewGuid();
+                    juegoDesdeEpic.contadorVistas = 0; //quitar esto después
+                    juegoDesdeEpic.idJuegoTienda = 0; //quitar esto después
+                    Console.WriteLine("\tJuego agregado EPIC: " + juegoDesdeEpic.nombre + " GUID: " + juegoDesdeEpic.idFlagg + " TIENDA: " + juegoDesdeEpic.tienda);
+
+                    _context.listaJuegosData.Add(juegoDesdeEpic);
+                }
+            }
             _context.SaveChanges();
         }
     }

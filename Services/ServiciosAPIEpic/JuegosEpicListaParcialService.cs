@@ -27,18 +27,19 @@ public class JuegosEpicListaParcialService
 		_httpClient.DefaultRequestHeaders.Clear();
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+        int contar = 0;
+
         for (int i = 0; i < 10225; i += 1000)
 		{
             var respuesta = await _httpClient.GetAsync(ConsultaApiEpic.armarConsultaEpic(" ", 5, "", "asc", i));
-			ObjetoJsonEpicGraphql objetoJson = new ObjetoJsonEpicGraphql();
-
+			ObjetoJsonEpicGraphql objetoJson = new ObjetoJsonEpicGraphql();      
 
             if (respuesta.IsSuccessStatusCode)
 			{
 				var jsonDeApi = respuesta.Content.ReadAsStringAsync();
 				objetoJson = JsonConvert.DeserializeObject<ObjetoJsonEpicGraphql>(jsonDeApi.Result);
 
-				int contar = 0;
+				
 
                 foreach(Element juego in objetoJson.data.catalog.searchStore.elements)
 				{
@@ -61,17 +62,15 @@ public class JuegosEpicListaParcialService
                     }
                     else { Console.WriteLine($"El juego {juego.title} no contiene imagenes realacionadas"); }
 
-					
-					Console.WriteLine(juego.title);
+                    Console.WriteLine($"Juego EPIC: {juego.title}");
                     flaggGamesList.Add(flaggGame);
-
-                    contar++;
-                    if (contar == 10) break;
                 }
 			}
+            contar++;
+            if (contar == 100) break;
         }
-		
-		return flaggGamesList;
+
+        return flaggGamesList;
 	}
 
 

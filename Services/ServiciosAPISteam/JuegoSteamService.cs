@@ -19,8 +19,9 @@ namespace FlaggGaming.Services.ServiciosAPISteam
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<Dictionary<string, JuegoSteam>> getJuegoSteam(string gameId)
+        public /*async*/ /*Task<*/Dictionary<string, JuegoSteam>/*>*/ getJuegoSteam(string gameId)
         {
+            Console.WriteLine("\t\t>>> JuegoSteamService - getJuegoSteam:\n\t\tSolicitando DATOS de juego a STEAM");
             Task<Dictionary<string, JuegoSteam>> tareaJuego = Task<Dictionary<string, JuegoSteam>>.Factory.StartNew
                 (
                     () =>
@@ -35,12 +36,12 @@ namespace FlaggGaming.Services.ServiciosAPISteam
 
                     if (respuestaDeApi().Result.IsSuccessStatusCode)
                     {
-                        Console.WriteLine("respuesta de API positiva");
+                        Console.WriteLine("\t\tRespuesta de API positiva");
                         var jsonDeApi = async Task<String> () => { return await respuestaDeApi().Result.Content.ReadAsStringAsync(); };
                         Console.WriteLine(jsonDeApi().Result);
 
                         JObject objetoJson = JObject.Parse(jsonDeApi().Result);
-                        Console.WriteLine("Prueba de atributo de objeto json : " + objetoJson[$"{gameId}"]["name"]);
+                        //Console.WriteLine("Prueba de atributo de objeto json : " + objetoJson[$"{gameId}"]["name"]);
     
                             //JObject jsonJuegoSteam = JObject.Parse(jsonDeApi().Result);
 
@@ -50,7 +51,7 @@ namespace FlaggGaming.Services.ServiciosAPISteam
                     }
                 );
 
-            return await tareaJuego;
+            return /*await*/ tareaJuego.Result;
         }
     }
 }

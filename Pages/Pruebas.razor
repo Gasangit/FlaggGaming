@@ -51,7 +51,7 @@
     async Task<JuegoSteamData> traerJuego(string idJuego)
     {
         
-        juegoJson = await juegoSteamService.getJuegoSteam(idJuego);
+        juegoJson = /*await*/ juegoSteamService.getJuegoSteam(idJuego);
         return juegoJson[idJuego].data;
     }
 }

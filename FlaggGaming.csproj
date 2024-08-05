@@ -12,12 +12,14 @@
 
   <ItemGroup>
     <None Remove="Pages\componentesLogin\RecuadroLogin.razor.css" />
+    <None Remove="Pages\componentesMisProductosTienda\TablaMisProductos.razor.css" />
     <None Remove="Pages\componentesRegistroTiendas\RecuadroRegistroTiendas.razor.css" />
     <None Remove="Pages\componentesRegistro\RecuadroRegistro.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Pages\componentesLogin\RecuadroLogin.razor.css" />
+    <Content Include="Pages\componentesMisProductosTienda\TablaMisProductos.razor.css" />
     <Content Include="Pages\componentesRegistroTiendas\RecuadroRegistroTiendas.razor.css" />
     <Content Include="Pages\componentesRegistro\RecuadroRegistro.razor.css" />
   </ItemGroup>

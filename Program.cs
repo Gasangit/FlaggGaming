@@ -25,12 +25,14 @@ builder.Services.AddDbContext<DatosContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserContext"));
 });
 
+builder.Logging.ClearProviders(); //limpia la consola de los mensajes internos de .net
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 //builder.Services.AddHostedService<TimerDescargaListaTotalSteam>();
 builder.Services.AddHostedService<TimerDescargaListaTotalEpic>();
-builder.Services.AddHostedService<TimerDescargaInfoJuegoSteam>();
+//builder.Services.AddHostedService<TimerDescargaInfoJuegoSteam>();
 builder.Services.AddScoped<juegosIndexService>();
 builder.Services.AddScoped<JuegosListaTotalService>();
 builder.Services.AddScoped<JuegoSteamService>();

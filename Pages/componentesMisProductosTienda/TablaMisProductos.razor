@@ -1,45 +1,51 @@
-﻿@using FlaggGaming.Model
+﻿<div class="container">
+    <div class="header-row">
+        <div class="title">
+            <h2>Mis Productos</h2>
+        </div>
+        <div class="button-container">
+            <a href="" onclick="" class="new-product-button">Nuevo Producto</a>
+        </div>
+    </div>
 
-<div class="row mt-5">
-    <div class="col">
-        <table class="table table-hover table-striped table-danger text-center">
-            <thead>
-                <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Imagen</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            @*<tbody>
-                @foreach (Juego unJuego in juegos)
-                {
-                    <tr>
-                        <td class="rounded-start-3 p-3">@unJuego.Name</td>
-                        <td>@unJuego.Description</td>
-                        <td><img class="img-thumbnail" src="@unJuego.urlImagen" width="120" height="75" /></td>
-                        <td><a>Boton Editar</a></td>
-                        <td class="rounded-end-3"><a>Boton Borrar</a></td>
-                    </tr>
-                }
-            </tbody>*@
-        </table>
+
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card">
+                <img class="card-img" src="imagenes/producto1.png" alt="Producto 1">
+                <div class="card-body">
+                    <div class="card-info">
+                        <p><strong>Nombre:</strong> Producto 1</p>
+                        <p><strong>Descripción:</strong> Descripción del producto 1</p>
+                        <p><strong>Marca:</strong> Marca 1</p>
+                        <p><strong>Categoría:</strong> Categoría 1</p>
+                        <p><strong>Precio:</strong> $100.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <a class="btn btn-primary" href="edit/1">Editar</a>
+                        <a class="btn btn-danger" href="delete/1">Borrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <img class="card-img" src="imagenes/producto1.png" alt="Producto 2">
+                <div class="card-body">
+                    <div class="card-info">
+                        <p><strong>Nombre:</strong> Producto 2</p>
+                        <p><strong>Descripción:</strong> Descripción del producto 2</p>
+                        <p><strong>Marca:</strong> Marca 2</p>
+                        <p><strong>Categoría:</strong> Categoría 2</p>
+                        <p><strong>Precio:</strong> $200.00</p>
+                    </div>
+                    <div class="card-actions">
+                        <a class="btn btn-primary" href="edit/2">Editar</a>
+                        <a class="btn btn-danger" href="delete/2">Borrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-@code 
-{
-   /* private Juego AlanWake = new Juego("Alan Wake 2", "Un juego de terror", "/imagenes/AlanWake2.jpg");
-     private Juego Cs2 = new Juego("Counter Strike 2", "El pricipal shooter competitivo", "/imagenes/cs2.jpg");
-     private Juego TheFinals = new Juego("The Finals", "La pricipal novedad en shooters", "/imagenes/TheFinals.jpg");
-
-     private List<Juego> juegos = new List<Juego>();
-
-     protected override void OnInitialized()
-         {
-         juegos.Add(AlanWake);
-         juegos.Add(Cs2);
-         juegos.Add(TheFinals);
-    }*/
-}
