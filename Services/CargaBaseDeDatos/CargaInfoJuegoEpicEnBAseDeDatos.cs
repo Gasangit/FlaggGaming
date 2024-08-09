@@ -19,7 +19,7 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
 
         public async Task insertJuegosEpicEnBD(object? state)
         {
-            List<JuegoFlagg> listaJuegosEnBD = _context.listaJuegosData.ToList();
+            List<JuegoFlagg> listaJuegosEnBD;
             List<JuegoFlagg> listaDesdeEpic = _juegosEpicService.getListaJuegosEpic().Result;
             bool juegoEncontrado;
 
@@ -27,22 +27,34 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
             {
                 juegoEncontrado = false;
 
+                listaJuegosEnBD = _context.listaJuegosData.ToList();
                 foreach (JuegoFlagg juegoFlaggEnBD in listaJuegosEnBD)
                 {
-                    if (juegoDesdeEpic.nombre == juegoFlaggEnBD.nombre) juegoEncontrado = true;
+                    if (juegoDesdeEpic.nombre == juegoFlaggEnBD.nombre && juegoFlaggEnBD.tienda == "Epic") 
+                    { 
+                        juegoEncontrado = true;
+                        Console.WriteLine("\tEl JUEGO ya se ENCUENTRA en la BASE DE DATOS" +
+                            $"\n\t\tNombre EPIC: {juegoDesdeEpic.nombre}  // Nombre BD: {juegoFlaggEnBD.nombre}");
+                    }
                 }
+                /*  Juegos que se repitieron en la base de datos 2, 13 y 13 veces respectivamente.
+                    CobblerDevAudience
+                    Contingent®?
+                    Cyber:Mind Dive
+                 */
 
                 if (!juegoEncontrado)
                 {
                     juegoDesdeEpic.idFlagg = Guid.NewGuid();
                     juegoDesdeEpic.contadorVistas = 0; //quitar esto después
                     juegoDesdeEpic.idJuegoTienda = 0; //quitar esto después
-                    Console.WriteLine("\tJuego agregado EPIC: " + juegoDesdeEpic.nombre + " GUID: " + juegoDesdeEpic.idFlagg + " TIENDA: " + juegoDesdeEpic.tienda);
+                    Console.WriteLine("\tJuego AGREGADO EPIC: " + juegoDesdeEpic.nombre + " GUID: " + juegoDesdeEpic.idFlagg + " TIENDA: " + juegoDesdeEpic.tienda);
 
                     _context.listaJuegosData.Add(juegoDesdeEpic);
                 }
             }
             _context.SaveChanges();
+            Console.WriteLine("Juegos enviados a la BASE DE DATOS");
         }
     }
 }

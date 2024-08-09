@@ -28,10 +28,12 @@ public class JuegosEpicListaParcialService
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
         int contar = 0;
+        int contarJuegos = 0;
+        bool esJuego;
 
-        for (int i = 0; i < 10225; i += 1000)
+        for (int i = 0; i < 9370 /*10225*/; i += 100)
 		{
-            var respuesta = await _httpClient.GetAsync(ConsultaApiEpic.armarConsultaEpic(" ", 5, "", "asc", i));
+            var respuesta = await _httpClient.GetAsync(ConsultaApiEpic.armarConsultaEpic(" ", 100, "", "asc", i));
 			ObjetoJsonEpicGraphql objetoJson = new ObjetoJsonEpicGraphql();      
 
             if (respuesta.IsSuccessStatusCode)
@@ -39,42 +41,60 @@ public class JuegosEpicListaParcialService
 				var jsonDeApi = respuesta.Content.ReadAsStringAsync();
 				objetoJson = JsonConvert.DeserializeObject<ObjetoJsonEpicGraphql>(jsonDeApi.Result);
 
-				
-
                 foreach(Element juego in objetoJson.data.catalog.searchStore.elements)
 				{
-                    JuegoFlagg flaggGame = new JuegoFlagg();
-                    flaggGame.nombre = juego.title;
-                    flaggGame.descripcionCorta = juego.description;
-                    flaggGame.tienda = "Epic";
-                    //flaggGame.precio = Decimal.Parse(juego.price.totalPrice.fmtPrice.discountPrice);
-                    flaggGame.estudio = juego.seller.name;
+                    contar++;
+                    esJuego = false;
+                    Console.WriteLine($"Se VERIFICA EL JUEGO EPIC: {juego.title}");
 
-                    if (juego.keyImages != null && juego.keyImages.Count > 0)
+                    foreach (Category categoria in juego.categories) 
                     {
-                        foreach (KeyImage image in juego.keyImages)
+                        Console.Write($"\t{categoria.path} - ");
+                        Console.WriteLine("");
+                        if (categoria.path == "games")
                         {
-                            if (image.type == "Thumbnail") { flaggGame.imagenMini = image.url; }
-
-                            if (image.type == "OfferImageWide"){ flaggGame.imagen = image.url; } 
-                            else if (image.type == "OfferImageTall") { flaggGame.imagen = image.url; }
+                            esJuego = true;
+                            Console.WriteLine($"\tJuego EPIC CONFIRMADO -> CATEGORÍA: {categoria.path}");
+                            contarJuegos++;
+                            break;
                         }
                     }
-                    else { Console.WriteLine($"El juego {juego.title} no contiene imagenes realacionadas"); }
 
-                    Console.WriteLine($"Juego EPIC: {juego.title}");
-                    flaggGamesList.Add(flaggGame);
+                    if (esJuego)
+                    {
+                        JuegoFlagg flaggGame = new JuegoFlagg();
+                        flaggGame.nombre = juego.title;
+                        flaggGame.descripcionCorta = juego.description;
+                        flaggGame.tienda = "Epic";
+                        //flaggGame.precio = Decimal.Parse(juego.price.totalPrice.fmtPrice.discountPrice);
+                        flaggGame.estudio = juego.seller.name;
+
+                        if (juego.keyImages != null && juego.keyImages.Count > 0)
+                        {
+                            foreach (KeyImage image in juego.keyImages)
+                            {
+                                if (image.type == "Thumbnail") { flaggGame.imagenMini = image.url; }
+
+                                if (image.type == "OfferImageWide") { flaggGame.imagen = image.url; }
+                                else if (image.type == "OfferImageTall") { flaggGame.imagen = image.url; }
+                            }
+                        }
+                        else { Console.WriteLine($"\tEl juego {juego.title} no contiene imagenes realacionadas"); }
+
+                        
+                        flaggGamesList.Add(flaggGame);
+                    }
+
                 }
 			}
-            contar++;
-            if (contar == 100) break;
         }
+        Console.WriteLine($"\n\n\tSe VERIFICAN {contar} Elements");
+        Console.WriteLine($"\tSe encontraron {contarJuegos} juegos.\n\n");
 
         return flaggGamesList;
 	}
 
-
-    public async Task<List<Element>> getListaJuegosEpicPrueba()
+    /*public async Task<List<Element>> getListaJuegosEpicPrueba()
     {
         Console.WriteLine("<< getListaJuegosEpic >>");
         List<Element> elements = new List<Element>();
@@ -87,7 +107,6 @@ public class JuegosEpicListaParcialService
         {
             var respuesta = await _httpClient.GetAsync(ConsultaApiEpic.armarConsultaEpic(" ", 5, "", "asc", i));
             ObjetoJsonEpicGraphql objetoJson = new ObjetoJsonEpicGraphql();
-
 
             if (respuesta.IsSuccessStatusCode)
             {
@@ -105,7 +124,6 @@ public class JuegosEpicListaParcialService
                 }
             }
         }
-
         return elements;
-    }
+    }*/
 }

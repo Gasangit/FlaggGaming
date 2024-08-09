@@ -535,6 +535,6 @@
     protected override async Task OnParametersSetAsync()
     {           
         gameId = Convert.ToString(appid);
-        diccionarioJson = /*await*/ juegoService.getJuegoSteam(gameId);
+        diccionarioJson = await juegoService.getJuegoSteam(gameId);
     }
 }

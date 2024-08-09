@@ -34,6 +34,7 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
             bool encontradoEnListaDataBD;
             int count = 0;
             int partialCount = 0;
+            int countGames = 0;
             int countAddListaTotal = 0;
             int countAddListaData = 0;
             int countUpdateListaData = 0;
@@ -41,6 +42,8 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
             ObjetoJsonListaJuegos listaJuegosSteam = _juegosListaTotalService.getListaJuegosSteam().Result;
             Console.WriteLine("\tLlamado a API STEAM para obtener lista.");
             string idJuegoString;
+
+            Dictionary<string, JuegoSteam> dicccionarioJuegoSteam;
 
             Console.WriteLine("\tIteración lista API STEAM");
             foreach (ItemListaJuegoSteam juegoDeListaSteam in listaJuegosSteam.applist.apps)
@@ -55,11 +58,18 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
 
                 idJuegoString = juegoDeListaSteam.appid.ToString();
 
-                //el id 3132780 da null al buscar en la API al igual que el id 1349523
-                Dictionary<string, JuegoSteam> dicccionarioJuegoSteam = null;
-                dicccionarioJuegoSteam = /*await*/ _juegoSteamService.getJuegoSteam(idJuegoString);
+                //el id 3132780 da null al buscar en la API al igual que el id 1349523. Aparentemente dieron null por un problema de la API, ahora traen datos.
+                //Dictionary<string, JuegoSteam> dicccionarioJuegoSteam = null;
+                dicccionarioJuegoSteam = await _juegoSteamService.getJuegoSteam(idJuegoString);
 
-                if (dicccionarioJuegoSteam[idJuegoString] != null)
+                while (idJuegoString == "22106310" || !dicccionarioJuegoSteam.ContainsKey(idJuegoString)) 
+                {
+                    Console.WriteLine("No se encontró la KEY en el DICCIONARIO del JUEGO. Se esperan 10 segundos para repetir el pedido de JUEGO a la API.");
+                    Thread.Sleep(10000);
+                    dicccionarioJuegoSteam = await  _juegoSteamService.getJuegoSteam(idJuegoString);
+                }
+
+                if (idJuegoString == "22106310" || dicccionarioJuegoSteam != null)
                 {
                     Console.WriteLine($"\t\t¿El JUEGO fue lanzado?: {dicccionarioJuegoSteam[idJuegoString].success}");
                     if (dicccionarioJuegoSteam[idJuegoString].success)
@@ -83,31 +93,33 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                             Console.WriteLine($"\t\t<SI> Se encontro el juego en la LISTA IDTIENDA BD: {juegoDeListaBD.appid.ToString(idJuegoString)} ID STEAM: {idJuegoString}");
                             break;
                         }
-                        Console.Write(partialCount++ + " - ");
+                        partialCount++;
+                        //Console.Write(partialCount++ + " - ");
                     }
                     if (!encontradoEnListaTotalBD)
                     {
-                        Console.WriteLine("\t\t<NO> Se encontro el juego en la LISTA. Se AGREGA a la misma");
+                        Console.WriteLine("\n\t\t<NO> Se encontro el juego en la LISTA. Se AGREGA a la misma");
                         juegoDeListaSteam.created_at = DateTime.Now;
                         _context.listaJuegos.Add(juegoDeListaSteam);
                         countAddListaTotal++;
                     }
-                    Console.WriteLine($"\t\tSe COMPARÓ con {partialCount} JUEGOS de la lista.");
+                    Console.WriteLine($"\n\t\tSe COMPARÓ con {partialCount} JUEGOS de la lista.");
                     partialCount = 0;
 
+                    Console.WriteLine("\n\t\tSe recorre la lista de DATOS del JUEGO");
                     listaJuegosDataBD = _context.listaJuegosData.ToList();
                     foreach (JuegoFlagg juegoFlaggDataBD in listaJuegosDataBD)
                     {
-                        Console.WriteLine("\t\tSe recorre la lista de DATOS del JUEGO");
+                        
                         if (juegoFlaggDataBD.idJuegoTienda.ToString() == idJuegoString)
                         {
                             encontradoEnListaDataBD = true;
-                            Console.WriteLine("\t\t<SI> Se encontró en lista de DATOS del JUEGO");
+                            Console.WriteLine("\n\t\t<SI> Se encontró en lista de DATOS del JUEGO");
                         }
                         
                         if (encontradoEnListaDataBD)
                         {
-                            Console.WriteLine("\t\tSe ACTUALIZAN los datos del juego en la lista.");
+                            Console.WriteLine("\n\t\tSe ACTUALIZAN los datos del juego en la lista.");
                             minimumPcRequirements = "";
                             if (dicccionarioJuegoSteam[idJuegoString].data.pc_requirements.Count > 0)
                             {
@@ -127,14 +139,15 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                             countUpdateListaData++;
                             break;
                         }
-                        Console.Write(partialCount++ + " - ");
+                        partialCount++;
+                        //Console.Write(partialCount++ + " - ");
                     }
-                    Console.WriteLine($"\t\tSe COMPARÓ con {partialCount} JUEGOS de la lista de DATOS.");
+                    Console.WriteLine($"\n\t\tSe COMPARÓ con {partialCount} JUEGOS de la lista de DATOS.");
                     partialCount = 0;
 
                     if (!encontradoEnListaDataBD)
                     {
-                        Console.WriteLine("\t\t<NO> Se encontró en lista de DATOS del JUEGO. Se agregan los datos del JUEGO a la lista.");
+                        Console.WriteLine("\n\t\t<NO> Se encontró en lista de DATOS del JUEGO. Se agregan los datos del JUEGO a la lista.");
                         minimumPcRequirements = "";
                         if (dicccionarioJuegoSteam[idJuegoString].data.pc_requirements.Count > 0)
                         {
@@ -158,11 +171,19 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                     }
                 }
                 count++;
-                /*if (count > 50) break;*/
-                if(count == 100) _context.SaveChanges();
+                countGames++;
+
+                if (count == 100) { _context.SaveChanges(); count = 0; }
+                //if (count > 499) break;
+
+                Console.WriteLine($"TOTAL JUEGOS EN LISTA DE STEAM: {listaJuegosSteam.applist.apps.Count}");
+                Console.WriteLine($"TOTAL JUEGOS VERIFICADOS: {countGames}");
+                Console.WriteLine($"TOTAL JUEGOS AGREGADOS EN <LISTA TOTAL>: {countAddListaTotal}");
+                Console.WriteLine($"TOTAL JUEGOS AGREGADOS EN <LISTA DATA (ADD)>: {countAddListaData}");
+                Console.WriteLine($"TOTAL JUEGOS AGREGADOS EN <LISTA DATOA (UPDATE)>: {countUpdateListaData}");
             }
             Console.WriteLine($"TOTAL JUEGOS EN LISTA DE STEAM: {listaJuegosSteam.applist.apps.Count}");
-            Console.WriteLine($"TOTAL JUEGOS VERIFICADOS: {count}");
+            Console.WriteLine($"TOTAL JUEGOS VERIFICADOS: {countGames}");
             Console.WriteLine($"TOTAL JUEGOS AGREGADOS EN <LISTA TOTAL>: {countAddListaTotal}");
             Console.WriteLine($"TOTAL JUEGOS AGREGADOS EN <LISTA DATA (ADD)>: {countAddListaData}");
             Console.WriteLine($"TOTAL JUEGOS AGREGADOS EN <LISTA DATOA (UPDATE)>: {countUpdateListaData}");

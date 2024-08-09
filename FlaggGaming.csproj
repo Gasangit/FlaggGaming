@@ -13,13 +13,22 @@
   <ItemGroup>
     <None Remove="Pages\componentesLogin\RecuadroLogin.razor.css" />
     <None Remove="Pages\componentesMisProductosTienda\TablaMisProductos.razor.css" />
+    <None Remove="Pages\componentesProducto\DatosComprar.razor.css" />
+    <None Remove="Pages\componentesProducto\DescripcionProducto.razor.css" />
+    <None Remove="Pages\componentesProducto\Grafico.razor.css" />
     <None Remove="Pages\componentesRegistroTiendas\RecuadroRegistroTiendas.razor.css" />
     <None Remove="Pages\componentesRegistro\RecuadroRegistro.razor.css" />
+    <None Remove="Shared\NewFile.txt" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Pages\componentesLogin\RecuadroLogin.razor.css" />
     <Content Include="Pages\componentesMisProductosTienda\TablaMisProductos.razor.css" />
+    <Content Include="Pages\componentesProducto\DatosComprar.razor.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+    <Content Include="Pages\componentesProducto\DescripcionProducto.razor.css" />
+    <Content Include="Pages\componentesProducto\Grafico.razor.css" />
     <Content Include="Pages\componentesRegistroTiendas\RecuadroRegistroTiendas.razor.css" />
     <Content Include="Pages\componentesRegistro\RecuadroRegistro.razor.css" />
   </ItemGroup>

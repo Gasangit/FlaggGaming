@@ -45,8 +45,8 @@ namespace FlaggGaming.Services.ServiciosAPISteam
                         return objetoJson;
                     }
                 );
-
-            return await tareaAppList;
+            Console.WriteLine("LLAMADO A API DE LISTA STEAM Y DEVOLUCIÓN DE LISTA DE JUEGOS");
+            return tareaAppList.Result;
         }
 
         

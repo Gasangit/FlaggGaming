@@ -16,8 +16,6 @@
                 @if (diccionarioJson[@gameId].data.mac_requirements != null)
                 {
                     <h2>@(diccionarioJson[@gameId].data.mac_requirements.GetType()));</h2>
-
-                    
                 }
             </div>
         }
@@ -37,7 +35,7 @@
     protected override async Task OnParametersSetAsync()
     {
         gameId = Convert.ToString(appid);
-        diccionarioJson = /*await*/ juegoService.getJuegoSteam(gameId);
+        diccionarioJson = await juegoService.getJuegoSteam(gameId);
     }
 
 }

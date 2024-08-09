@@ -34,7 +34,7 @@ namespace FlaggGaming.Services.ServiciosConTimer
         {
             using var scope = _serviceProvider.CreateScope();
             var scopedProcessingService = scope.ServiceProvider.GetRequiredService<CargaInfoJuegoSteamEnBAseDeDatos>();
-            await scopedProcessingService.insertJuegosSteamEnBD(state);
+             await scopedProcessingService.insertJuegosSteamEnBD(state);
         }
     }
 }
