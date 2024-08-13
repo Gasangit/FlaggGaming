@@ -19,7 +19,7 @@ namespace FlaggGaming.Services.ServiciosConTimer
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             DoWork(stoppingToken);
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(45));
+            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromDays(1));
             return Task.CompletedTask;
         }
 

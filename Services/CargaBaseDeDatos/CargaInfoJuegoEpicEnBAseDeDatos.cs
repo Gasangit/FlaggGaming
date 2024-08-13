@@ -20,14 +20,14 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
         public async Task insertJuegosEpicEnBD(object? state)
         {
             List<JuegoFlagg> listaJuegosEnBD;
-            List<JuegoFlagg> listaDesdeEpic = _juegosEpicService.getListaJuegosEpic().Result;
+            List<JuegoFlagg> listaDesdeEpic = await _juegosEpicService.getListaJuegosEpic();
             bool juegoEncontrado;
 
             foreach (JuegoFlagg juegoDesdeEpic in listaDesdeEpic)
             {
                 juegoEncontrado = false;
 
-                listaJuegosEnBD = _context.listaJuegosData.ToList();
+                /*listaJuegosEnBD = _context.listaJuegosData.ToList();
                 foreach (JuegoFlagg juegoFlaggEnBD in listaJuegosEnBD)
                 {
                     if (juegoDesdeEpic.nombre == juegoFlaggEnBD.nombre && juegoFlaggEnBD.tienda == "Epic") 
@@ -36,24 +36,25 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                         Console.WriteLine("\tEl JUEGO ya se ENCUENTRA en la BASE DE DATOS" +
                             $"\n\t\tNombre EPIC: {juegoDesdeEpic.nombre}  // Nombre BD: {juegoFlaggEnBD.nombre}");
                     }
-                }
+                }*/
                 /*  Juegos que se repitieron en la base de datos 2, 13 y 13 veces respectivamente.
                     CobblerDevAudience
                     Contingent®?
                     Cyber:Mind Dive
                  */
 
-                if (!juegoEncontrado)
-                {
+                /*if (!juegoEncontrado)
+                {*/
                     juegoDesdeEpic.idFlagg = Guid.NewGuid();
                     juegoDesdeEpic.contadorVistas = 0; //quitar esto después
                     juegoDesdeEpic.idJuegoTienda = 0; //quitar esto después
                     Console.WriteLine("\tJuego AGREGADO EPIC: " + juegoDesdeEpic.nombre + " GUID: " + juegoDesdeEpic.idFlagg + " TIENDA: " + juegoDesdeEpic.tienda);
 
                     _context.listaJuegosData.Add(juegoDesdeEpic);
-                }
+                /*}*/
             }
             _context.SaveChanges();
+            //_context.Dispose();
             Console.WriteLine("Juegos enviados a la BASE DE DATOS");
         }
     }

@@ -31,7 +31,7 @@ builder.Logging.ClearProviders(); //limpia la consola de los mensajes internos d
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 //builder.Services.AddHostedService<TimerDescargaListaTotalSteam>();
-//builder.Services.AddHostedService<TimerDescargaListaTotalEpic>();
+builder.Services.AddHostedService<TimerDescargaListaTotalEpic>();
 builder.Services.AddHostedService<TimerDescargaInfoJuegoSteam>();
 builder.Services.AddScoped<juegosIndexService>();
 builder.Services.AddScoped<JuegosListaTotalService>();

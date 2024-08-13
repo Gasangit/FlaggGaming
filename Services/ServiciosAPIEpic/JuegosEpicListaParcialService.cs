@@ -31,10 +31,10 @@ public class JuegosEpicListaParcialService
         int contarJuegos = 0;
         bool esJuego;
 
-        for (int i = 0; i < 9370 /*10225*/; i += 100)
+        for (int i = 0; i < 9387 /*10225*/; i += 1000)
 		{
-            var respuesta = await _httpClient.GetAsync(ConsultaApiEpic.armarConsultaEpic(" ", 100, "", "asc", i));
-			ObjetoJsonEpicGraphql objetoJson = new ObjetoJsonEpicGraphql();      
+            var respuesta = await _httpClient.GetAsync(ConsultaApiEpic.armarConsultaEpic(" ", 1000, "", "asc", i));
+			ObjetoJsonEpicGraphql objetoJson = new ObjetoJsonEpicGraphql();     
 
             if (respuesta.IsSuccessStatusCode)
 			{

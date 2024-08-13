@@ -1,5 +1,51 @@
 ﻿<footer class="footer">
-  <img src="#" alt="Alternate Text" />
-    <p>Author: Hege Refsnes</p>
-    <p><a href="mailto:hege@example.com">hege@example.com</a></p>
+
+    
+    <div id="arrowTop" hidden></div>
+    
+    <div class="logo_Text">
+        <img class="logo_white" src="/imagenes/logoflaggWhite2.png" alt="Logo Flagg en blancot" />
+            <p class="bajada">
+                El equipo de FLAGG se enfocó en la creación de una Web y App Mobile llamada “FLAGG Gaming”, la cual se centrará en ayudar al usuario gamer Argentino, a poder encontrar el mejor precio con nuestra poderosa herramienta de comparación de juegos, junto con el módulo de cálculos de impuestos (“Precio Posta”) y la previsión de precios a futuro (“Precio Pare de Sufrir”).
+                Adicional a esto, los juegos que viniesen en dólares serán autoconvertidos al tipo de cambio REAL también.
+                Para no dejar a nuestras queridas tiendas gamers, habilitamos una sección para que puedan registrarse y hacer llegar sus locales y los productos que disponibiliza en sus tiendas.
+            </p>
+</div>
+    <div class="redes_sociales">
+    
+            <p class="gracias">
+                ¡Gracias!
+            </p>
+            <p class="invitacion">
+                El equipo de FLAGG Gaming los invita a unirse a nuestro sitio web y descargar nuestra aplicación.
+            </p>
+
+        <ul class="redes_sociales_lks">
+            <li>
+                <img class="logo_instagram" src="/imagenes/insta.png" alt="Logo Instagram" />
+                <a href="https://www.instagram.com/">&commat;FlaggGaming</a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/"> <img class="logo_instagram" src="/imagenes/insta.png" alt="Logo Instagram" /></a>
+            </li>
+            <li>
+                 <a href="https://www.instagram.com/"> <img class="logo_instagram" src="/imagenes/insta.png" alt="Logo Instagram" /></a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/"> <img class="logo_instagram" src="/imagenes/insta.png" alt="Logo Instagram" /></a>
+            </li>
+</ul></div>
+
+    <script>
+
+        arrowTop.onclick = function () {
+            window.scrollTo(pageXOffset, 0);
+            // después de scrollTo, habrá un evento "scroll", entonces la flecha se ocultará automáticamente
+        };
+
+        window.addEventListener('scroll', function () {
+            arrowTop.hidden = (pageYOffset < document.documentElement.clientHeight);
+        });
+    </script>
+
 </footer>

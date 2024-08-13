@@ -125,9 +125,79 @@ dropbtn {
 }
 
 .footer {
-    padding: 0;
-    margin: 10px 0 0 0;
+    padding: 10px 0 0 0;
+    margin: 20px 0 0 0;
     width: 100%;
-    background-color: #989898;
+    background-color: #fccbc2;
     position: absolute;
+    display: flex;
+}
+
+.logo_Text {
+    width: 50%;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font-family: Century;
+    font-size: 13px;
+}
+
+.logo_white {
+    margin: 10px;
+    /*padding: 10px;*/
+    border-radius: 50%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+.bajada {
+    margin: 10px;
+    padding: 10px 80px 10px 80px;
+    text-align: justify;
+}
+
+
+.redes_sociales {
+    width: 50%;
+    margin: 20px;
+    padding: 20px;
+}
+
+.gracias {
+    margin: 10px;
+    padding: 10px;
+    font-family: Century;
+    font-size: 30px;
+}
+
+.invitacion {
+    width: 50%;
+    margin: 10px 10px 10px 10px;
+    padding: 10px;
+    font-family: Century;
+    font-size: 20px;
+    text-align: justify;
+}
+
+#arrowTop {
+    height: 9px;
+    width: 14px;
+    color: green;
+    /* position: fixed;*/
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+}
+
+    #arrowTop::before {
+        content: '▲';
+    }
+
+.redes_sociales_lks {
+    list-style: none;
+    margin: 0 10px 0 10px;
+}
+
+.logo_usuario {
+    border-radius: 50%;
+    box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.2);
 }

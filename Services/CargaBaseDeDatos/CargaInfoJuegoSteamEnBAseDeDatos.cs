@@ -84,8 +84,8 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                 if (verificarEnlistaTotalYDataBD)
                 {
                     Console.WriteLine("\t\tBusqueda de juego en lista existente");
-                    listaJuegosTotalBD = _context.listaJuegos.ToList();
-                    foreach (ItemListaJuegoSteam juegoDeListaBD in listaJuegosTotalBD)
+                    //listaJuegosTotalBD = _context.listaJuegos.ToList();
+                    /*foreach (ItemListaJuegoSteam juegoDeListaBD in listaJuegosTotalBD)
                     {
                         if (juegoDeListaBD.appid.ToString() == idJuegoString)
                         {
@@ -97,11 +97,11 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                         //Console.Write(partialCount++ + " - ");
                     }
                     if (!encontradoEnListaTotalBD)
-                    {
+                    {*/
                         Console.WriteLine("\n\t\t<NO> Se encontro el juego en la LISTA. Se AGREGA a la misma");
                         juegoDeListaSteam.created_at = DateTime.Now;
                         _context.listaJuegos.Add(juegoDeListaSteam);
-                        countAddListaTotal++;
+                        countAddListaTotal++;/*
                     }
                     Console.WriteLine($"\n\t\tSe COMPARÓ con {partialCount} JUEGOS de la lista.");
                     partialCount = 0;
@@ -115,9 +115,9 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                         {
                             encontradoEnListaDataBD = true;
                             Console.WriteLine("\n\t\t<SI> Se encontró en lista de DATOS del JUEGO");
-                        }
+                        }*/
                         
-                        if (encontradoEnListaDataBD)
+                        /*if (encontradoEnListaDataBD)
                         {
                             Console.WriteLine("\n\t\tSe ACTUALIZAN los datos del juego en la lista.");
                             minimumPcRequirements = "";
@@ -138,15 +138,15 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                             _context.listaJuegosData.Update(juegoFlaggDataBD);
                             countUpdateListaData++;
                             break;
-                        }
+                        }*/
                         partialCount++;
                         //Console.Write(partialCount++ + " - ");
-                    }
+                    /*}*/
                     Console.WriteLine($"\n\t\tSe COMPARÓ con {partialCount} JUEGOS de la lista de DATOS.");
                     partialCount = 0;
 
-                    if (!encontradoEnListaDataBD)
-                    {
+                    /*if (!encontradoEnListaDataBD)
+                    {*/
                         Console.WriteLine("\n\t\t<NO> Se encontró en lista de DATOS del JUEGO. Se agregan los datos del JUEGO a la lista.");
                         minimumPcRequirements = "";
                         if (dicccionarioJuegoSteam[idJuegoString].data.pc_requirements.Count > 0)
@@ -168,12 +168,13 @@ namespace FlaggGaming.Services.CargaBaseDeDatos
                         juegoFlaggParaAgregar.urlTienda = "https://store.steampowered.com/app/" + idJuegoString;
                         _context.listaJuegosData.Add(juegoFlaggParaAgregar);
                         countAddListaData++;
-                    }
+                    /*}*/
                 }
                 count++;
                 countGames++;
 
                 if (count == 100) { _context.SaveChanges(); count = 0; }
+                //_context.Dispose();
                 //if (count > 499) break;
 
                 Console.WriteLine($"TOTAL JUEGOS EN LISTA DE STEAM: {listaJuegosSteam.applist.apps.Count}");
