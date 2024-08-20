@@ -1,76 +1,76 @@
 ﻿@using FlaggGaming.Model
-
-<div class="row justify-content-center">
-    <div class="col-12 mb-5">
-        <a href="/" class="row mx-5 py-3 justify-content-center border border-dark">
-            <div class="col-3 py-4 rounded-3 border border-dark">
-                <div class="row">
-                    <div class="col-12 text-center"><img src="/favicon.png" /></div>
-                    <div class="col text-center">SUBIR FOTO</div>
-                </div>
-            </div>
+<div class="row justify-content-center formulario-carga-producto">
+    <div class="col-12 text-center mb-4">
+        <div class="col-auto text-end mb-2">
+            <a href="" class="btn btn-primary">Carga Masiva xlsx</a>
+        </div>
+        <a href="/" class="d-block mx-auto py-3 border rounded-3 subir-imgo">
+            <img src="/favicon.png" class="img-fluid mb-2 p-img" alt="Subir Foto">
+            <div>Subir Foto</div>
         </a>
     </div>
-    <div class="col-5 mb-3 p-5 rounded-3 border border-dark">
-        <EditForm Model="unJuego" OnSubmit="@metodoParaProcesarElFormulario">
-            <div class="row mb-3">
-                <div class="col"><label>ID PRODUCTO : </label></div>
-                <div class="col"><input type="text"/></div>
+    <div class="col-6 mb-3 p-4 rounded-3 border">
+        <div class="row mb-3 align-items-center">
+            <label for="idProducto" class="col-4 col-form-label">ID Producto</label> 
+            <div class="col-8">
+                <input id="idProducto" type="text" class="form-control" />
             </div>
-            <div class="row mb-3">
-                <div class="col"><label>DESCRIPCIÓN : </label></div>
-                <div class="col"><input type="text" /></div>
+        </div>
+        <div class="row mb-3 align-items-center">
+            <label for="descripcion" class="col-4 col-form-label">Descripción</label>
+            <div class="col-8">
+                <input id="descripcion" type="text" class="form-control" />
             </div>
-            <div class="row mb-3">
-                <div class="col"><label>CATEGORÍA : </label></div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                </div>
+        </div>
+        <div class="row mb-3 align-items-center">
+            <label for="categoria" class="col-4 col-form-label">Categoría</label>
+            <div class="col-8">
+                <select id="categoria" class="form-select">
+                    <option>Seleccione una Categoría</option>
+                    <option>Procesadores</option>
+                    <option>Tarjetas Madre</option>
+                    <option>Memoria RAM</option>
+                    <option>Discos duros</option>
+                    <option>Unidades de Estado Sólido</option>
+                    <option>Tarjeteas Gráficas</option>
+                    <option>Fuentes de Alimentación</option>
+                    <option>Gabinetes</option>
+                    <option>Refrigeración</option>
+                </select>
             </div>
-            <div class="row mb-3">
-                <div class="col"><label>MARCA : </label></div>
-                <div class="col"><input type="text" /></div>
+        </div>
+        <div class="row mb-3 align-items-center">
+            <label for="marca" class="col-4 col-form-label">Marca</label>
+            <div class="col-8">
+                <input id="marca" type="text" class="form-control" />
             </div>
-            <div class="row mb-3">
-                <div class="col"><label>PRECIO VENTA : </label></div>
-                <div class="col"><input type="text" /></div>
+        </div>
+        <div class="row mb-3 align-items-center">
+            <label for="precioVenta" class="col-4 col-form-label">Precio</label>
+            <div class="col-8">
+                <input id="precioVenta" type="text" class="form-control" />
             </div>
-            <div class="row">
-                <div class="col"><label>ESTADO : </label></div>
-                <div class="col">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Dropdown button
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </div>
-                </div>
+        </div>
+        <div class="row align-items-center">
+            <label for="estado" class="col-4 col-form-label">Estado</label>
+            <div class="col-8">
+                <select id="estado" class="form-select">
+                    <option>Activo</option>
+                    <option>Inactivo</option>
+                </select>
             </div>
-        </EditForm>
-    </div> 
-    <div class="col-12 text-center pb-5">
-        <a class="btn btn-info" href="">Cargar Producto</a>
+        </div>
+        <div class="col-12 text-center mt-4">
+            <a class="btn btn-success" href="">Agregar Producto</a>
+        </div>
     </div>
 </div>
 
 @code {
-    [Parameter] public Juego unJuego { get; set; }  = new Juego();
+    [Parameter] public Juego unJuego { get; set; } = new Juego();
 
     private void metodoParaProcesarElFormulario()
     {
-        
+
     }
 }
