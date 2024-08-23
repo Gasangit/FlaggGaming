@@ -1,12 +1,26 @@
 ﻿@page "/"
 @using FlaggGaming.Pages.componentesIndex
+@using FlaggGaming.Model.juegoFlagg
+@inject FlaggGaming.Entity.DatosContext datosService
 
 <PageTitle>Flagg</PageTitle>
 
 <Carousel/>
 
+<MasBuscados arrayMasBuscados="@arrayMasBuscados" />
+
 <Destacados />
 
 <Ofertas />
+
+@code{
+    public JuegoFlagg[] arrayMasBuscados { get; set; } = new JuegoFlagg[4];
+
+    protected override async Task OnInitializedAsync()
+    {
+        arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).Take(4).ToArray();
+
+    }
+}
 
 

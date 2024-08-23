@@ -1,12 +1,14 @@
-﻿@page "/juego"
+﻿@page "/juego/{idJuegoFlagg}"
 @using FlaggGaming.Pages.componentesJuego
 @using FlaggGaming.Pages.componentesIndex
+@using FlaggGaming.Model.juegoFlagg
+@inject FlaggGaming.Entity.DatosContext datosService
 
 <Carousel />
 
 <div class="row">
     <div class="col">
-        <TituloEImagen />
+        <TituloEImagen imagenJuego="@unJuegoFlagg.imagen"/>
     </div>
     <div class="col">
         <SteamEpic />
@@ -17,5 +19,13 @@
 <Descripcion />
 
 @code {
+    [Parameter] public string? idJuegoFlagg { get; set; }
+    private JuegoFlagg unJuegoFlagg;
 
+    protected override void OnInitialized()
+    {
+        unJuegoFlagg = datosService.listaJuegosData.Where(game => game.idFlagg == new Guid(idJuegoFlagg)).FirstOrDefault();
+        unJuegoFlagg.contadorVistas++;
+        datosService.Update(unJuegoFlagg);
+    }
 }

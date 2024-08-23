@@ -1,14 +1,14 @@
-@using FlaggGaming.Model
+@using FlaggGaming.Model.juegoFlagg
 
 <div class="col-5 card cardHover">
-    <a href="/juego" class="text-decoration-none text-dark">
+    <a href="juego/@unJuego.idFlagg" class="text-decoration-none text-dark">
         <div class="row">
             <div class="col-md-8 card-body">
-                <h2 class="card-title">Titulo del juego</h2>
-                <p class="card-text">Descripcion del juego con algo de texto para rellenar el espacio</p>
+                <h2 class="card-title">@unJuego.nombre</h2>
+                <p class="card-text">@unJuego.descripcionCorta</p>
             </div>
             <div class="col-md-8 d-flex align-content-center">
-                <img class="img-fluid" src="/imagenes/cs2.webp" />
+                <img class="img-fluid" src=@unJuego.imagenMini />
             </div>
         </div>
     </a>
@@ -18,5 +18,5 @@
 @code
 {
     [Parameter]
-    public Juego? unJuego { get; set; }
+    public JuegoFlagg? unJuego { get; set; }
 }

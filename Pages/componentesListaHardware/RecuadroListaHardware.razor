@@ -1,0 +1,104 @@
+﻿<div class="container">
+    <div class="header-row">
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Buscar productos...">
+        </div>
+        <div class="filter-container">
+            <select class="filter-select">
+                <option value="">Ordenar por</option>
+                <option value="menor-precio">Menor precio</option>
+                <option value="mayor-precio">Mayor precio</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="product-grid">
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 1">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Producto 1</p>
+                    <p class="product-price">$100.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 2">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Producto 2</p>
+                    <p class="product-price">$200.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 3">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Producto 3</p>
+                    <p class="product-price">$200.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 4">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Producto 4</p>
+                    <p class="product-price">$200.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 5">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Producto 5</p>
+                    <p class="product-price">$200.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 6">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Memoria RAM Vengeance LPX gamer color negro 32GB 2 Corsair CMK32GX4M2E3200C16</p>
+                    <p class="product-price">$ 200.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 7">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Memoria RAM Vengeance LPX gamer color negro 32GB 2 Corsair CMK32GX4M2E3200C16</p>
+                    <p class="product-price">$ 200.00</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 8">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="product-name">Memoria RAM Vengeance LPX gamer color negro 32GB 2 Corsair CMK32GX4M2E3200C16</p>
+                    <p class="product-price">$ 1000.00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.clickable-card').forEach(card => {
+        card.addEventListener('click', () => {
+            window.location.href = /detalle/${ card.dataset.productId };
+        });
+    });
+</script>

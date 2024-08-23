@@ -71,18 +71,18 @@ dropbtn {
     z-index: 1;
 }
 
-    /* Estilos para los enlaces del menú */
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
+/* Estilos para los enlaces del menú */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
-        /* Cambiar el color del enlace cuando se pasa el mouse sobre él */
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
+/* Cambiar el color del enlace cuando se pasa el mouse sobre él */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
 
 /* Mostrar el menú desplegable cuando se pasa el mouse sobre el botón */
 .dropdown:hover .dropdown-content {
@@ -151,23 +151,25 @@ dropbtn {
 
 .bajada {
     margin: 10px;
-    padding: 10px 80px 10px 80px;
+    padding: 10px 40px 10px 40px;
     text-align: justify;
 }
 
 
 .redes_sociales {
     /*width: 50%;*/
-    margin: 20px;
-    padding: 20px;
+    margin: 5px;
+    padding: 10px;
     text-align: center;
+    font-family: Century;
+    font-size: 12px;
 }
 
 .gracias {
     margin: 10px;
     padding: 10px;
     font-family: Century;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .invitacion {
@@ -175,7 +177,7 @@ dropbtn {
     margin: 10px;
     padding: 10px;
     font-family: Century;
-    font-size: 20px;
+    font-size: 16px;
     /*text-align: justify;*/
 }
 
@@ -195,8 +197,9 @@ dropbtn {
 
 .redes_sociales_lks {
     list-style: none;
-    margin: 0 10px 0 10px;
+    margin: 0 5px 0 5px;
     text-align: left;
+    font-size: 14px;
 }
 
 .logo_usuario {
@@ -222,4 +225,11 @@ dropbtn {
 .copyright-paragraph {
     text-align: justify;
     margin-bottom: 20px;
+}
+
+.aplicacion {
+    width: 70%;
+    margin: 0 20px 0 0;
+    border-radius: 8%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
 }
