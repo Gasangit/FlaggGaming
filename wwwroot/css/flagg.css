@@ -228,8 +228,13 @@ dropbtn {
 }
 
 .aplicacion {
-    width: 70%;
+    width: 50%;
     margin: 0 20px 0 0;
     border-radius: 8%;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+}
+
+.imagen-nosotros {
+    width: 100px;
+    height: 100px
 }

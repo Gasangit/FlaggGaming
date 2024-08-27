@@ -22,6 +22,7 @@ namespace FlaggGaming.Model.juegoFlagg
         public string? imagen { get; set; }
         public string? imagenMini { get; set; }
         public string? urlTienda { get; set; }
+        public string? urlEpic { get; set; }
         //public decimal? precio { get; set; }
         public int? contadorVistas { get; set; }
         

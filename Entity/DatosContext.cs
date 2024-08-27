@@ -74,6 +74,7 @@ namespace FlaggGaming.Entity
                         juego.Property(j => j.imagen).HasColumnType("varchar(max)");
                         juego.Property(j => j.imagenMini).HasColumnType("varchar(max)");
                         juego.Property(j => j.urlTienda).HasColumnType("varchar(max)");
+                        juego.Property(j => j.urlEpic).HasColumnType("varchar(max)");
                         //juego.Property(j => j.precio).HasColumnType("varchar(max)");
                         juego.Property(j => j.contadorVistas).HasColumnType("int");
                         //juego.Property(j => j.idOferta).HasColumnType("varchar(max)");

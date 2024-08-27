@@ -1,0 +1,5 @@
+.form-control:focus {
+    border-color: red; /* Cambia el color del borde */
+    box-shadow: 0 0 5px red; /* Cambia el color del contorno */
+    outline: none; /* Elimina el contorno predeterminado */
+}

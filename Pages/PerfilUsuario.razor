@@ -1,1 +1,47 @@
-﻿
+﻿@page "/perfilusuario"
+@using FlaggGaming.Pages.componentesLogin
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form>
+                <h1 class="text-center">PERFIL USUARIO</h1>
+
+                <!-- Usuario -->
+                <div class="form-group">
+                    <label for="username">Usuario</label>
+                    <input type="text" class="form-control" id="username" placeholder="Admin" disabled>
+                </div>
+
+                <!-- Nombre de Usuario -->
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" class="form-control" id="name" placeholder="FlaggGaming">
+                </div>
+
+                <!-- Apellido de Usuario -->
+                <div class="form-group">
+                    <label for="lastname">Apellido</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="FlaggGaming">
+                </div>
+
+                <!-- Correo Electrónico -->
+                <div class="form-group">
+                    <label for="email">Mail</label>
+                    <input type="email" class="form-control" id="email" placeholder="flaggaming@mail.com">
+                </div>
+
+                <!-- Contraseña -->
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" id="password" placeholder="********">
+                </div>
+
+                <!-- Botón Guardar Cambios -->
+                <div class="text-center mt-2">
+                    <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
