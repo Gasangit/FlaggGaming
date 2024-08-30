@@ -235,6 +235,10 @@ dropbtn {
 }
 
 .imagen-nosotros {
-    width: 100px;
-    height: 100px
+    width: 150px;
+    height: auto;
+}
+
+.nos-tarjeta {
+    margin: 40px 20px 40px 20px;
 }
