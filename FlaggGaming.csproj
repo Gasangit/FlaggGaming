@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="Pages\componentesListaHardware\RecuadroListaHardware.razor.css" />
+    <None Remove="Pages\componentesListaTienda\RecuadroLogin.razor.css" />
     <None Remove="Pages\componentesLogin\RecuadroLogin.razor.css" />
     <None Remove="Pages\componentesMisProductosTienda\TablaMisProductos.razor.css" />
     <None Remove="Pages\componentesProducto\DatosComprar.razor.css" />
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <Content Include="Pages\componentesListaHardware\RecuadroListaHardware.razor.css" />
+    <Content Include="Pages\componentesListaTienda\RecuadroListaTienda.razor.css" />
     <Content Include="Pages\componentesLogin\RecuadroLogin.razor.css" />
     <Content Include="Pages\componentesMisProductosTienda\TablaMisProductos.razor.css" />
     <Content Include="Pages\componentesProducto\DatosComprar.razor.css">

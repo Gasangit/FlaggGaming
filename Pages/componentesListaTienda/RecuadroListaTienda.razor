@@ -1,0 +1,136 @@
+<div class="container">
+    <div class="header-row">
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="Buscar tiendas...">
+        </div>
+        <div class="filter-container">
+            <select class="filter-select">
+                <option value="">Filtrar por ubicación</option>
+                <option value="capital-federal">Capital Federal</option>
+                <option value="gba-norte">Bs.As G.B.A Norte</option>
+                <option value="gba-sur">Bs.As. G.B.A Sur</option>
+                <option value="gba-oeste">Bs.As. G.B.A Oeste</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="shop-grid">
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 1">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 2">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 3">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 4">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 5">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 6">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 7">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 8">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 9">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 10">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 11">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card clickable-card">
+            <img class="card-img" src="imagenes/tienda-logo.png" alt="Tienda 12">
+            <div class="card-body">
+                <div class="card-info">
+                    <p class="shop-name">Starko</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.clickable-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const tiendaId = card.getAttribute('data-tienda-id');
+            window.location.href = /detalle/${ tiendaId };
+        });
+    });
+</script>

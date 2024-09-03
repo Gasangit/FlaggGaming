@@ -181,20 +181,6 @@ dropbtn {
     /*text-align: justify;*/
 }
 
-#arrowTop {
-    height: 9px;
-    width: 14px;
-    color: orange;
-    /* position: fixed;*/
-    top: 10px;
-    left: 10px;
-    cursor: pointer;
-}
-
-    #arrowTop::before {
-        content: '▲';
-    }
-
 .redes_sociales_lks {
     list-style: none;
     margin: 0 5px 0 5px;
@@ -241,4 +227,33 @@ dropbtn {
 
 .nos-tarjeta {
     margin: 40px 20px 40px 20px;
+}
+
+.parrafo-acerca {
+    text-align: justify;
+    margin-bottom: 70px;
+}
+
+.parrafo-nombres {
+    font-size: 22px;
+}
+
+.parrafo-nosotros {
+    text-align: justify;
+}
+
+.cf-icon-svg {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    padding: 0 0 0 0;
+    margin: 10px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+
+.arrow_top {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    float: right;
 }
