@@ -1,36 +1,27 @@
-<div class="row rounded mt-5 p-3 m-1">
-    <div class="col-12 text-center">
-        <h2>Ofertas</h2>
-    </div>
-    <div class="col">
-        <div class="col card cardHover">
-            <a href="/juego" class="text-decoration-none text-dark">
-                <div class="row">
-                    <div class="col-md-8 card-body">
-                        <h2 class="card-title">Titulo del juego</h2>
-                        <p class="card-text">Descripcion del juego con algo de texto para rellenar el espacio</p>
-                    </div>
-                    <div class="col-md-8 d-flex align-content-center">
-                        <img class="img-fluid" src="/imagenes/AlanWake2.jpg" />
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
+@using FlaggGaming.Model.juegoFlagg
 
-    <div class="col">
-        <div class="col card cardHover">
-            <a href="/juego" class="text-decoration-none text-dark">
-                <div class="row">
-                    <div class="col-md-8 card-body">
-                        <h2 class="card-title">Titulo del juego</h2>
-                        <p class="card-text">Descripcion del juego con algo de texto para rellenar el espacio</p>
-                    </div>
-                    <div class="col-md-8 d-flex align-content-center">
-                        <img class="img-fluid" src="/imagenes/cs2.webp" />
-                    </div>
+<div class="row rounded mt-5 p-3 m-1">
+    <div class="row">
+        @if (arrayOfertas[0] != null)
+        {
+            <div class="row p-3 m-1">
+                <div class="col-12 text-center"><h2>Ofertas</h2></div>
+                <div class="col">
+                    @for (int i = 0; i < 8; i++)
+                    {
+                        <div class="row mt-3 justify-content-between px-2">
+                            <CardJuego unJuego="@arrayOfertas[i]" />
+                            <CardJuego unJuego="@arrayOfertas[i+1]" />
+                        </div>
+                        i++;
+                    }
                 </div>
-            </a>
-        </div>
+            </div>
+        }
     </div>
 </div>
+
+@code
+{
+    [Parameter] public JuegoFlagg[] arrayOfertas { get; set; }
+}

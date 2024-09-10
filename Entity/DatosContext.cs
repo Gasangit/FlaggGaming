@@ -6,13 +6,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlaggGaming.Entity
 {
-    public class DatosContext: DbContext
+    public class DatosContext : DbContext
     {
         public DbSet<ItemListaJuegoSteam> listaJuegos { get; set; }
         public DbSet<JuegoFlagg> listaJuegosData { get; set; }
+        public DbSet<Oferta> listaOfertas { get; set; }
 
         public DatosContext() { } //Constructor vacio
-        public DatosContext(DbContextOptions<DatosContext> optionsBuilder) : base(optionsBuilder) 
+        public DatosContext(DbContextOptions<DatosContext> optionsBuilder) : base(optionsBuilder)
         { } //Constructor que necesita MVC para interfaces.
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,16 +44,25 @@ namespace FlaggGaming.Entity
                 .ToTable("juegos")
                 .HasKey(juego => juego.idFlagg);
 
-            /*modelBuilder.Entity<Oferta>()
+            modelBuilder.Entity<Oferta>()
                 .ToTable("ofertas")
-                .HasKey(oferta => oferta.idOferta);*/
+                .HasKey(oferta => oferta.idOferta);
+
+
+            //Relación OFERTA JUEGOS
+            modelBuilder.Entity<Oferta>()
+                .HasMany(oferta => oferta.juegos)
+                .WithOne(juego => juego.oferta);
+            modelBuilder.Entity<JuegoFlagg>()
+                .HasOne(juego => juego.oferta)
+                .WithMany(oferta => oferta.juegos);
 
             modelBuilder.Entity<ItemListaJuegoSteam>(
                     juego =>
                     {
                         juego.Property(j => j.name).HasColumnType("varchar(500)");
                         juego.Property(j => j.created_at).HasColumnType("datetime");
-                    }                
+                    }
                 );
 
             modelBuilder.Entity<ItemListaJuegoEpic>(
@@ -77,7 +87,7 @@ namespace FlaggGaming.Entity
                         juego.Property(j => j.urlEpic).HasColumnType("varchar(max)");
                         //juego.Property(j => j.precio).HasColumnType("varchar(max)");
                         juego.Property(j => j.contadorVistas).HasColumnType("int");
-                        //juego.Property(j => j.idOferta).HasColumnType("varchar(max)");
+                        juego.Property(j => j.idOferta).HasColumnType("varchar(max)");
                         juego.Property(j => j.estudio).HasColumnType("varchar(max)");
                         juego.Property(j => j.requisitos).HasColumnType("varchar(max)");
                     }
@@ -90,16 +100,15 @@ namespace FlaggGaming.Entity
                        fecha.Property(j => j.proximamente).HasColumnType("BIT");
                        fecha.Property(j => j.fecha).HasColumnType("varchar(max)");
                    }
-               );
+               );*/
 
             modelBuilder.Entity<Oferta>(
                 oferta =>
                 {
                     oferta.Property(o => o.idOferta).HasColumnType("uniqueidentifier");
-                    oferta.Property(o => o.idFlagg).HasColumnType("uniqueidentifier");
                     oferta.Property(o => o.discount_percent).HasColumnType("int");
                 }
-                );*/
+                );
         }
     }
 }

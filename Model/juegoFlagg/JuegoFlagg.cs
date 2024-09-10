@@ -2,6 +2,7 @@ using FlaggGaming.Model.apiSteamJuego;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using FlaggGaming.Model.juegoFlagg;
 
 namespace FlaggGaming.Model.juegoFlagg
 {
@@ -25,12 +26,12 @@ namespace FlaggGaming.Model.juegoFlagg
         public string? urlEpic { get; set; }
         //public decimal? precio { get; set; }
         public int? contadorVistas { get; set; }
-        
+
         public string? estudio { get; set; }
         public string? requisitos { get; set; }
 
-        //public int? idOferta { get; set; }
-        //public Oferta? oferta { get; set; }
+        public Guid? idOferta { get; set; }
+        public Oferta? oferta { get; set; }
         //public FechaLanzamiento? fechaLanzamiento { get; set; }
 
         public JuegoFlagg() { }
@@ -48,7 +49,7 @@ namespace FlaggGaming.Model.juegoFlagg
             this.estudio = _estudio;
             this.requisitos = _requisitos;
             //this.fechaLanzamiento = _fechaLanzamiento;
-           
+
         }
 
         public JuegoFlagg(string _descripcionCorta, string _imagen, string _imagenMini, string _urlTienda, string _requisitos)

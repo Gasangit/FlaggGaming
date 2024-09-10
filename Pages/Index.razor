@@ -8,19 +8,18 @@
 <Carousel/>
 
 <MasBuscados arrayMasBuscados="@arrayMasBuscados" />
-
+<Ofertas arrayOfertas="@arrayOfertas" />
 <Destacados />
 
-<Ofertas />
+
 
 @code{
     public JuegoFlagg[] arrayMasBuscados { get; set; } = new JuegoFlagg[4];
+    public JuegoFlagg[] arrayOfertas { get; set; } = new JuegoFlagg[8];
 
     protected override async Task OnInitializedAsync()
     {
         arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).Take(4).ToArray();
-
+        //arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Take(8).ToArray();
     }
 }
-
-
