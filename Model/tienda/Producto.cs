@@ -1,8 +1,9 @@
 ﻿using FlaggGaming.Model.tienda;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlaggGaming.Model.tienda
 {
-    public class Producto
+    public class Producto:PageModel
     {
         public int idInternoProducto {  get; set; }
         public int idTienda { get; set; }

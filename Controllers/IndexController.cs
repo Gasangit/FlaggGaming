@@ -1,14 +1,22 @@
 ﻿using System;
 using FlaggGaming.Services.ServiciosAPISteam;
 using Microsoft.AspNetCore.Mvc;
+using FlaggGaming.Entity;
 
 public class IndexController: Controller
 {
-    private readonly JuegosListaTotalService _JuegosListaTotalService;
-    public IndexController(JuegosListaTotalService listaJuegosService)
+    private readonly DatosContext _context;
+    public IndexController(DatosContext contextService)
 	{
-        _JuegosListaTotalService  = listaJuegosService;
+        _context  = contextService;
 	}
+
+    public IActionResult Index() {
+
+
+
+        return View();
+    }
 
     
 }

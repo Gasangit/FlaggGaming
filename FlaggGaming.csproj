@@ -20,6 +20,7 @@
     <None Remove="Pages\componentesProducto\Grafico.razor.css" />
     <None Remove="Pages\componentesRegistroTiendas\RecuadroRegistroTiendas.razor.css" />
     <None Remove="Pages\componentesRegistro\RecuadroRegistro.razor.css" />
+    <None Remove="Pages\ListaDeJuegos.razor.css" />
     <None Remove="Shared\NewFile.txt" />
   </ItemGroup>
 
@@ -35,6 +36,9 @@
     <Content Include="Pages\componentesProducto\Grafico.razor.css" />
     <Content Include="Pages\componentesRegistroTiendas\RecuadroRegistroTiendas.razor.css" />
     <Content Include="Pages\componentesRegistro\RecuadroRegistro.razor.css" />
+    <Content Include="Pages\ListaDeJuegos.razor.css">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

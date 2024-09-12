@@ -24,6 +24,11 @@
     vertical-align: middle; /* Centra verticalmente la barra respecto a la imagen */
 }
 
+.reg-tienda {
+    margin-right: 15px;
+}
+
+
 .bg-body-tertiary {
     padding: 0;
     margin: 0;

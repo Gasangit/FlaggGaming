@@ -45,6 +45,8 @@ builder.Services.AddScoped<CargaInfoJuegoEpicEnBAseDeDatos>();
 //builder.Services.AddTransient<BackgroundService, CargaListaSteamEnBaseDeDatos>();
 builder.Services.AddHttpClient("scrapWebEpic");
 //builder.Services.AddScoped<IJSRuntime>();
+builder.Services.AddMvc();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 

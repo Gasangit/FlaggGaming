@@ -10,9 +10,9 @@
             <div class="col-md-8 d-flex align-content-center">
                 <img class="img-fluid" src=@unJuego.imagenMini />
             </div>
-            @if (unJuego.idOferta != null)
+            @if (unJuego.oferta != null)
             {
-                <div class="col-md-8">@unJuego.idOferta %</div>
+                <div class="col-md-8">@unJuego.oferta.discount_percent.ToString() %</div>
             }
         </div>
     </a>

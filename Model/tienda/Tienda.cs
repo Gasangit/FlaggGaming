@@ -1,6 +1,8 @@
-﻿namespace FlaggGaming.Model.tienda
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace FlaggGaming.Model.tienda
 {
-    public class Tienda
+    public class Tienda:PageModel
     {
         public int Id { get; set; }
         public string razonSocial {  get; set; }

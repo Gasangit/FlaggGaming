@@ -3,10 +3,11 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using FlaggGaming.Model.juegoFlagg;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlaggGaming.Model.juegoFlagg
 {
-    public class JuegoFlagg
+    public class JuegoFlagg : PageModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]

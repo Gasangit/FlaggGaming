@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlaggGaming.Model.Usuarios
 {
-    public class Usuario
+    public class Usuario: PageModel
     {
         public int Id { get; set; }
         public string nombre {  get; set; }

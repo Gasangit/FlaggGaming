@@ -2,6 +2,7 @@
 @using FlaggGaming.Pages.componentesIndex
 @using FlaggGaming.Model.juegoFlagg
 @inject FlaggGaming.Entity.DatosContext datosService
+@using Microsoft.EntityFrameworkCore
 
 <PageTitle>Flagg</PageTitle>
 
@@ -20,6 +21,6 @@
     protected override async Task OnInitializedAsync()
     {
         arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).Take(4).ToArray();
-        //arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Take(8).ToArray();
+        arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Include(game => game.oferta).ToArray();
     }
 }
