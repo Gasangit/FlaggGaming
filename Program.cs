@@ -45,8 +45,8 @@ builder.Services.AddScoped<CargaInfoJuegoEpicEnBAseDeDatos>();
 //builder.Services.AddTransient<BackgroundService, CargaListaSteamEnBaseDeDatos>();
 builder.Services.AddHttpClient("scrapWebEpic");
 //builder.Services.AddScoped<IJSRuntime>();
-builder.Services.AddMvc();
-builder.Services.AddControllersWithViews();
+//builder.Services.AddMvc();
+//builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -66,20 +66,5 @@ app.UseRouting();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-
-/*JobManager.Initialize();
-
-JobManager.AddJob(
-    () =>
-    {
-        CargaListaSteamEnBaseDeDatos carga = new CargaListaSteamEnBaseDeDatos();
-        carga.insertListaSteamEnBD();
-        Console.WriteLine("Ingreso de datos");
-    },
-    s => s.ToRunEvery(5).Seconds()
-);*/
-
-/*JuegosEpicListaParcialService claseLista = new JuegosEpicListaParcialService();
-await claseLista.getListaJuegosEpic();*/
 
 app.Run();

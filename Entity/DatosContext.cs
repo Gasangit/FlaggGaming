@@ -90,6 +90,7 @@ namespace FlaggGaming.Entity
                         juego.Property(j => j.idOferta).HasColumnType("varchar(max)");
                         juego.Property(j => j.estudio).HasColumnType("varchar(max)");
                         juego.Property(j => j.requisitos).HasColumnType("varchar(max)");
+                        juego.Property(j => j.ofertaidOferta).HasColumnType("uniqueidentifier");
                     }
                 );
 

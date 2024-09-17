@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlaggGaming.Model.juegoFlagg
 {
-    public class JuegoFlagg : PageModel
+    public class JuegoFlagg
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -34,6 +34,7 @@ namespace FlaggGaming.Model.juegoFlagg
         public Guid? idOferta { get; set; }
         public Oferta? oferta { get; set; }
         //public FechaLanzamiento? fechaLanzamiento { get; set; }
+        public Guid? ofertaidOferta { get; set; }
 
         public JuegoFlagg() { }
 

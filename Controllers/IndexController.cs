@@ -3,9 +3,9 @@ using FlaggGaming.Services.ServiciosAPISteam;
 using Microsoft.AspNetCore.Mvc;
 using FlaggGaming.Entity;
 
-public class IndexController: Controller
+public class IndexController/*: Controller*/
 {
-    private readonly DatosContext _context;
+    /*private readonly DatosContext _context;
     public IndexController(DatosContext contextService)
 	{
         _context  = contextService;
@@ -16,7 +16,7 @@ public class IndexController: Controller
 
 
         return View();
-    }
+    }*/
 
     
 }

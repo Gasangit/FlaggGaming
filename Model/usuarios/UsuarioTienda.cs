@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlaggGaming.Model.Usuarios
 {
-    public class UsuarioTienda: PageModel
+    public class UsuarioTienda/*: PageModel*/
     {
         public int idUsuario { get; set; }
         public int idTienda {  get; set; }

@@ -2,13 +2,10 @@
 using FlaggGaming.Services.ServiciosAPISteam;
 using Microsoft.AspNetCore.Mvc;
 
-public class IndexController: Controller
+public class UsuarioController /*: Controller*/
 {
-    private readonly JuegosListaTotalService _JuegosListaTotalService;
-    public IndexController(JuegosListaTotalService listaJuegosService)
-	{
-        _JuegosListaTotalService  = listaJuegosService;
-	}
+    
+    public UsuarioController(){}
 
     
 }

@@ -4,12 +4,13 @@
 @inject FlaggGaming.Entity.DatosContext datosService
 @using Microsoft.EntityFrameworkCore
 
+
 <PageTitle>Flagg</PageTitle>
 
 <Carousel/>
 
-<MasBuscados arrayMasBuscados="@arrayMasBuscados" />
-<Ofertas arrayOfertas="@arrayOfertas" />
+<MasBuscados />
+<Ofertas />
 <Destacados />
 
 
@@ -20,7 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).Take(4).ToArray();
-        arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Include(game => game.oferta).ToArray();
+        //arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).Take(4).ToArray();
+        //arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Include(game => game.oferta).ToArray();
     }
 }

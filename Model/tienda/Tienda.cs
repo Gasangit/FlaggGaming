@@ -2,7 +2,7 @@
 
 namespace FlaggGaming.Model.tienda
 {
-    public class Tienda:PageModel
+    public class Tienda/*:PageModel*/
     {
         public int Id { get; set; }
         public string razonSocial {  get; set; }
