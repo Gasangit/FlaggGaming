@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using FlaggGaming.Model.juegoFlagg;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Reflection.Metadata;
 
 namespace FlaggGaming.Model.juegoFlagg
 {
@@ -34,6 +35,7 @@ namespace FlaggGaming.Model.juegoFlagg
         public Guid? idOferta { get; set; }
         public Oferta? oferta { get; set; }
         //public FechaLanzamiento? fechaLanzamiento { get; set; }
+        [ForeignKey(nameof(oferta))]
         public Guid? ofertaidOferta { get; set; }
 
         public JuegoFlagg() { }

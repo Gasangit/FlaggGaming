@@ -9,8 +9,8 @@
 
 <Carousel/>
 
-<MasBuscados />
-<Ofertas />
+<MasBuscados arrayMasBuscados="@arrayMasBuscados"/>
+<Ofertas arrayOfertas="@arrayOfertas"/>
 <Destacados />
 
 
@@ -21,7 +21,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        //arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).Take(4).ToArray();
-        //arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Include(game => game.oferta).ToArray();
+        arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).ToArray();
+        arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Include(game => game.oferta).ToArray();
     }
 }
