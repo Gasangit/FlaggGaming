@@ -1,8 +1,10 @@
 @using FlaggGaming.Model.juegoFlagg
+@inject FlaggGaming.Entity.DatosContext datosService
+@using Microsoft.EntityFrameworkCore
 
 <div class="row rounded mt-5 p-3 m-1">
     <div class="row">
-        @if (arrayOfertas != null)
+        @if (arrayOfertasSeleccionadas != null)
         {
             <div class="row p-3 m-1">
                 <div class="col-12 text-center"><h2>Ofertas</h2></div>
@@ -10,8 +12,8 @@
                     @for (int i = 0; i < 8; i++)
                     {
                         <div class="row mt-3 justify-content-between px-2">
-                            <CardJuego unJuego="@arrayOfertas[i]" />
-                            <CardJuego unJuego="@arrayOfertas[i+1]" />
+                            <CardJuego unJuego="@arrayOfertasSeleccionadas[i]" />
+                            <CardJuego unJuego="@arrayOfertasSeleccionadas[i+1]" />
                         </div>
                         i++;
                     }
@@ -23,5 +25,25 @@
 
 @code
 {
-    [Parameter] public JuegoFlagg[] arrayOfertas { get; set; }
+    [Parameter] public JuegoFlagg[] arrayOfertasSeleccionadas { get; set; }
+    List<JuegoFlagg> juegosConOferta;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        juegosConOferta = datosService.listaJuegosData.Where(game => game.ofertaidOferta != null).Include(game => game.oferta).ToList();
+
+        for (int indice = 0; indice < arrayOfertasSeleccionadas.Length; indice++)
+        {
+            foreach (JuegoFlagg juegoBbdd in juegosConOferta)
+            {
+                if (arrayOfertasSeleccionadas[indice].idFlagg == juegoBbdd.idFlagg)
+                {
+                    arrayOfertasSeleccionadas[indice] = juegoBbdd;
+                }
+            }
+        }
+    }
+    
+
 }

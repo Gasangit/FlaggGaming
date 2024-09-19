@@ -10,18 +10,36 @@
 <Carousel/>
 
 <MasBuscados arrayMasBuscados="@arrayMasBuscados"/>
-<Ofertas arrayOfertas="@arrayOfertas"/>
+<Ofertas arrayOfertasSeleccionadas="@arrayOfertasSeleccionadas" />
 <Destacados />
 
 
 
 @code{
     public JuegoFlagg[] arrayMasBuscados { get; set; } = new JuegoFlagg[4];
-    public JuegoFlagg[] arrayOfertas { get; set; } = new JuegoFlagg[8];
+    public JuegoFlagg[]? arrayOfertas { get; set; }
+    public JuegoFlagg[] arrayOfertasSeleccionadas { get; set; } = new JuegoFlagg[8];
+    Random objetoRandom = new Random();
+    int randIndex;
+    JuegoFlagg? juegoRandom;
 
     protected override async Task OnInitializedAsync()
     {
         arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).ToArray();
-        arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).Include(game => game.oferta).ToArray();
+        arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).ToArray();
+
+        for (int indice = 0; indice < arrayOfertasSeleccionadas.GetLength(0) ; indice++)
+        {            
+            randIndex = objetoRandom.Next(arrayOfertas.Length);
+            juegoRandom = arrayOfertas[randIndex];
+
+            if (juegoRandom.ofertaidOferta == null)
+            {
+                juegoRandom.ofertaidOferta = juegoRandom.idOferta;
+                datosService.Update(juegoRandom);
+            }
+            arrayOfertasSeleccionadas[indice] = juegoRandom;
+        }
+        datosService.SaveChanges();
     }
 }

@@ -10,10 +10,10 @@
             <div class="col-md-8 d-flex align-content-center">
                 <img class="img-fluid" src=@unJuego.imagenMini />
             </div>
-            @*@if (unJuego.oferta != null)
+            @if (unJuego.oferta != null)
             {
-                <div class="col-md-8">@unJuego.oferta.discount_percent.ToString() %</div>
-            }*@
+                <div class="col-md-4 fs-1">@unJuego.oferta.discount_percent.ToString() %</div>
+            }
         </div>
     </a>
 </div>
@@ -23,4 +23,12 @@
 {
     [Parameter]
     public JuegoFlagg? unJuego { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (unJuego.descripcionCorta.Length > 150)
+        {
+            unJuego.descripcionCorta = unJuego.descripcionCorta.Substring(0, 150) + "...";
+        }
+    }
 }
