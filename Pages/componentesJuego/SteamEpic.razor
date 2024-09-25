@@ -11,7 +11,7 @@
             <div class="col-3 my-auto">
                 <div class="row p-2 mb-2">
                     <div class="col text-center rounded">
-                        <a href="store.steampowered.com" class="btn btn-primary">U$D 10</a>
+                        <a href="store.steampowered.com" class="btn btn-primary">U$D @precioSteamDolares.ToString()</a>
                     </div>
                 </div>
                 <div class="row p-2">
@@ -47,7 +47,20 @@
     {
         idJuegoTienda = unJuegoFlagg.idJuegoTienda.ToString();
         juegoSteamApi = await servicioJuegoApiSteam.getJuegoSteam(idJuegoTienda);
-        //precioSteamDolares =  juegoSteamApi[idJuegoTienda].data.price_overview.
 
+        while (!juegoSteamApi.ContainsKey(idJuegoTienda))
+        {
+            Console.WriteLine("No se encontró la KEY en el DICCIONARIO del JUEGO. Se esperan 10 segundos para repetir el pedido de JUEGO a la API.");
+            Thread.Sleep(10000);
+            juegoSteamApi = await servicioJuegoApiSteam.getJuegoSteam(idJuegoTienda);
+        }
+
+        if (juegoSteamApi[idJuegoTienda].success)
+        {
+            if (juegoSteamApi[idJuegoTienda].data.price_overview != null)
+            {
+                precioSteamDolares = (decimal) juegoSteamApi[idJuegoTienda].data.price_overview.final / 100;
+            }
+        }
     }
 }
