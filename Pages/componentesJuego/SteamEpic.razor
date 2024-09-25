@@ -1,4 +1,8 @@
-﻿<div class="row">
+﻿@using FlaggGaming.Model.apiSteamJuego
+@using FlaggGaming.Model.juegoFlagg
+@inject FlaggGaming.Services.ServiciosAPISteam.JuegoSteamService servicioJuegoApiSteam
+
+<div class="row">
     <div class="col mx-2">
         <div class="row border border-danger border-3 rounded">
             <div class="col-6 py-3 text-center">
@@ -34,5 +38,16 @@
 </div>
 
 @code {
+    [Parameter] public JuegoFlagg unJuegoFlagg { get; set; }
+    public Dictionary<string, JuegoSteam> juegoSteamApi;
+    public decimal precioSteamDolares;
+    public string idJuegoTienda;
 
+    protected override async Task OnInitializedAsync()
+    {
+        idJuegoTienda = unJuegoFlagg.idJuegoTienda.ToString();
+        juegoSteamApi = await servicioJuegoApiSteam.getJuegoSteam(idJuegoTienda);
+        //precioSteamDolares =  juegoSteamApi[idJuegoTienda].data.price_overview.
+
+    }
 }

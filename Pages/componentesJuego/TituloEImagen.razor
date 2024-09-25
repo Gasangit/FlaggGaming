@@ -1,5 +1,5 @@
 ﻿<div class="row bg-danger rounded">
-    <div class="col ms-5 ps-0"><h2 class="text-center">Counter - Strike 2</h2></div>
+    <div class="col ms-5 ps-0 text-light fs-2"><h2 class="text-center">@tituloJuego</h2></div>
 </div>
 <div class="row mt-2">
     <div class="col">
@@ -8,5 +8,6 @@
 </div>
 
 @code {
-    [Parameter] public string imagenJuego {get; set;}
+    [Parameter] public string imagenJuego { get; set; }
+    [Parameter] public string tituloJuego { get; set; }
 }

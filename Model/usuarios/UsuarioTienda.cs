@@ -3,11 +3,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FlaggGaming.Model.Usuarios
 {
-    public class UsuarioTienda/*: PageModel*/
+    public class UsuarioTienda
     {
-        public int idUsuario { get; set; }
-        public int idTienda {  get; set; }
-        public Usuario usuario {  get; set; }
-        public Tienda tienda {  get; set; }
+        public int IdU { get; set; }
+
+        public int IdT { get; set; }
+
+        public bool Active { get; set; }
+
+        public virtual Tienda IdTNavigation { get; set; } = null!;
+
+        public virtual Usuario IdUNavigation { get; set; } = null!;
     }
 }

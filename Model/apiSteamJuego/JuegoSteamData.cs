@@ -48,5 +48,6 @@ namespace FlaggGaming.Model.apiSteamJuego
         public string? background_raw { get; set; }
         public ContentDescriptors? content_descriptors { get; set; }
         public Ratings? ratings { get; set; }
+        public PriceOverview? price_overview { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace FlaggGaming.Model.Usuarios
         public string mail {  get; set; }
         public string password {  get; set; }
         public bool rolTienda { get; set; }
+        public virtual ICollection<UsuarioTienda> UsuariosTienda { get; set; } = new List<UsuarioTienda>();
     }
 }

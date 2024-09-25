@@ -12,8 +12,8 @@
                     @for (int i = 0; i < 8; i++)
                     {
                         <div class="row mt-3 justify-content-between px-2">
-                            <CardJuego unJuego="@arrayOfertasSeleccionadas[i]" />
-                            <CardJuego unJuego="@arrayOfertasSeleccionadas[i+1]" />
+                            <CardJuego unJuego="@arrayOfertasSeleccionadas[i]" esOfertaJuego="@esOferta"/>
+                            <CardJuego unJuego="@arrayOfertasSeleccionadas[i+1]" esOfertaJuego="@esOferta" />
                         </div>
                         i++;
                     }
@@ -27,7 +27,7 @@
 {
     [Parameter] public JuegoFlagg[] arrayOfertasSeleccionadas { get; set; }
     List<JuegoFlagg> juegosConOferta;
-
+    bool esOferta = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,6 +44,4 @@
             }
         }
     }
-    
-
 }

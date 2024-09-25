@@ -10,7 +10,7 @@
             <div class="col-md-8 d-flex align-content-center">
                 <img class="img-fluid" src=@unJuego.imagenMini />
             </div>
-            @if (unJuego.oferta != null)
+            @if (unJuego.oferta != null && esOfertaJuego == true)
             {
                 <div class="col-md-4 fs-1">@unJuego.oferta.discount_percent.ToString() %</div>
             }
@@ -21,8 +21,8 @@
 
 @code
 {
-    [Parameter]
-    public JuegoFlagg? unJuego { get; set; }
+    [Parameter] public JuegoFlagg? unJuego { get; set; }
+    [Parameter] public bool? esOfertaJuego { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {

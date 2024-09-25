@@ -8,24 +8,24 @@
 
 <div class="row">
     <div class="col">
-        <TituloEImagen imagenJuego="@unJuegoFlagg.imagen"/>
+        <TituloEImagen imagenJuego="@unJuegoFlagg.imagen" tituloJuego="@unJuegoFlagg.nombre"/>
     </div>
     <div class="col">
-        <SteamEpic />
+        <SteamEpic unJuegoFlagg="@unJuegoFlagg"/>
     </div>
 </div>
 
-<Requisitos />
-<Descripcion />
+<Requisitos descripcionJuego="@unJuegoFlagg.descripcionCorta"/>
 
 @code {
     [Parameter] public string? idJuegoFlagg { get; set; }
-    private JuegoFlagg unJuegoFlagg;
+    public JuegoFlagg unJuegoFlagg;
 
     protected override void OnInitialized()
     {
         unJuegoFlagg = datosService.listaJuegosData.Where(game => game.idFlagg == new Guid(idJuegoFlagg)).FirstOrDefault();
         unJuegoFlagg.contadorVistas++;
         datosService.Update(unJuegoFlagg);
+        datosService.SaveChanges();
     }
 }

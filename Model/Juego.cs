@@ -1,4 +1,6 @@
-﻿namespace FlaggGaming.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FlaggGaming.Model
 {
     public class Juego
     {
