@@ -1,36 +1,47 @@
 ﻿@using FlaggGaming.Model.apiSteamJuego
 @using FlaggGaming.Model.juegoFlagg
 @inject FlaggGaming.Services.ServiciosAPISteam.JuegoSteamService servicioJuegoApiSteam
+@inject FlaggGaming.Services.ServiciosAPIEpic.JuegoEpicService servicioJuegoEpic
+@inject FlaggGaming.Services.ServiciosParaCalculos.ServicioDolar servicioDolarTarjeta
+@inject FlaggGaming.Services.ServiciosParaCalculos.ServicioIPC servicioIPC
 
 <div class="row">
     <div class="col mx-2">
         <div class="row border border-danger border-3 rounded">
-            <div class="col-6 py-3 text-center">
+            <div class="col-4 py-3 text-center">
                 <img src="/imagenes/logoSteam.jpg" class="img-fluid" /> @*STEAM*@
             </div>
-            <div class="col-3 my-auto">
-                <div class="row p-2 mb-2">
-                    <div class="col text-center rounded">
-                        <a href="store.steampowered.com" class="btn btn-primary">U$D @precioSteamDolares.ToString()</a>
+            <div class="col-8 my-auto">
+                <div class="row p-2 mb-1">
+                    <div class="col text-center rounded d-grid gap-2">
+                        <a href="store.steampowered.com" class="btn btn-primary">Precio: U$D @precioSteamDolares.ToString()</a>
                     </div>
                 </div>
                 <div class="row p-2">
-                    <div class="col text-center rounded">
-                        <a href="store.steampowered.com" class="btn btn-primary">$ 10000</a>
+                    <div class="col text-center rounded d-grid gap-2">
+                        <a href="store.steampowered.com" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaSteam.ToString("N2")</a>
+                    </div>
+                </div>
+                <div class="row p-2">
+                    <div class="col text-center rounded d-grid gap-2">
+                        <a href="store.steampowered.com" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirSteam.ToString("N2")</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mt-3 border border-danger border-3 rounded">
-            <div class="col-6 py-2 text-center">
+            <div class="col-4 py-2 text-center">
                 <img src="/imagenes/logoEpic.jpg" class="img-fluid" /> @*EPIC*@
             </div>
-            <div class="col-3 my-auto">
-                <div class="row p-2 mb-2">
-                    <div class="col text-center"><a href="www.epicgames.com" class="btn btn-primary">U$D 15</a></div>
+            <div class="col-8 my-auto">
+                <div class="row p-2 mb-1">
+                    <div class="col text-center d-grid gap-2"><a href="www.epicgames.com" class="btn btn-primary">Precio: U$D @precioEpicDolares.ToString()</a></div>
                 </div>
                 <div class="row p-2">
-                    <div class="col text-center"><a href="www.epicgames.com" class="btn btn-primary">$ 15000</a></div>
+                    <div class="col text-center d-grid gap-2"><a href="www.epicgames.com" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaEpic.ToString("N2")</a></div>
+                </div>
+                <div class="row p-2">
+                    <div class="col text-center d-grid gap-2"><a href="www.epicgames.com" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirEpic.ToString("N2")</a></div>
                 </div>
             </div>
         </div>
@@ -40,18 +51,29 @@
 @code {
     [Parameter] public JuegoFlagg unJuegoFlagg { get; set; }
     public Dictionary<string, JuegoSteam> juegoSteamApi;
-    public decimal precioSteamDolares;
+    public decimal precioSteamDolares = 0.0M;
+    public decimal precioEpicDolares = 0.0M;
+    public decimal valorDolarTarjeta = 0.0M;
+    public decimal valorInflacion = 0.0M;
+    public decimal precioPostaSteam = 0.0M;
+    public decimal precioPareDeSufrirSteam;
+    public decimal precioPostaEpic = 0.0M;
+    public decimal precioPareDeSufrirEpic = 0.0M;
+
     public string idJuegoTienda;
 
     protected override async Task OnInitializedAsync()
     {
         idJuegoTienda = unJuegoFlagg.idJuegoTienda.ToString();
+        valorDolarTarjeta = await servicioDolarTarjeta.getValorDolarTarjeta();
+        valorInflacion = await servicioIPC.getValoresIPC();
         juegoSteamApi = await servicioJuegoApiSteam.getJuegoSteam(idJuegoTienda);
+        precioEpicDolares = await servicioJuegoEpic.getPrecioJuegoEpic(unJuegoFlagg.nombre);
 
         while (!juegoSteamApi.ContainsKey(idJuegoTienda))
         {
-            Console.WriteLine("No se encontró la KEY en el DICCIONARIO del JUEGO. Se esperan 10 segundos para repetir el pedido de JUEGO a la API.");
-            Thread.Sleep(10000);
+            Console.WriteLine("No se encontró la KEY en el DICCIONARIO del JUEGO. Se esperan 3 segundos para repetir el pedido de JUEGO a la API.");
+            Thread.Sleep(3000);
             juegoSteamApi = await servicioJuegoApiSteam.getJuegoSteam(idJuegoTienda);
         }
 
@@ -62,5 +84,14 @@
                 precioSteamDolares = (decimal) juegoSteamApi[idJuegoTienda].data.price_overview.final / 100;
             }
         }
+
+        
+        Console.WriteLine($"Valor Dolar Tarjeta en vista SteamEpic (Juego) {valorDolarTarjeta}");
+
+        precioPostaSteam = precioSteamDolares * valorDolarTarjeta;
+        precioPostaEpic = precioEpicDolares * valorDolarTarjeta;
+
+        precioPareDeSufrirSteam = (precioPostaSteam * valorInflacion) + precioPostaSteam;
+        precioPareDeSufrirEpic = (precioPostaEpic * valorInflacion) + precioPostaEpic;
     }
 }

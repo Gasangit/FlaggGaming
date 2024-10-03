@@ -1,80 +1,148 @@
 ﻿@page "/listajuegos"
-
-@using FlaggGaming.Model
+@using FlaggGaming.Model.juegoFlagg
+@inject FlaggGaming.Entity.DatosContext datosService
+@using System.Linq
+@using Microsoft.EntityFrameworkCore
 
 <div class="row">
     <div class="col-9 text-center">
         <h1>LISTA DE JUEGOS</h1>
     </div>
     <div class="col-3 text-right">
-        <input type="text" class="search-box" placeholder="Buscar Juego" style="width: 100%; font-size: 18px;">
+        <input type="text" class="search-box" placeholder="Buscar Juego" style="width: 100%; font-size: 18px;" @oninput="OnSearchInput" />
     </div>
 </div>
 
 <div class="row">
-    <div class="col-6">
-        <h2>STEAM</h2>
-        <div class="col-6 card clickable-card" style="margin-bottom: 10px;">
-            <img class="card-img" src="/imagenes/cs2.jpg" alt="Juego1" />
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name"> Counter-Strike 2 </p>
-                    <p class="product-price"> Free </p>
-                </div>
-            </div>
-        </div>
+    <div class="col-12">
+        <h2>JUEGOS</h2>
 
-        <div class="col-6 card clickable-card" style="margin-bottom: 10px;">
-            <img class="card-img" src="/imagenes/AlanWake2.jpg" alt="Juego2" />
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name"> Alan Wake II </p>
-                    <p class="product-price"> USD 10,50 </p>
-                </div>
+        @if (isLoading)
+        {
+            <p>Cargando juegos...</p> <!-- Mensaje de carga opcional -->
+        }
+        else if (paginatedJuegos != null && paginatedJuegos.Any())
+        {
+            <div class="row">
+                @foreach (var juego in paginatedJuegos)
+                {
+                    <div class="col-sm-4 col-md-3" style="padding-bottom: 15px;">
+                        <a href="juego/@juego.idFlagg" class="text-decoration-none text-dark">
+                            <div class="card clickable-card h-100" style="margin-bottom: 10px;">
+                                <img class="card-img-top" src=@juego.imagenMini alt=@juego.nombre style="height: 200px; object-fit: cover;" />
+                                <div class="card-body d-flex flex-column">
+                                    <div class="card-info mb-auto">
+                                        <p class="product-name" style="font-size: 16px; font-weight: bold;">@juego.nombre</p>
+                                        <p class="product-grid" style="font-size: 14px;">@juego.descripcionCorta</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
             </div>
-        </div>
 
-        <div class="col-6 card clickable-card" style="margin-bottom: 10px;">
-            <img class="card-img" src="/imagenes/Battlefield2042.jpg" alt="Juego3" />
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name"> BattleField 2042 </p>
-                    <p class="product-price"> USD 35,00 </p>
+            <!-- Paginación -->
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-primary mx-2" @onclick="PreviousPage" disabled="@(!HasPreviousPage)">Anterior</button>
+                    <span>Página @currentPage de @totalPages</span>
+                    <button class="btn btn-primary mx-2" @onclick="NextPage" disabled="@(!HasNextPage)">Siguiente</button>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="col-6">
-        <h2>EPIC GAMES</h2>
-        <div class="col-6 card clickable-card" style="margin-bottom: 10px;">
-            <img class="card-img" src="/imagenes/cs2.jpg" alt="Juego1" />
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name"> Counter-Strike 2 </p>
-                    <p class="product-price"> Free </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 card clickable-card" style="margin-bottom: 10px;">
-            <img class="card-img" src="/imagenes/AlanWake2.jpg" alt="Juego2" />
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name"> Alan Wake II </p>
-                    <p class="product-price"> USD 15,00 </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6 card clickable-card" style="margin-bottom: 10px;">
-            <img class="card-img" src="/imagenes/Battlefield2042.jpg" alt="Juego3" />
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name"> BattleField 2042 </p>
-                    <p class="product-price"> USD 25,00 </p>
-                </div>
-            </div>
-        </div>
+        }
+        else
+        {
+            <p>No se encontraron juegos.</p>
+        }
     </div>
 </div>
+
+@code
+{
+    private List<JuegoFlagg> juegos = new List<JuegoFlagg>();
+    private List<JuegoFlagg> filteredJuegos = new List<JuegoFlagg>();
+    private List<JuegoFlagg> paginatedJuegos = new List<JuegoFlagg>();
+    private string searchQuery = string.Empty;
+    private bool isLoading = true;
+
+    // Variables para la paginación
+    private int currentPage = 1;
+    private int pageSize = 12;
+    private int totalPages => (int)Math.Ceiling((double)filteredJuegos.Count / pageSize);
+
+    // Propiedades para deshabilitar botones de paginación
+    private bool HasPreviousPage => currentPage > 1;
+    private bool HasNextPage => currentPage < totalPages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            isLoading = true; // Indicamos que estamos cargando
+            juegos = await datosService.listaJuegosData.ToListAsync();
+            filteredJuegos = juegos; // Inicialmente mostramos todos los juegos
+            UpdatePagination(); // Actualizamos la paginación
+        }
+        catch (Exception ex)
+        {
+            // Manejo de errores (opcional)
+            Console.WriteLine($"Error cargando los juegos: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false; // Indicamos que la carga terminó
+        }
+    }
+
+    private void OnSearchInput(ChangeEventArgs e)
+    {
+        searchQuery = e.Value.ToString().ToLower(); // Guardamos el valor de búsqueda
+        FilterJuegos();
+    }
+
+    private void FilterJuegos()
+    {
+        if (string.IsNullOrEmpty(searchQuery))
+        {
+            filteredJuegos = juegos; // Si no hay búsqueda, mostramos todos los juegos
+        }
+        else
+        {
+            filteredJuegos = juegos
+                .Where(j => j.nombre.ToLower().Contains(searchQuery)) // Filtramos por el nombre del juego
+                .ToList();
+        }
+
+        // Reseteamos a la primera página tras la búsqueda
+        currentPage = 1;
+        UpdatePagination();
+    }
+
+    private void UpdatePagination()
+    {
+        // Calculamos qué juegos se mostrarán en la página actual
+        paginatedJuegos = filteredJuegos
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
+
+    private void NextPage()
+    {
+        if (HasNextPage)
+        {
+            currentPage++;
+            UpdatePagination();
+        }
+    }
+
+    private void PreviousPage()
+    {
+        if (HasPreviousPage)
+        {
+            currentPage--;
+            UpdatePagination();
+        }
+    }
+}

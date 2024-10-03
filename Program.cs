@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using FluentScheduler;
 using System.Runtime.Serialization.DataContracts;
 using FlaggGaming.Services.ServiciosConTimer;
+using FlaggGaming.Services.ServiciosParaCalculos;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,23 +31,24 @@ builder.Logging.ClearProviders(); //limpia la consola de los mensajes internos d
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddAuthentication(); //para identity
 //builder.Services.AddHostedService<TimerDescargaListaTotalSteam>();
 //builder.Services.AddHostedService<TimerDescargaListaTotalEpic>();
 //builder.Services.AddHostedService<TimerDescargaInfoJuegoSteam>();
 builder.Services.AddScoped<juegosIndexService>();
 builder.Services.AddScoped<JuegosListaTotalService>();
 builder.Services.AddScoped<JuegoSteamService>();
+builder.Services.AddScoped<JuegoEpicService>();
 builder.Services.AddScoped<ScrapWebEpicService>();
 builder.Services.AddScoped<EpicGameStoreNetService>();
 builder.Services.AddScoped<JuegosEpicListaParcialService>();
 builder.Services.AddScoped<CargaListaSteamEnBaseDeDatos>();
 builder.Services.AddScoped<CargaInfoJuegoSteamEnBAseDeDatos>();
 builder.Services.AddScoped<CargaInfoJuegoEpicEnBAseDeDatos>();
-//builder.Services.AddTransient<BackgroundService, CargaListaSteamEnBaseDeDatos>();
+builder.Services.AddScoped<ServicioDolar>();
+builder.Services.AddScoped<ServicioIPC>();
 builder.Services.AddHttpClient("scrapWebEpic");
-//builder.Services.AddScoped<IJSRuntime>();
-//builder.Services.AddMvc();
-//builder.Services.AddControllersWithViews();
+
 
 var app = builder.Build();
 
@@ -65,6 +67,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlazorHub();
+app.UseAuthentication(); //para identity
+app.UseAuthorization(); //para identity
 app.MapFallbackToPage("/_Host");
 
 app.Run();
