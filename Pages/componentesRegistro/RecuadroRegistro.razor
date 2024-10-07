@@ -1,27 +1,43 @@
-﻿<div class="container">
+﻿@using FlaggGaming.Entity
+@using FlaggGaming.Model.Usuarios
+@inject NavigationManager Navigation
+@inject DatosContext _context
+
+<div class="container">
     <div class="row">
         <div class="col-6 registro-form">
-            <form>
+            <EditForm Model="@usuario" OnValidSubmit="Registro">
                 <h1 class="text-center">REGISTRO</h1>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger">@errorMessage</div>
+                }
+
+                @if (!string.IsNullOrEmpty(successMessage))
+                {
+                    <div class="alert alert-success">@successMessage</div>
+                }
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Nombre" />
+                    <InputText @bind-Value="usuario.nombre" class="form-control" placeholder="Nombre" />
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Apellido" />
+                    <InputText @bind-Value="usuario.apellido" class="form-control" placeholder="Apellido" />
                 </div>
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Ingrese mail" />
+                    <InputText @bind-Value="usuario.mail" class="form-control" placeholder="Ingrese mail" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Ingrese Contraseña" />
+                    <InputText @bind-Value="usuario.password" type="password" class="form-control" placeholder="Ingrese Contraseña" />
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Repetir contraseña" />
+                    <InputText @bind-Value="confirmPassword" type="password" class="form-control" placeholder="Repetir contraseña" />
                 </div>
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary">Crear Cuenta</button>
                 </div>
-            </form>
+            </EditForm>
         </div>
         <div class="col-6 image-container">
             <img src="/imagenes/Battlefield2042.jpg" class="img-fluid" alt="Battlefield 2042" />
@@ -30,5 +46,68 @@
 </div>
 
 @code {
+    private Usuario usuario = new Usuario();
+    private string confirmPassword;
+    private string errorMessage;
+    private string successMessage;
 
+
+    private async Task Registro()
+    {
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+
+        if (!EmailValido(usuario.mail))
+        {
+            errorMessage = "Correo Electrónico inválido";
+        }
+        else if (string.IsNullOrEmpty(usuario.password) || string.IsNullOrEmpty(confirmPassword))
+        {
+            errorMessage = "Por favor, ingresa los datos correspondientes";
+        }
+        else if (usuario.password != confirmPassword)
+        {
+            errorMessage = "Las contraseñas no coinciden";
+        }
+        else if (ContainsSqlInjection(usuario.mail) || ContainsSqlInjection(usuario.password))
+        {
+            errorMessage = "Datos inválidos";
+        }
+        else
+        {
+            var usuarioExistente = _context.Usuarios.SingleOrDefault(u => u.mail == usuario.mail);
+            if (usuarioExistente != null)
+            {
+                errorMessage = "El correo electrónico ya está registrado";
+            }
+            else
+            {
+                usuario.password = BCrypt.Net.BCrypt.HashPassword(usuario.password);
+                _context.Usuarios.Add(usuario);
+                await _context.SaveChangesAsync();
+
+                successMessage = "Registro exitoso.";
+
+                Navigation.NavigateTo("/login");
+            }
+        }
+    }
+
+    private bool EmailValido(string email)
+    {
+        return new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(email);
+    }
+
+    private bool ContainsSqlInjection(string input)
+    {
+        string[] sqlKeywords = { "SELECT", "INSERT", "UPDATE", "DELETE", "DROP", "TABLE" };
+        foreach (var keyword in sqlKeywords)
+        {
+            if (input.ToUpper().Contains(keyword))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

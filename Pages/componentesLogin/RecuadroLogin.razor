@@ -1,24 +1,101 @@
+@using FlaggGaming.Entity
+@using FlaggGaming.Model.Usuarios
+@inject NavigationManager Navigation
+@inject DatosContext _context
+
 <div class="container">
     <div class="row">
         <div class="col-6 login-form">
-            <form>
+            <EditForm Model="@usuario" OnValidSubmit="Login">
                 <h1 class="text-center">BIENVENIDO</h1>
+
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger">@errorMessage</div>
+                }
+
+                @if (!string.IsNullOrEmpty(successMessage))
+                {
+                    <div class="alert alert-success">@successMessage</div>
+                }
+
                 <div class="form-group">
-                    <input type="email" id="email" class="form-control" placeholder="Ingrese mail" />
+                    <InputText @bind-Value="usuario.mail" class="form-control" placeholder="Ingrese mail" />
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" class="form-control" placeholder="Ingrese Contraseña" />
+                    <InputText @bind-Value="usuario.password" type="password" class="form-control" placeholder="Ingrese Contraseña" />
                 </div>
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-                    <a class="" href="/registro" role="button" aria-expanded="false">
-                        Registrarse
-                    </a>
+                    <button type="button" class="btn btn-secondary" @onclick="Registrarse">Registrarse</button>
                 </div>
-            </form>
+            </EditForm>
         </div>
         <div class="col-6 image-container">
             <img src="imagenes/Yoshi-MarioKart.jpg" class="img-fluid" alt="Yoshi en Mario Kart">
         </div>
     </div>
 </div>
+
+@code {
+    private Usuario usuario = new Usuario();
+    private string errorMessage;
+    private string successMessage;
+
+    private async Task Login()
+    {
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+
+        if (string.IsNullOrEmpty(usuario.mail) || string.IsNullOrEmpty(usuario.password))
+        {
+            errorMessage = "Por favor, completa todos los campos.";
+            return;
+        }
+
+        if (!EmailValido(usuario.mail))
+        {
+            errorMessage = "Correo Electrónico inválido";
+        }
+        else if (ContainsSqlInjection(usuario.mail) || ContainsSqlInjection(usuario.password))
+        {
+            errorMessage = "Correo Electrónico o Contraseña inválidos";
+        }
+        else
+        {
+            var usuarioExistente = _context.Usuarios.SingleOrDefault(u => u.mail == usuario.mail);
+            if (usuarioExistente != null && BCrypt.Net.BCrypt.Verify(usuario.password, usuarioExistente.password))
+            {
+                successMessage = "Inicio de sesión exitoso.";
+                Navigation.NavigateTo("/"); //Falta agregar ruta una vez logueado el usuario
+            }
+            else
+            {
+                errorMessage = "Mail y/o Contraseña incorrectos";
+            }
+        }
+    }
+
+    private bool EmailValido(string email)
+    {
+        return new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(email);
+    }
+
+    private bool ContainsSqlInjection(string input)
+    {
+        string[] sqlKeywords = { "SELECT", "INSERT", "UPDATE", "DELETE", "DROP", "TABLE" };
+        foreach (var keyword in sqlKeywords)
+        {
+            if (input.ToUpper().Contains(keyword))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void Registrarse()
+    {
+        Navigation.NavigateTo("/registro");
+    }
+}

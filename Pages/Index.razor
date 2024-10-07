@@ -4,7 +4,6 @@
 @inject FlaggGaming.Entity.DatosContext datosService
 @using Microsoft.EntityFrameworkCore
 
-
 <PageTitle>Flagg</PageTitle>
 
 <Carousel/>
@@ -12,8 +11,6 @@
 <MasBuscados arrayMasBuscados="@arrayMasBuscados"/>
 <Ofertas arrayOfertasSeleccionadas="@arrayOfertasSeleccionadas" />
 <Destacados />
-
-
 
 @code{
     public JuegoFlagg[] arrayMasBuscados { get; set; } = new JuegoFlagg[4];
@@ -29,17 +26,19 @@
         arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).ToArray();
 
         for (int indice = 0; indice < arrayOfertasSeleccionadas.GetLength(0) ; indice++)
-        {            
+            {            
             randIndex = objetoRandom.Next(arrayOfertas.Length);
             juegoRandom = arrayOfertas[randIndex];
 
             if (juegoRandom.ofertaidOferta == null)
-            {
-                juegoRandom.ofertaidOferta = juegoRandom.idOferta;
+                {
+                juegoRandom.ofertaidOferta = new Guid(juegoRandom.idOferta);
                 datosService.Update(juegoRandom);
             }
             arrayOfertasSeleccionadas[indice] = juegoRandom;
         }
         datosService.SaveChanges();
+
+        
     }
 }

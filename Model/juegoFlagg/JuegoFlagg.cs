@@ -32,7 +32,7 @@ namespace FlaggGaming.Model.juegoFlagg
         public string? estudio { get; set; }
         public string? requisitos { get; set; }
 
-        public Guid? idOferta { get; set; }
+        public /*Guid?*/ string? idOferta { get; set; }
         public Oferta? oferta { get; set; }
         //public FechaLanzamiento? fechaLanzamiento { get; set; }
         [ForeignKey(nameof(oferta))]
