@@ -5,7 +5,7 @@ namespace FlaggGaming.Model.Usuarios
 {
     public class UsuarioTienda
     {
-        public int IdU { get; set; }
+        /*public int IdU { get; set; }
 
         public int IdT { get; set; }
 
@@ -13,6 +13,6 @@ namespace FlaggGaming.Model.Usuarios
 
         public virtual Tienda IdTNavigation { get; set; } = null!;
 
-        public virtual Usuario IdUNavigation { get; set; } = null!;
+        public virtual Usuario IdUNavigation { get; set; } = null!;*/
     }
 }

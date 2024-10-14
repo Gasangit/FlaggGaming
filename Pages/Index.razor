@@ -13,7 +13,8 @@
 <Destacados />
 
 @code{
-    public JuegoFlagg[] arrayMasBuscados { get; set; } = new JuegoFlagg[4];
+    public List<JuegoFlagg> listaJuegosBaseDeDatos = new List<JuegoFlagg>();
+    public JuegoFlagg[] arrayMasBuscados { get; set; } = new JuegoFlagg[8];
     public JuegoFlagg[]? arrayOfertas { get; set; }
     public JuegoFlagg[] arrayOfertasSeleccionadas { get; set; } = new JuegoFlagg[8];
     Random objetoRandom = new Random();
@@ -22,8 +23,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        arrayMasBuscados = datosService.listaJuegosData.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).ToArray();
-        arrayOfertas = datosService.listaJuegosData.Where(game => game.idOferta != null).ToArray();
+        listaJuegosBaseDeDatos = datosService.listaJuegosData.ToList();
+        arrayMasBuscados = listaJuegosBaseDeDatos.OrderByDescending(game => game.contadorVistas).Where(game => game.imagenMini != null).Take(8).ToArray();
+        arrayOfertas = listaJuegosBaseDeDatos.Where(game => game.idOferta != null).ToArray();
 
         for (int indice = 0; indice < arrayOfertasSeleccionadas.GetLength(0) ; indice++)
             {            

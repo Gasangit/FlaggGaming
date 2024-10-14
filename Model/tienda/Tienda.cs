@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using FlaggGaming.Model.Usuarios;
+using FlaggGaming.Model.usuarios;
 
 namespace FlaggGaming.Model.tienda
 {
@@ -32,7 +32,7 @@ namespace FlaggGaming.Model.tienda
 
         public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
 
-        public virtual ICollection<UsuarioTienda> UsuariosTienda { get; set; } = new List<UsuarioTienda>();
+        public virtual ICollection<UsuariosTienda> UsuariosTienda { get; set; } = new List<UsuariosTienda>();
         
         /*public int Id { get; set; }
         public string razonSocial {  get; set; }

@@ -18,11 +18,12 @@ public class JuegoEpicService
 
     public async Task<decimal> getPrecioJuegoEpic(string nombreJuego)
     {
-        Console.WriteLine("<< getListaJuegosEpic >>");
+        Console.WriteLine("<< JuegoEpicService - getPrecioJuegoEpic >>");
         List<JuegoFlagg> flaggGamesList = new List<JuegoFlagg>();
         decimal precioJuegoEpic = 0.0M;
         string precioConSimbolo;
         string precioSinSimbolo;
+        string consulta;
 
         var _httpClient = _httpClientFactory.CreateClient("clienteEpic");
         _httpClient.DefaultRequestHeaders.Clear();
@@ -32,7 +33,9 @@ public class JuegoEpicService
         int contarJuegos = 0;
         bool esJuego;
 
-        var respuesta = await _httpClient.GetAsync(ConsultaApiEpic.armarConsultaEpic(nombreJuego, 10, "title", "asc", 1)).ConfigureAwait(false);
+        consulta = ConsultaApiEpic.armarConsultaEpic(nombreJuego, 10, "title", "asc", 0);
+        //Console.WriteLine($"\t\tConsulta enviada a EPIC: {consulta}");
+        var respuesta = await _httpClient.GetAsync(consulta).ConfigureAwait(false);
         ObjetoJsonEpicGraphql objetoJson = new ObjetoJsonEpicGraphql();
 
         if (respuesta.IsSuccessStatusCode)
@@ -44,16 +47,15 @@ public class JuegoEpicService
             {
                 contar++;
                 esJuego = false;
-                Console.WriteLine($"Se VERIFICA EL JUEGO EPIC: {juego.title}");
+                Console.WriteLine($"\t\tSe VERIFICA EL JUEGO EPIC: {juego.title}\n\t\tSe COMPARA con el nombre ingresado: {nombreJuego}");
 
                 foreach (Category categoria in juego.categories)
                 {
-                    Console.Write($"\t{categoria.path} - ");
-                    Console.WriteLine("");
+                    Console.Write($"\t\t{categoria.path} - ");
                     if (categoria.path == "games")
                     {
                         esJuego = true;
-                        Console.WriteLine($"\tJuego EPIC CONFIRMADO -> CATEGORÍA: {categoria.path}");
+                        Console.WriteLine($"\t\tJuego EPIC CONFIRMADO -> CATEGORÍA: {categoria.path}");
                         contarJuegos++;
                         break;
                     }
@@ -61,19 +63,20 @@ public class JuegoEpicService
 
                 if (esJuego && string.Equals(juego.title, nombreJuego, StringComparison.OrdinalIgnoreCase))
                 {
-                    
+
                     precioConSimbolo = juego.price.totalPrice.fmtPrice.discountPrice;
                     precioSinSimbolo = precioConSimbolo.Replace("$", "").Replace(",", "");
                     precioJuegoEpic = Convert.ToDecimal(precioSinSimbolo, CultureInfo.InvariantCulture);
 
-                    Console.WriteLine("JUEGO: " + juego.title + "\nPRECIO ORIGINAL: " +juego.price.totalPrice.fmtPrice.discountPrice + "\nPRECIO FLAGG: " + precioJuegoEpic);
+                    Console.WriteLine("\t\tJUEGO: " + juego.title + "\n\t\tPRECIO ORIGINAL: " + juego.price.totalPrice.fmtPrice.discountPrice + "\n\t\tPRECIO FLAGG: " + precioJuegoEpic);
                     break;
                     //flaggGamesList.Add(flaggGame);
                 }
+                else { Console.WriteLine($"\t\tLos nombres {juego.title} y {nombreJuego} se vefican como DISTINTOS."); }
             }
         }
-        Console.WriteLine($"\n\n\tSe VERIFICAN {contar} Elements");
-        Console.WriteLine($"\tSe encontraron {contarJuegos} juegos.\n\n");
+        Console.WriteLine($"\n\n\t\tSe VERIFICAN {contar} Elements");
+        Console.WriteLine($"\t\tSe encontraron {contarJuegos} juegos.\n\n");
 
         return precioJuegoEpic;
     }

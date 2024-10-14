@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FlaggGaming.Model.Usuarios
+namespace FlaggGaming.Model.usuarios
 {
     public class Usuario/*: PageModel*/
     {
@@ -11,6 +11,6 @@ namespace FlaggGaming.Model.Usuarios
         public string mail {  get; set; }
         public string password {  get; set; }
         public bool rolTienda { get; set; }
-        public virtual ICollection<UsuarioTienda> UsuariosTienda { get; set; } = new List<UsuarioTienda>();
+        public virtual ICollection<UsuariosTienda> UsuariosTienda { get; set; } = new List<UsuariosTienda>();
     }
 }

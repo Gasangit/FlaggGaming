@@ -3,7 +3,7 @@ using FlaggGaming.Model.apiSteamListaJuegosTotal;
 using FlaggGaming.Model.apiEpic.apiEpicListaJuegosTotal;
 using FlaggGaming.Model.juegoFlagg;
 using Microsoft.EntityFrameworkCore;
-using FlaggGaming.Model.Usuarios;
+using FlaggGaming.Model.usuarios;
 using FlaggGaming.Model.tienda;
 using FlaggGaming.Model;
 
@@ -15,6 +15,13 @@ namespace FlaggGaming.Entity
         public DbSet<JuegoFlagg> listaJuegosData { get; set; }
         public DbSet<Oferta> listaOfertas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public virtual DbSet<Categoria> Categorias { get; set; }
+        public virtual DbSet<Producto> Productos { get; set; }
+
+        public virtual DbSet<Model.juegoFlagg.ReleaseDate> ReleaseDates { get; set; }
+        public virtual DbSet<Tienda> Tiendas { get; set; }
+
+        public virtual DbSet<UsuariosTienda> UsuariosTiendas { get; set; }
 
         public DatosContext() { } //Constructor vacio
         public DatosContext(DbContextOptions<DatosContext> optionsBuilder) : base(optionsBuilder)
@@ -34,7 +41,7 @@ namespace FlaggGaming.Entity
         {
             //modelBuilder.Entity<Juego>(entity => entity.HasNoKey());
             modelBuilder.Entity<ItemListaJuegoEpic>(entity => entity.HasNoKey());
-            //modelBuilder.Entity<Juego>(entity => entity.HasNoKey());
+            modelBuilder.Entity<Juego>(entity => entity.HasNoKey());
 
             modelBuilder.Entity<Categoria>(entity =>
             {
@@ -154,7 +161,7 @@ namespace FlaggGaming.Entity
                     .HasConstraintName("FK__productos__id_ti__4E88ABD4");
             });
 
-            modelBuilder.Entity<FechaLanzamiento>(entity =>
+            modelBuilder.Entity<Model.juegoFlagg.ReleaseDate>(entity =>
             {
                 entity
                     .HasNoKey()
@@ -274,7 +281,7 @@ namespace FlaggGaming.Entity
                 entity.Property(e => e.rolTienda).HasColumnName("rolTienda");
             });
 
-            modelBuilder.Entity<UsuarioTienda>(entity =>
+            modelBuilder.Entity<UsuariosTienda>(entity =>
             {
                 entity.HasKey(e => new { e.IdU, e.IdT }).HasName("PK__usuarios__01951BBA4021FFF4");
 

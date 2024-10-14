@@ -14,17 +14,17 @@
             <div class="col-8 my-auto">
                 <div class="row p-2 mb-1">
                     <div class="col text-center rounded d-grid gap-2">
-                        <a href="store.steampowered.com" class="btn btn-primary">Precio: U$D @precioSteamDolares.ToString()</a>
+                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">Precio: U$D @precioSteamDolares.ToString()</a>
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="col text-center rounded d-grid gap-2">
-                        <a href="store.steampowered.com" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaSteam.ToString("N2")</a>
+                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaSteam.ToString("N2")</a>
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="col text-center rounded d-grid gap-2">
-                        <a href="store.steampowered.com" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirSteam.ToString("N2")</a>
+                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirSteam.ToString("N2")</a>
                     </div>
                 </div>
             </div>
@@ -35,13 +35,19 @@
             </div>
             <div class="col-8 my-auto">
                 <div class="row p-2 mb-1">
-                    <div class="col text-center d-grid gap-2"><a href="www.epicgames.com" class="btn btn-primary">Precio: U$D @precioEpicDolares.ToString()</a></div>
+                    <div class="col text-center d-grid gap-2">
+                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio: U$D @precioEpicDolares.ToString()</a>
+                    </div>
                 </div>
                 <div class="row p-2">
-                    <div class="col text-center d-grid gap-2"><a href="www.epicgames.com" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaEpic.ToString("N2")</a></div>
+                    <div class="col text-center d-grid gap-2">
+                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaEpic.ToString("N2")</a>
+                    </div>
                 </div>
                 <div class="row p-2">
-                    <div class="col text-center d-grid gap-2"><a href="www.epicgames.com" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirEpic.ToString("N2")</a></div>
+                    <div class="col text-center d-grid gap-2">
+                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirEpic.ToString("N2")</a>
+                    </div>
                 </div>
             </div>
         </div>
