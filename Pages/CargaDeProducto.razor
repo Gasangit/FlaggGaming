@@ -1,9 +1,24 @@
 ﻿@page "/cargarproductos"
 @page "/editarproductos/{idProducto?}"
 @using FlaggGaming.Pages.componentesCargaDeProductos
+@using FlaggGaming.Services.ServicioUsuario
 
-<Encabezado/>
-<RecuadroCargaDeProductos/>
+@if (!ServicioUsurioLogin.rolTienda)
+{
+    <div class="continer">
+        <div class="row my-5 justify-content-center">
+            <div class="col-7 text-center">
+                <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <Encabezado/>
+    <RecuadroCargaDeProductos/>    
+}
+
 
 @code 
 {

@@ -2,6 +2,7 @@
 @using FlaggGaming.Model.usuarios
 @inject NavigationManager Navigation
 @inject DatosContext _context
+@inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioLoginUsuario
 
 <div class="container">
     <div class="row">
@@ -67,6 +68,7 @@
             if (usuarioExistente != null && BCrypt.Net.BCrypt.Verify(usuario.password, usuarioExistente.password))
             {
                 successMessage = "Inicio de sesión exitoso.";
+                servicioLoginUsuario.setUsuarioLoginData(usuarioExistente.Id, usuarioExistente.nombre, usuarioExistente.apellido, usuarioExistente.mail, usuarioExistente.rolTienda);
                 Navigation.NavigateTo("/"); //Falta agregar ruta una vez logueado el usuario
             }
             else

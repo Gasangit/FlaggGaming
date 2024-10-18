@@ -2,12 +2,13 @@
 @using FlaggGaming.Pages.componentesIndex
 @using FlaggGaming.Model.juegoFlagg
 @inject FlaggGaming.Entity.DatosContext datosService
+@inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioLoginUsuario
 @using Microsoft.EntityFrameworkCore
+@using FlaggGaming.Services.ServicioUsuario
 
 <PageTitle>Flagg</PageTitle>
 
 <Carousel/>
-
 <MasBuscados arrayMasBuscados="@arrayMasBuscados"/>
 <Ofertas arrayOfertasSeleccionadas="@arrayOfertasSeleccionadas" />
 <Destacados />

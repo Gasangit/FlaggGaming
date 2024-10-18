@@ -17,6 +17,7 @@ using FluentScheduler;
 using System.Runtime.Serialization.DataContracts;
 using FlaggGaming.Services.ServiciosConTimer;
 using FlaggGaming.Services.ServiciosParaCalculos;
+using FlaggGaming.Services.ServicioUsuario;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,6 +48,7 @@ builder.Services.AddScoped<CargaInfoJuegoSteamEnBAseDeDatos>();
 builder.Services.AddScoped<CargaInfoJuegoEpicEnBAseDeDatos>();
 builder.Services.AddScoped<ServicioDolar>();
 builder.Services.AddScoped<ServicioIPC>();
+builder.Services.AddScoped<ServicioUsurioLogin>();
 builder.Services.AddHttpClient("scrapWebEpic");
 
 

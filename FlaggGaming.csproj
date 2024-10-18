@@ -54,7 +54,6 @@
 
   <ItemGroup>
     <Folder Include="Pages\componentesHardwareEspecifico\" />
-    <Folder Include="Pages\PruebasComp\componentesPruebaJuego\" />
   </ItemGroup>
 
   <ItemGroup>

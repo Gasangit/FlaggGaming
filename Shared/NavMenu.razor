@@ -1,6 +1,8 @@
 ﻿@inject IJSRuntime Javascript
-
-
+@inject NavigationManager Navigation
+@inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioSuscribir
+@*implements IDisposable*@
+@using FlaggGaming.Services.ServicioUsuario
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid navbar-custom">
@@ -40,18 +42,23 @@
                 </svg>
             </a>
             <a class="bi bi-star-fill" href="/Login"><img class="logo_usuario" src="/imagenes/logousuario.png" alt="Logo usuario"></a>
+            <span class="">@nombre</span>
         </div>
   </div>
 </nav>
 
 
-@functions  
+@functions
 {
     @functions {
+        string nombre = "";
 
         protected async override Task OnAfterRenderAsync(bool firstRender)
         {
-
+            //Console.WriteLine($"NAV: {StateHasChanged}");
+            nombre = ServicioUsurioLogin.nombre;
+            //servicioSuscribir.forzarCambio();
+            //servicioSuscribir.OnUsuarioLogin += StateHasChanged;
             if (firstRender)
             {
                 await Javascript.InvokeAsync<object>("activarDropdown");
@@ -59,6 +66,12 @@
             }
         }
     }
+    
+        //protected override bool ShouldRender(){return true;}
+        /*public void Dispose()
+        {
+            servicioSuscribir.OnUsuarioLogin -= StateHasChanged;
+        }*/
 }
 
 <script>
