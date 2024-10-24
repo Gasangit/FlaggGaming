@@ -1,4 +1,10 @@
 ﻿@using FlaggGaming.Model
+@using FlaggGaming.Services.ServicioUsuario
+@using FlaggGaming.Model.tienda
+@inject FlaggGaming.Entity.DatosContext datosService
+@using System.Linq
+@using Microsoft.EntityFrameworkCore
+
 <div class="row justify-content-center formulario-carga-producto">
     <div class="col-12 text-center mb-4">
         <div class="col-auto text-end mb-2">
@@ -26,16 +32,10 @@
             <label for="categoria" class="col-4 col-form-label">Categoría</label>
             <div class="col-8">
                 <select id="categoria" class="form-select">
-                    <option>Seleccione una Categoría</option>
-                    <option>Procesadores</option>
-                    <option>Tarjetas Madre</option>
-                    <option>Memoria RAM</option>
-                    <option>Discos duros</option>
-                    <option>Unidades de Estado Sólido</option>
-                    <option>Tarjeteas Gráficas</option>
-                    <option>Fuentes de Alimentación</option>
-                    <option>Gabinetes</option>
-                    <option>Refrigeración</option>
+                     @foreach (var categoria in categoriaFiltrados)
+        {
+                    <option>@categoria.DescCategoria</option>
+        }
                 </select>
             </div>
         </div>
@@ -72,5 +72,17 @@
     private void metodoParaProcesarElFormulario()
     {
 
+    }
+
+    private List<Categoria> categorias = new List<Categoria>();
+    private string searchTerm = ""; // Variable para almacenar el término de búsqueda
+
+    //Propiedad que devuelve la lista de tiendas filtradas según el término de búsqueda
+    private IEnumerable<Categoria> categoriaFiltrados =>
+    categorias.Where(c => string.IsNullOrEmpty(searchTerm) || c.DescCategoria.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+
+    protected override async Task OnInitializedAsync()
+    {
+        categorias = await datosService.Categorias.ToListAsync();
     }
 }

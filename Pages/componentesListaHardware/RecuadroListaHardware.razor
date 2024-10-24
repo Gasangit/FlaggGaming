@@ -1,98 +1,32 @@
-﻿
+﻿@inject FlaggGaming.Entity.DatosContext contextoDatos
+@using FlaggGaming.Model.tienda
+@using Microsoft.EntityFrameworkCore;
 
 <div class="container">
     <div class="header-row">
         <div class="search-container">
-            <input type="text" class="search-box" placeholder="Buscar productos...">
-        </div>
-        <div class="filter-container">
-            <select class="filter-select">
-                <option value="">Ordenar por</option>
-                <option value="menor-precio">Menor precio</option>
-                <option value="mayor-precio">Mayor precio</option>
-            </select>
-        </div>
+            <input type="text" class="search-box" placeholder="Buscar Juego" style="width: 100%; font-size: 18px;" @oninput="OnSearchInput" />
+        </div>        
     </div>
-
     <div class="product-grid">
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 1">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Producto 1</p>
-                    <p class="product-price">$100.00</p>
+        @foreach (Producto unProducto in paginatedProductos)
+        {
+            <div class="card clickable-card">
+                <img class="card-img" src="@unProducto.IdCategoriaNavigation.ImagenUrl" alt="@unProducto.DescTienda"> <!-- imagenes/memorias.jpg-->
+                <div class="card-body">
+                    <div class="card-info">
+                        <p class="product-name">@unProducto.DescTienda</p>
+                        <p class="product-price">$ @unProducto.PrecioVta</p>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 2">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Producto 2</p>
-                    <p class="product-price">$200.00</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 3">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Producto 3</p>
-                    <p class="product-price">$200.00</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 4">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Producto 4</p>
-                    <p class="product-price">$200.00</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 5">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Producto 5</p>
-                    <p class="product-price">$200.00</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 6">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Memoria RAM Vengeance LPX gamer color negro 32GB 2 Corsair CMK32GX4M2E3200C16</p>
-                    <p class="product-price">$ 200.00</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 7">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Memoria RAM Vengeance LPX gamer color negro 32GB 2 Corsair CMK32GX4M2E3200C16</p>
-                    <p class="product-price">$ 200.00</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card clickable-card">
-            <img class="card-img" src="imagenes/memorias.jpg" alt="Producto 8">
-            <div class="card-body">
-                <div class="card-info">
-                    <p class="product-name">Memoria RAM Vengeance LPX gamer color negro 32GB 2 Corsair CMK32GX4M2E3200C16</p>
-                    <p class="product-price">$ 1000.00</p>
-                </div>
-            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <button class="btn btn-primary mx-2" @onclick="PreviousPage" disabled="@(!HasPreviousPage)">Anterior</button>
+            <span>Página @currentPage de @totalPages</span>
+            <button class="btn btn-primary mx-2" @onclick="NextPage" disabled="@(!HasNextPage)">Siguiente</button>
         </div>
     </div>
 </div>
@@ -105,6 +39,95 @@
     });
 </script>
 
-@{
+@functions{
+    List<Producto> listaProductos = new List<Producto>();
+    private List<Producto> filteredProductos = new List<Producto>();
+    private List<Producto> paginatedProductos = new List<Producto>();
+    private string searchQuery = string.Empty;
+    private bool isLoading = true;
+
+    private int currentPage = 1;
+    private int pageSize = 8;
+
+    private bool HasPreviousPage => currentPage > 1;
+    private bool HasNextPage => currentPage < totalPages;
+    private int totalPages => (int)Math.Ceiling((double)filteredProductos.Count / pageSize);
+
+    protected override void OnInitialized()
+    {
+        try
+        {
+            isLoading = true; // Indicamos que estamos cargando
+            listaProductos = contextoDatos.Productos
+                .Include(producto => producto.IdCategoriaNavigation)
+                .Include(producto => producto.IdTiendaNavigation)
+                .Where(producto => producto.Estatus != false)
+                .ToList();
+
+            filteredProductos = listaProductos;
+            UpdatePagination();
+        }
+        catch (Exception ex)
+        {
+            // Manejo de errores (opcional)
+            Console.WriteLine($"Error cargando los juegos: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false; // Indicamos que la carga terminó
+        }
+        
+    }
+
+    private void OnSearchInput(ChangeEventArgs e)
+    {
+        searchQuery = e.Value.ToString().ToLower(); // Guardamos el valor de búsqueda
+        FilterProductos();
+    }
+
+    private void FilterProductos()
+    {
+        if (string.IsNullOrEmpty(searchQuery))
+        {
+            filteredProductos = listaProductos; // Si no hay búsqueda, mostramos todos los juegos
+        }
+        else
+        {
+            filteredProductos = listaProductos
+                .Where(producto => producto.DescTienda.ToLower().Contains(searchQuery)) // Filtramos por el nombre del juego
+                .ToList();
+        }
+
+        // Reseteamos a la primera página tras la búsqueda
+        currentPage = 1;
+        UpdatePagination();
+    }
+
+    private void UpdatePagination()
+    {
+        // Calculamos qué juegos se mostrarán en la página actual
+        paginatedProductos = filteredProductos
+            .Skip((currentPage - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+    }
+
+    private void NextPage()
+    {
+        if (HasNextPage)
+        {
+            currentPage++;
+            UpdatePagination();
+        }
+    }
+
+    private void PreviousPage()
+    {
+        if (HasPreviousPage)
+        {
+            currentPage--;
+            UpdatePagination();
+        }
+    }
 
 }

@@ -1,40 +1,39 @@
 ﻿@page "/misproductostabla"
 @using FlaggGaming.Services.ServicioUsuario
+@using FlaggGaming.Model.tienda
+@inject FlaggGaming.Entity.DatosContext datosService
+@using System.Linq
+@using Microsoft.EntityFrameworkCore
 
-@if (!ServicioUsurioLogin.rolTienda)
-{
-    <div class="continer">
-        <div class="row my-5 justify-content-center">
-            <div class="col-7 text-center">
-                <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
-            </div>
-        </div>
-    </div>
-}
-else
-{
+
+
     <div class="container">
         <div class="header-row">
             <div class="title">
                 <h2>Mis Productos</h2>
             </div>
             <div class="button-container">
-                <a href="" onclick="" class="new-product-button">Nuevo Producto</a>
+            <a href="/cargarproductos" onclick="" class="new-product-button">Nuevo Producto</a>
             </div>
+        <div class="col-3 text-right">
+            <input @bind="searchTerm" class="search-box form-control" placeholder="Buscar Productos" />
+        </div>  
         </div>
 
 
         <div class="row mt-5">
+        @foreach (var producto in productosFiltrados)
+        {
             <div class="col-12">
                 <div class="card">
                     <img class="card-img" src="imagenes/producto1.png" alt="Producto 1">
                     <div class="card-body">
                         <div class="card-info">
-                            <p><strong>Nombre:</strong> Producto 1</p>
-                            <p><strong>Descripción:</strong> Descripción del producto 1</p>
-                            <p><strong>Marca:</strong> Marca 1</p>
-                            <p><strong>Categoría:</strong> Categoría 1</p>
-                            <p><strong>Precio:</strong> $100.00</p>
+                            <p><strong>Nombre:</strong>@producto.SkuTienda</p>
+                            <p><strong>Descripción:</strong>@producto.DescTienda</p>
+                            <p><strong>Marca:</strong>@producto.Marca</p>
+                            <p><strong>Categoría:</strong>@producto.IdCategoria</p>
+                            <p><strong>Precio:</strong>@producto.PrecioVta</p>
                         </div>
                         <div class="card-actions">
                             <a class="btn btn-primary" href="edit/1">Editar</a>
@@ -43,25 +42,23 @@ else
                     </div>
                 </div>
             </div>
-
-            <div class="col-12">
-                <div class="card">
-                    <img class="card-img" src="imagenes/producto1.png" alt="Producto 2">
-                    <div class="card-body">
-                        <div class="card-info">
-                            <p><strong>Nombre:</strong> Producto 2</p>
-                            <p><strong>Descripción:</strong> Descripción del producto 2</p>
-                            <p><strong>Marca:</strong> Marca 2</p>
-                            <p><strong>Categoría:</strong> Categoría 2</p>
-                            <p><strong>Precio:</strong> $200.00</p>
-                        </div>
-                        <div class="card-actions">
-                            <a class="btn btn-primary" href="edit/2">Editar</a>
-                            <a class="btn btn-danger" href="delete/2">Borrar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        }
+           
+            
         </div>
     </div>
+
+
+@code {
+    private List<Producto> productos = new List<Producto>();
+    private string searchTerm = ""; // Variable para almacenar el término de búsqueda
+
+    // Propiedad que devuelve la lista de tiendas filtradas según el término de búsqueda
+    private IEnumerable<Producto> productosFiltrados =>
+        productos.Where(p => string.IsNullOrEmpty(searchTerm) || p.SkuTienda.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+
+    protected override async Task OnInitializedAsync()
+    {
+        productos = await datosService.Productos.ToListAsync();
+    }
 }
