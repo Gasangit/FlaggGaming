@@ -1,12 +1,29 @@
 ﻿.cardHover:hover {
     background-color: rgba(30,30,30,0.5);
-    border: 0.3em solid black;
+    border: 0.2em solid black;
     animation: mymove 5s infinite;
 }
 
 
-@keyframes mymove {
-    50% {
-        border: 15px solid lightblue;
-    }
+@keyframes mymove {50% {border: solid lightblue;}}
+
+.title-style {
+    min-height: 2em;
+}
+
+.description-style {
+    min-height: 5em;
+}
+
+.image-style {
+    min-height:5em;
+    max-height:6em;
+}
+
+.image-container-style {
+    max-height:6em;
+}
+
+.discount-text-style {
+    font-size:4em;
 }

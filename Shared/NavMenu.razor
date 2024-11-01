@@ -1,7 +1,7 @@
 ﻿@inject IJSRuntime Javascript
 @inject NavigationManager Navigation
 @inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioSuscribir
-@*implements IDisposable*@
+@implements IDisposable
 @using FlaggGaming.Services.ServicioUsuario
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -47,36 +47,30 @@
                 </svg>
             </a>
             <a class="bi bi-star-fill" href="/Login"><img class="logo_usuario" src="/imagenes/logousuario.png" alt="Logo usuario"></a>
-            <span class="">@nombre</span>
+            <p class="my-auto px-2 fs-5 text-light">@nombre</p>
         </div>
   </div>
 </nav>
 
+@code {
+    private string nombre = "";
 
-@functions
-{
-    @functions {
-        string nombre = "";
-
-        protected async override Task OnAfterRenderAsync(bool firstRender)
-        {
-            //Console.WriteLine($"NAV: {StateHasChanged}");
-            nombre = ServicioUsurioLogin.nombre;
-            //servicioSuscribir.forzarCambio();
-            //servicioSuscribir.OnUsuarioLogin += StateHasChanged;
-            if (firstRender)
-            {
-                await Javascript.InvokeAsync<object>("activarDropdown");
-                firstRender = false;
-            }
-        }
+    protected override void OnInitialized()
+    {
+        servicioSuscribir.OnUsuarioLogin += ActualizarNombre;
+        nombre = ServicioUsurioLogin.nombre;
     }
-    
-        //protected override bool ShouldRender(){return true;}
-        /*public void Dispose()
-        {
-            servicioSuscribir.OnUsuarioLogin -= StateHasChanged;
-        }*/
+
+    private void ActualizarNombre()
+    {
+        nombre = ServicioUsurioLogin.nombre; //servicioSuscribir.nombreServicio;
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        servicioSuscribir.OnUsuarioLogin -= ActualizarNombre;
+    }
 }
 
 <script>

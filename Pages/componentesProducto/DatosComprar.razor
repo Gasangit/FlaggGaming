@@ -1,25 +1,23 @@
-﻿@using FlaggGaming.Model
+﻿@using FlaggGaming.Model.tienda
 
-<div class="row mb-4 align-items-center bg-white">
+<div class="row mb-3 align-items-center bg-white">
     <div class="col-3 text-center">
-        <img src=@unHardware.urlImagen alt="" class="img-fluid" />
+        <img src=@("imagenes/" + unProducto.IdCategoriaNavigation.DescCategoria + ".png") class="img-thumbnail w-75" />
     </div>
-    <div class="col-6 p-5">
+    <div class="col-6 p-3 pb-0 mb-0">
         <div class="mb-3">
-            <h2>@unHardware.Name</h2>
+            <h3></h3>
         </div>
         <div class="mb-3">
-            <h3>$ @unHardware.Price</h3>
+            <h3 class="fs-1">$ @unProducto.PrecioVta</h3>
         </div>
-        <div>
-            <NavLink href="" class="btn btn-primary">Comprar</NavLink>
+        <div class="">
+            <NavLink href="" class="btn btn-primary">Visitar tienda</NavLink> //esto va a la vista de información de la tienda
         </div>
-    </div>
-    <div class="col-3 text-center">
-        <h3>Razor.CO</h3>
     </div>
 </div>
 
 @code {
-    [Parameter] public Hardware unHardware { get; set; } = new Hardware();
+    [Parameter] public FlaggGaming.Model.tienda.Producto unProducto{ get; set; }
+    //@unProducto.IdCategoriaNavigation.ImagenUrl
 }

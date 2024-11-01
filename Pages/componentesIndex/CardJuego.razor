@@ -1,18 +1,30 @@
 @using FlaggGaming.Model.juegoFlagg
 
-<div class="col-5 card cardHover">
+<div class="col-5 card cardHover" @onclick=spinnerATrue>
     <a href="juego/@unJuego.idFlagg" class="text-decoration-none text-dark">
         <div class="row">
             <div class="col-md-8 card-body">
-                <h2 class="card-title">@unJuego.nombre</h2>
-                <p class="card-text">@unJuego.descripcionCorta</p>
+                <h5 class="card-title title-style">@unJuego.nombre</h5>
+                <p class="card-text pt-1 description-style">@unJuego.descripcionCorta</p>
+                <hr />
             </div>
-            <div class="col-md-8 d-flex align-content-center">
-                <img class="img-fluid" src=@unJuego.imagenMini />
+            <div class="col-md-8 pb-2">
+                <div class="row image-container-style">
+                    <img class="img-fluid image-style" src=@unJuego.imagenMini />
+                </div>
+
             </div>
-            @if (unJuego.oferta != null && esOfertaJuego == true)
+            @if (verSpinner)
             {
-                <div class="col-md-4 fs-1">@unJuego.oferta.discount_percent.ToString() %</div>
+                <div class="col-md-3 d-flex justify-content-center align-items-center">
+                    <div class="spinner-border"></div>
+                </div>
+            }
+            @if (unJuego.oferta != null && esOfertaJuego == true && !verSpinner)
+            {
+                <div class="col-md-4 discount-text-style d-flex align-items-center justify-content-center">
+                    @unJuego.oferta.discount_percent.ToString()%
+                </div>
             }
         </div>
     </a>
@@ -23,6 +35,7 @@
 {
     [Parameter] public JuegoFlagg? unJuego { get; set; }
     [Parameter] public bool? esOfertaJuego { get; set; } = false;
+    public bool verSpinner = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -31,4 +44,6 @@
             unJuego.descripcionCorta = unJuego.descripcionCorta.Substring(0, 150) + "...";
         }
     }
+
+    public void spinnerATrue() { verSpinner = true; }
 }

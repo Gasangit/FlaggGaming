@@ -1,15 +1,20 @@
-﻿@page "/producto"
+﻿@page "/producto/{idProducto}"
+@inject FlaggGaming.Entity.DatosContext contextoDatos
 @using FlaggGaming.Pages.componentesProducto
 @using FlaggGaming.Model
 
-<DatosComprar unHardware=@objetoHardware />
+<DatosComprar unProducto=@unProducto />
 
-<DescripcionProducto unHardware=@objetoHardware />
+<DescripcionProducto unProducto=@unProducto />
 
 <Grafico />
 
+@functions{
+    [Parameter] public string idProducto { get; set; }
+    private FlaggGaming.Model.tienda.Producto unProducto { get; set; }
 
-@code {
-
-    private Hardware objetoHardware { get; set; } = new Hardware("Memoria Generica","/imagenes/memorias.jpg",120000);
+    protected override void OnInitialized()
+    {   
+        unProducto = contextoDatos.Productos.Where(producto => producto.IdInternoProducto == Convert.ToInt32(idProducto)).FirstOrDefault();
+    }
 }

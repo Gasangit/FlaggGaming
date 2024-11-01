@@ -9,6 +9,7 @@ public class ServicioUsurioLogin
 {
     public static int Id { get; set; }
     public static string nombre { get; set; }
+    public string nombreServicio { get; set; }
     public static string apellido { get; set; }
     public static string mail { get; set; }
     public static string password { get; set; }
@@ -19,11 +20,12 @@ public class ServicioUsurioLogin
     {
         ServicioUsurioLogin.Id = idParam;
         ServicioUsurioLogin.nombre = nombreParam;
+        this.nombreServicio = nombreParam;
         ServicioUsurioLogin.apellido = apellidoParam;
         ServicioUsurioLogin.mail = mailParam;
         ServicioUsurioLogin.rolTienda = rolParam;
         OnUsuarioLogin?.Invoke();
     }
 
-    public void forzarCambio() { OnUsuarioLogin?.Invoke(); }
+    //public void forzarCambio() { OnUsuarioLogin?.Invoke(); }
 }

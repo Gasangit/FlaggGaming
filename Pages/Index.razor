@@ -7,7 +7,6 @@
 @using FlaggGaming.Services.ServicioUsuario
 
 <PageTitle>Flagg</PageTitle>
-
 <Carousel/>
 <MasBuscados arrayMasBuscados="@arrayMasBuscados"/>
 <Ofertas arrayOfertasSeleccionadas="@arrayOfertasSeleccionadas" />
@@ -29,12 +28,12 @@
         arrayOfertas = listaJuegosBaseDeDatos.Where(game => game.idOferta != null).ToArray();
 
         for (int indice = 0; indice < arrayOfertasSeleccionadas.GetLength(0) ; indice++)
-            {            
+        {            
             randIndex = objetoRandom.Next(arrayOfertas.Length);
             juegoRandom = arrayOfertas[randIndex];
 
             if (juegoRandom.ofertaidOferta == null)
-                {
+            {
                 juegoRandom.ofertaidOferta = new Guid(juegoRandom.idOferta);
                 datosService.Update(juegoRandom);
             }
@@ -42,6 +41,6 @@
         }
         datosService.SaveChanges();
 
-        
+
     }
 }

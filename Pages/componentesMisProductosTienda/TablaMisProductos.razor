@@ -32,7 +32,15 @@
                             <p><strong>Nombre:</strong>@producto.SkuTienda</p>
                             <p><strong>Descripción:</strong>@producto.DescTienda</p>
                             <p><strong>Marca:</strong>@producto.Marca</p>
-                            <p><strong>Categoría:</strong>@producto.IdCategoria</p>
+                            <p><strong>Categoría:</strong>                            
+                                @foreach (var categoria in categorias){
+                                    if (producto.IdCategoria == categoria.IdCategoria)
+                                    {
+                                        @categoria.DescCategoria;
+                                    }
+
+                                }                               
+                            </p>
                             <p><strong>Precio:</strong>@producto.PrecioVta</p>
                         </div>
                         <div class="card-actions">
@@ -51,6 +59,7 @@
 
 @code {
     private List<Producto> productos = new List<Producto>();
+    private List<Categoria> categorias = new List<Categoria>();
     private string searchTerm = ""; // Variable para almacenar el término de búsqueda
 
     // Propiedad que devuelve la lista de tiendas filtradas según el término de búsqueda
@@ -60,5 +69,6 @@
     protected override async Task OnInitializedAsync()
     {
         productos = await datosService.Productos.ToListAsync();
+        categorias = await datosService.Categorias.ToListAsync();
     }
 }

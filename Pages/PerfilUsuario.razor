@@ -1,40 +1,40 @@
 ﻿@page "/perfilusuario"
 @using FlaggGaming.Pages.componentesLogin
+@using FlaggGaming.Entity
+@inject NavigationManager Navigation
+@inject DatosContext _context
+@using FlaggGaming.Model.usuarios
+@using FlaggGaming.Services.ServicioUsuario
+@inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioLoginUsuario
 
 <div class="container">
     <div class="row">
         <div class="col">
-            <form>
+            <form @onsubmit="ActualizarPerfil">
                 <h1 class="text-center">PERFIL USUARIO</h1>
-
-                <!-- Usuario -->
-                <div class="form-group">
-                    <label for="username">Usuario</label>
-                    <input type="text" class="form-control" id="username" placeholder="Admin" disabled>
-                </div>
 
                 <!-- Nombre de Usuario -->
                 <div class="form-group">
                     <label for="name">Nombre</label>
-                    <input type="text" class="form-control" id="name" placeholder="FlaggGaming">
+                    <input type="text" class="form-control" id="name" @bind="usuarioDb.nombre">
                 </div>
 
                 <!-- Apellido de Usuario -->
                 <div class="form-group">
                     <label for="lastname">Apellido</label>
-                    <input type="text" class="form-control" id="lastname" placeholder="FlaggGaming">
+                    <input type="text" class="form-control" id="lastname" @bind="usuarioDb.apellido">
                 </div>
 
                 <!-- Correo Electrónico -->
                 <div class="form-group">
                     <label for="email">Mail</label>
-                    <input type="email" class="form-control" id="email" placeholder="flaggaming@mail.com">
+                    <input type="email" class="form-control" id="email" @bind="usuarioDb.mail">
                 </div>
 
                 <!-- Contraseña -->
                 <div class="form-group">
-                    <label for="password">Contraseña</label>
-                    <input type="password" class="form-control" id="password" placeholder="********">
+                    <label for="password">Nueva Contraseña (opcional)</label>
+                    <input type="password" class="form-control" id="password" @bind="nuevaPassword" placeholder="Dejar en blanco para mantener la actual">
                 </div>
 
                 <!-- Botón Guardar Cambios -->
@@ -42,6 +42,91 @@
                     <button type="submit" class="btn btn-danger">Guardar Cambios</button>
                 </div>
             </form>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="alert alert-success">@successMessage</div>
+            }
         </div>
     </div>
 </div>
+
+@code {
+    private string errorMessage;
+    private string successMessage;
+    private string nuevaPassword = string.Empty;
+    private Usuario usuarioDb = new Usuario();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var usuarioId = ServicioUsurioLogin.Id;
+
+        if (usuarioId > 0)
+        {
+            usuarioDb = await _context.Usuarios.FindAsync(usuarioId);
+            if (usuarioDb == null)
+            {
+                errorMessage = "Usuario no encontrado";
+            }
+        }
+        else
+        {
+            errorMessage = "No hay un usuario logueado.";
+            Navigation.NavigateTo("/login");
+        }
+    }
+
+    private async Task ActualizarPerfil()
+    {
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+
+        if (string.IsNullOrEmpty(this.usuarioDb.nombre) || string.IsNullOrEmpty(this.usuarioDb.apellido) || string.IsNullOrEmpty(this.usuarioDb.mail))
+        {
+            errorMessage = "Por favor, completa todos los campos.";
+            return;
+        }
+
+        if (!EmailValido(this.usuarioDb.mail))
+        {
+            errorMessage = "Correo Electrónico inválido";
+            return;
+        }
+
+        if (usuarioDb != null)
+        {
+            Console.WriteLine(usuarioDb.nombre);
+
+            if (!string.IsNullOrEmpty(nuevaPassword))
+            {
+                usuarioDb.password = BCrypt.Net.BCrypt.HashPassword(nuevaPassword);
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                servicioLoginUsuario.setUsuarioLoginData(usuarioDb.Id, usuarioDb.nombre, usuarioDb.apellido, usuarioDb.mail, usuarioDb.rolTienda);
+                successMessage = "Perfil actualizado correctamente.";
+            }
+            catch (Exception ex)
+            {
+                errorMessage = "Error al actualizar el perfil: " + ex.Message;
+            }
+        }
+        else
+        {
+            errorMessage = "Usuario no encontrado.";
+        }
+    }
+
+    private bool EmailValido(string email)
+    {
+        return new System.ComponentModel.DataAnnotations.EmailAddressAttribute().IsValid(email);
+    }
+}

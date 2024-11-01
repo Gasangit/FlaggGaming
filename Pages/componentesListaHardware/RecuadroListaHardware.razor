@@ -11,15 +11,17 @@
     <div class="product-grid">
         @foreach (Producto unProducto in paginatedProductos)
         {
-            <div class="card clickable-card">
-                <img class="card-img" src="@unProducto.IdCategoriaNavigation.ImagenUrl" alt="@unProducto.DescTienda"> <!-- imagenes/memorias.jpg-->
-                <div class="card-body">
-                    <div class="card-info">
-                        <p class="product-name">@unProducto.DescTienda</p>
-                        <p class="product-price">$ @unProducto.PrecioVta</p>
+            <a href="/producto/@unProducto.IdInternoProducto" class="text-decoration-none">
+                <div class="card clickable-card">
+                    <img class="card-img w-50" src=@("imagenes/" + unProducto.IdCategoriaNavigation.DescCategoria + ".png") alt="@unProducto.DescTienda"> <!-- imagenes/memorias.jpg-->
+                    <div class="card-body">
+                        <div class="card-info">
+                            <p class="product-name">@unProducto.DescTienda</p>
+                            <p class="product-price">$ @unProducto.PrecioVta</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         }
     </div>
     <div class="row">
