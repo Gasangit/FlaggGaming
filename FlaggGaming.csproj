@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Pages\componentesCargaDeProductos\NewFile.txt" />
     <None Remove="Pages\componentesListaHardware\RecuadroListaHardware.razor.css" />
     <None Remove="Pages\componentesListaTienda\RecuadroListaTienda.razor.css" />
     <None Remove="Pages\componentesLogin\RecuadroLogin.razor.css" />

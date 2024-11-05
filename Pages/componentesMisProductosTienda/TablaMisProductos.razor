@@ -1,9 +1,11 @@
 ﻿@page "/misproductostabla"
 @using FlaggGaming.Services.ServicioUsuario
 @using FlaggGaming.Model.tienda
+@using FlaggGaming.Model.usuarios
 @inject FlaggGaming.Entity.DatosContext datosService
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
+@inject NavigationManager NavigationManager
 
 
 
@@ -26,26 +28,47 @@
         {
             <div class="col-12">
                 <div class="card">
-                    <img class="card-img" src="imagenes/producto1.png" alt="Producto 1">
+                   @foreach (var categoria in categorias)
+                    {
+                        if (producto.IdCategoria == categoria.IdCategoria)
+                        {
+                         <img class="card-img" src="imagenes/@(categoria.DescCategoria).png" alt="@categoria.DescCategoria">
+                        }
+
+                    }                   
                     <div class="card-body">
                         <div class="card-info">
                             <p><strong>Nombre:</strong>@producto.SkuTienda</p>
                             <p><strong>Descripción:</strong>@producto.DescTienda</p>
                             <p><strong>Marca:</strong>@producto.Marca</p>
-                            <p><strong>Categoría:</strong>                            
+                            <p><strong>Categoría:</strong>
+
                                 @foreach (var categoria in categorias){
                                     if (producto.IdCategoria == categoria.IdCategoria)
                                     {
                                         @categoria.DescCategoria;
                                     }
-
-                                }                               
-                            </p>
+                                }                           
+                           </p>
                             <p><strong>Precio:</strong>@producto.PrecioVta</p>
+                           
+                                @if (producto.Estatus)
+                                {
+                                    <div class="alert alert-success" role="alert">
+                                    <p><strong>  Activo</strong></p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="alert alert-danger" role="alert">
+                                    <p><strong>  Inactivo</strong></p>
+                                    </div>                                
+                                }
+                          
                         </div>
                         <div class="card-actions">
-                            <a class="btn btn-primary" href="edit/1">Editar</a>
-                            <a class="btn btn-danger" href="delete/1">Borrar</a>
+                            <a class="btn btn-primary" href="editarproductos/@producto.IdInternoProducto">Editar</a>
+                            <a class="btn btn-danger" @onclick="() => ConfirmarBorrado(producto.IdInternoProducto)">Borrar</a>
                         </div>
                     </div>
                 </div>
@@ -60,15 +83,51 @@
 @code {
     private List<Producto> productos = new List<Producto>();
     private List<Categoria> categorias = new List<Categoria>();
+    private UsuariosTienda usuariostienda = new UsuariosTienda();
     private string searchTerm = ""; // Variable para almacenar el término de búsqueda
+    private bool guardadoExitoso;
 
     // Propiedad que devuelve la lista de tiendas filtradas según el término de búsqueda
     private IEnumerable<Producto> productosFiltrados =>
         productos.Where(p => string.IsNullOrEmpty(searchTerm) || p.SkuTienda.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
 
+
     protected override async Task OnInitializedAsync()
     {
-        productos = await datosService.Productos.ToListAsync();
+        usuariostienda = await datosService.UsuariosTiendas.FirstOrDefaultAsync(u => u.IdU == ServicioUsurioLogin.Id);
         categorias = await datosService.Categorias.ToListAsync();
+        productos = await datosService.Productos.Where(p => p.IdTienda == usuariostienda.IdT).ToListAsync();
     }
+
+    private async Task ConfirmarBorrado(int idProducto)
+    {
+        // Llama a JavaScript para mostrar el cuadro de confirmación
+        if (await jsRuntime.InvokeAsync<bool>("confirm", "¿Estás seguro de que deseas eliminar este producto?"))
+        {
+            await BorrarProducto(idProducto);
+        }
+    }
+
+    private async Task BorrarProducto(int idProducto)
+    {
+        // Buscar el producto en la base de datos por su ID
+        var producto = await datosService.Productos.FirstOrDefaultAsync(p => p.IdInternoProducto == idProducto);
+
+        // Si el producto existe, proceder con la eliminación
+        if (producto != null)
+        {
+            datosService.Productos.Remove(producto);
+            await datosService.SaveChangesAsync();
+            guardadoExitoso = true; // Mostrar un mensaje de confirmación si es necesario
+            NavigationManager.NavigateTo("/misproductos", forceLoad: true);
+        }
+        else
+        {
+            // Manejar el caso cuando el producto no se encuentra
+            // Por ejemplo, puedes mostrar un mensaje de error
+            Console.WriteLine("Producto no encontrado");
+        }
+    }
+
+    [Inject] private IJSRuntime? jsRuntime { get; set; }
 }

@@ -24,7 +24,7 @@
           </a>
         </li>
         <li>
-          <a class="nav-link" href="/listatienda" role="button" aria-expanded="false">
+          <a class="nav-link" href="/listatiendas" role="button" aria-expanded="false">
              Tiendas
           </a>
         </li>       
@@ -33,11 +33,14 @@
               Sobre Nosotros
           </a>
         </li>
-        <li>
-          <a class="nav-link" href="/misproductos" role="button" aria-expanded="false">
+                @if (ServicioUsurioLogin.rolTienda)
+                {
+                    <li>
+                        <a class="nav-link" href="/misproductos" role="button" aria-expanded="false">
               Mi tienda
           </a>
         </li>
+        }
       </ul>
     </div>
         <div class="d-flex justify-content-end usuario">
@@ -47,7 +50,7 @@
                 </svg>
             </a>
             <a class="bi bi-star-fill" href="/Login"><img class="logo_usuario" src="/imagenes/logousuario.png" alt="Logo usuario"></a>
-            <p class="my-auto px-2 fs-5 text-light">@nombre</p>
+            <a href="/perfilusuario" class="my-auto px-2 fs-5 text-light decoration-none">@nombre</a>
         </div>
   </div>
 </nav>

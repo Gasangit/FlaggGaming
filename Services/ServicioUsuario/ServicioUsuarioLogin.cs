@@ -28,4 +28,16 @@ public class ServicioUsurioLogin
     }
 
     //public void forzarCambio() { OnUsuarioLogin?.Invoke(); }
+
+    public void setUsuarioLogOut()
+    {
+        ServicioUsurioLogin.Id = 0;
+        ServicioUsurioLogin.nombre = "";
+        this.nombreServicio = "";
+        ServicioUsurioLogin.apellido = "";
+        ServicioUsurioLogin.mail = "";
+        ServicioUsurioLogin.rolTienda = false;
+        OnUsuarioLogin?.Invoke();
+
+    }
 }

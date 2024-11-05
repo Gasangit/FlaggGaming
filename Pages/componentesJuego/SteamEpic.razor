@@ -24,7 +24,11 @@
                 </div>
                 <div class="row p-2">
                     <div class="col text-center rounded d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirSteam.ToString("N2")</a>
+                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">
+                            Precio Pare de Sufrir (Prox. mes): $ @if (valorInflacion != 0.0M)
+                            {@precioPareDeSufrirSteam.ToString("N2");}
+                            else{<span>"El servicio ha fallado."</span>}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -46,7 +50,9 @@
                 </div>
                 <div class="row p-2">
                     <div class="col text-center d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @precioPareDeSufrirEpic.ToString("N2")</a>
+                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @if (valorInflacion != 0.0M) { precioPareDeSufrirEpic.ToString("N2"); }
+                            else{<p>"El servicio ha fallado."</p>}
+                        </a>
                     </div>
                 </div>
             </div>
@@ -90,13 +96,17 @@
                 precioSteamDolares = (decimal) juegoSteamApi[idJuegoTienda].data.price_overview.final / 100;
             }
         }
-        
+
         Console.WriteLine($"Valor Dolar Tarjeta en vista SteamEpic (Juego) {valorDolarTarjeta}");
 
         precioPostaSteam = precioSteamDolares * valorDolarTarjeta;
         precioPostaEpic = precioEpicDolares * valorDolarTarjeta;
 
-        precioPareDeSufrirSteam = (precioPostaSteam * valorInflacion) + precioPostaSteam;
-        precioPareDeSufrirEpic = (precioPostaEpic * valorInflacion) + precioPostaEpic;
+        if (valorInflacion != 0.0M)
+        {
+            precioPareDeSufrirSteam = (precioPostaSteam * valorInflacion) + precioPostaSteam;
+            precioPareDeSufrirEpic = (precioPostaEpic * valorInflacion) + precioPostaEpic;
+        }
+        
     }
 }

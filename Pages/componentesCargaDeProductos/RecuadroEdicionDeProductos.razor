@@ -1,28 +1,27 @@
 ﻿@using FlaggGaming.Model
 @using FlaggGaming.Services.ServicioUsuario
 @using FlaggGaming.Model.tienda
-@using FlaggGaming.Model.usuarios
 @inject FlaggGaming.Entity.DatosContext datosService
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 
+<div class="row justify-content-center formulario-carga-producto">
 
-    
-<div class="row justify-content-center formulario-carga-producto" >
-  
-    <div class="col-12 text-center mb-4">
-        <div class="col-auto text-end mb-2">
-            <a href="" class="btn btn-primary">Carga Masiva xlsx</a>
-        </div>
-     </div>
+     
     <div class="col-6 mb-3 p-4 rounded-3 border">
         <div class="row mb-3 align-items-center">
-        <label for="skuTienda" class="col-4 col-form-label">SKU Tienda</label>
-        <div class="col-8">
-            <input @bind="producto.SkuTienda" id="SkuProducto" type="text" class="form-control" />
+                <label for="idProducto" class="col-4 col-form-label">ID Producto</label>
+            <div class="col-8">
+                <input @bind="producto.IdInternoProducto" id="idProducto" type="text" class="form-control" disabled />
+            </div>
         </div>
-    </div>
+        <div class="row mb-3 align-items-center">
+            <label for="skuTienda" class="col-4 col-form-label">SKU Tienda</label>
+            <div class="col-8">
+                <input @bind="producto.SkuTienda" id="SkuProducto" type="text" class="form-control" />
+            </div>
+        </div>
         <div class="row mb-3 align-items-center">
             <label for="descripcion" class="col-4 col-form-label">Descripción</label>
             <div class="col-8">
@@ -35,7 +34,7 @@
                 <select @bind="producto.IdCategoria" id="categoria" class="form-select">
                     @foreach (var categoria in categorias)
                     {
-                        <option value="@categoria.IdCategoria">@categoria.DescCategoria</option>
+                          <option value="@categoria.IdCategoria">@categoria.DescCategoria</option>
                     }
                 </select>
             </div>
@@ -52,42 +51,60 @@
                 <input @bind="producto.PrecioVta" id="precioVenta" type="text" class="form-control" />
             </div>
         </div>
-       
+        <div class="row align-items-center">
+            <label for="estado" class="col-4 col-form-label">Estado</label>
+            <div class="col-8">
+                <select id="estado" class="form-select" @onchange="OnStatusChange">
+                    @if (producto.Estatus)
+                    {
+                        <option value="True">Activo</option>
+                        <option value="False">Inactivo</option>
+                    }
+                    else{
+                     <option value="False">Inactivo</option>
+                     <option value="True">Activo</option>                        
+                     }
+                    </select>
+            </div>
+        </div>
         <div class="col-12 text-center mt-4">
-            <a class="btn btn-success" @onclick="AgregarProducto"  >Agregar Producto</a>
+                <a class="btn btn-success" @onclick="ModificarProducto" href="">Modificar Producto</a>
         </div>
     </div>
+        
 </div>
 
-
 @code {
-    //value="@categoria.IdCategoria"
-    private Producto producto = new Producto();
+   
+    [Parameter] public int IdProducto { get; set; }
+
+    private Producto producto { get; set; } = new Producto();
     private bool guardadoExitoso;
-    private UsuariosTienda usuariostienda = new UsuariosTienda();
 
     private void metodoParaProcesarElFormulario()
     {
 
     }
-
+        
     private List<Categoria> categorias = new List<Categoria>();
-    private string searchTerm = ""; // Variable para almacenar el término de búsqueda
-
+  
     protected override async Task OnInitializedAsync()
-    {     
-        usuariostienda = await datosService.UsuariosTiendas.FirstOrDefaultAsync(u => u.IdU == ServicioUsurioLogin.Id);
+    {
         categorias = await datosService.Categorias.ToListAsync();
+        producto = await datosService.Productos.FirstOrDefaultAsync(p => p.IdInternoProducto == IdProducto);
+
     }
 
-    private async Task AgregarProducto()
+    private async Task ModificarProducto()
     {
         // Actualizar los datos del producto en la base de datos
-        producto.IdTienda = usuariostienda.IdT;
-        producto.Estatus = bool.Parse("True");
-        datosService.Productos.AddAsync(producto);
+        datosService.Productos.Update(producto);
         await datosService.SaveChangesAsync();
         guardadoExitoso = true; // Mostrar un mensaje de confirmación
-        NavigationManager.NavigateTo("/misproductos");
-   }
+    }
+
+    private void OnStatusChange(ChangeEventArgs e)
+    {
+        producto.Estatus = bool.Parse(e.Value.ToString());
+    }        
 }
