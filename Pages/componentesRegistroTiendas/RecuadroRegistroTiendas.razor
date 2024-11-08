@@ -1,40 +1,69 @@
-﻿<div class="container">
+﻿@using FlaggGaming.Entity
+@inject NavigationManager Navigation
+@inject DatosContext _context
+@using FlaggGaming.Model.usuarios
+@using FlaggGaming.Model.tienda
+@using FlaggGaming.Services.ServicioUsuario
+@inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioLoginUsuario
+
+<div class="container">
     <div class="row">
         <div class="col-6 registro-form">
-            <form>
+            <form @onsubmit="RegistrarTienda">
                 <h1 class="text-center">REGISTRO TIENDAS</h1>
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Razón Social" />
+                    <input type="text" class="form-control" placeholder="Razón Social" @bind="tienda.RazonSocial" required />
                 </div>
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="CUIT" />
+                    <input type="text" class="form-control" placeholder="CUIT" @bind="tienda.Cuit" required />
                 </div>
+
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Nombre de la tienda" />
+                    <input type="text" class="form-control" placeholder="Nombre de la tienda" @bind="tienda.Name" required />
                 </div>
+
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Mail" />
+                    <input type="email" class="form-control" placeholder="Mail" @bind="tienda.Mail" required />
                 </div>
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Direccion" />
+                    <input type="text" class="form-control" placeholder="Dirección" @bind="tienda.Dir" />
                 </div>
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Horarios" />
+                    <input type="text" class="form-control" placeholder="Horarios" @bind="tienda.Hr" />
                 </div>
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Días de atención" />
+                    <input type="text" class="form-control" placeholder="Días de atención" @bind="tienda.Days" />
                 </div>
+
                 <div class="form-group">
-                    <input type="number" class="form-control" placeholder="Numero de contacto" />
+                    <input type="number" class="form-control" placeholder="Número de contacto" @bind="tienda.Tel" />
                 </div>
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Instagram" />
+                    <input type="text" class="form-control" placeholder="Instagram" @bind="tienda.Insta" />
                 </div>
+
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary">Enviar formulario</button>
                 </div>
             </form>
+
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger">@errorMessage</div>
+            }
+
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="alert alert-success">@successMessage</div>
+            }
         </div>
+
         <div class="col-6 image-container">
             <img src="/imagenes/DragonBallZKakarot.jpg" class="img-fluid" alt="Dragon Ball Z Kakarot" />
         </div>
@@ -42,5 +71,35 @@
 </div>
 
 @code {
+    private Tienda tienda = new Tienda();
+    private string errorMessage;
+    private string successMessage;
 
+    private async Task RegistrarTienda()
+    {
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+
+        try
+        {
+            var usuarioId = ServicioUsurioLogin.Id;
+            if (usuarioId <= 0)
+            {
+                errorMessage = "Debe iniciar sesión para registrar una tienda.";
+                return;
+            }
+
+            //tienda.UsuariosTienda = usuarioId;
+
+            _context.Tiendas.Add(tienda);
+            await _context.SaveChangesAsync();
+
+            successMessage = "Tienda registrada exitosamente.";
+            tienda = new Tienda();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al registrar la tienda: {ex.Message}";
+        }
+    }
 }

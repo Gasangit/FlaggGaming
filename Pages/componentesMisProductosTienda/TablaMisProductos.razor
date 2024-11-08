@@ -9,75 +9,85 @@
 
 
 
-    <div class="container">
-        <div class="header-row">
-            <div class="title">
-                <h2>Mis Productos</h2>
-            </div>
-            <div class="button-container">
+<div class="container">
+    <div class="header-row">
+        <div class="title">
+            <h2>Mis Productos</h2>
+        </div>
+        <div class="button-container">
             <a href="/cargarproductos" onclick="" class="new-product-button">Nuevo Producto</a>
-            </div>
+        </div>
         <div class="col-3 text-right">
             <input @bind="searchTerm" class="search-box form-control" placeholder="Buscar Productos" />
-        </div>  
         </div>
+    </div>
+    @* Mensaje de confirmación *@
+    @if (guardadoExitoso)
+    {
+        <div class="alert alert-success nombre-guardado">
+            El producto '@nombreProductoGuardado' ha sido borrado.
+        </div>
+    }
 
-
-        <div class="row mt-5">
+    <div class="row mt-5">
         @foreach (var producto in productosFiltrados)
         {
             <div class="col-12">
                 <div class="card">
-                   @foreach (var categoria in categorias)
+                    @foreach (var categoria in categorias)
                     {
                         if (producto.IdCategoria == categoria.IdCategoria)
                         {
-                         <img class="card-img" src="imagenes/@(categoria.DescCategoria).png" alt="@categoria.DescCategoria">
+                            <img class="card-img" src="imagenes/@(categoria.DescCategoria).png" alt="@categoria.DescCategoria">
                         }
 
-                    }                   
+                    }
                     <div class="card-body">
                         <div class="card-info">
                             <p><strong>Nombre:</strong>@producto.SkuTienda</p>
                             <p><strong>Descripción:</strong>@producto.DescTienda</p>
                             <p><strong>Marca:</strong>@producto.Marca</p>
-                            <p><strong>Categoría:</strong>
+                            <p>
+                                <strong>Categoría:</strong>
 
-                                @foreach (var categoria in categorias){
+                                @foreach (var categoria in categorias)
+                                {
                                     if (producto.IdCategoria == categoria.IdCategoria)
                                     {
-                                        @categoria.DescCategoria;
+                                        @categoria.DescCategoria
+                                        ;
                                     }
-                                }                           
-                           </p>
+                                }
+                            </p>
                             <p><strong>Precio:</strong>@producto.PrecioVta</p>
-                           
-                                @if (producto.Estatus)
-                                {
-                                    <div class="alert alert-success" role="alert">
+
+                            @if (producto.Estatus)
+                            {
+                                <div class="alert alert-success" role="alert">
                                     <p><strong>  Activo</strong></p>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="alert alert-danger" role="alert">
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="alert alert-danger" role="alert">
                                     <p><strong>  Inactivo</strong></p>
-                                    </div>                                
-                                }
-                          
+                                </div>
+                            }
+
                         </div>
                         <div class="card-actions">
                             <a class="btn btn-primary" href="editarproductos/@producto.IdInternoProducto">Editar</a>
-                            <a class="btn btn-danger" @onclick="() => ConfirmarBorrado(producto.IdInternoProducto)">Borrar</a>
+                            <a class="btn btn-danger" @onclick="() => ConfirmarBorrado(producto.IdInternoProducto)" href="/misproductos">Borrar</a>
                         </div>
+
                     </div>
                 </div>
             </div>
         }
-           
-            
-        </div>
+
+
     </div>
+</div>
 
 
 @code {
@@ -86,6 +96,7 @@
     private UsuariosTienda usuariostienda = new UsuariosTienda();
     private string searchTerm = ""; // Variable para almacenar el término de búsqueda
     private bool guardadoExitoso;
+    private string nombreProductoGuardado;
 
     // Propiedad que devuelve la lista de tiendas filtradas según el término de búsqueda
     private IEnumerable<Producto> productosFiltrados =>
@@ -118,8 +129,11 @@
         {
             datosService.Productos.Remove(producto);
             await datosService.SaveChangesAsync();
+            productos.RemoveAll(p => p.IdInternoProducto == idProducto);
+            nombreProductoGuardado = producto.SkuTienda;
             guardadoExitoso = true; // Mostrar un mensaje de confirmación si es necesario
-            NavigationManager.NavigateTo("/misproductos", forceLoad: true);
+            producto = new Producto();
+
         }
         else
         {

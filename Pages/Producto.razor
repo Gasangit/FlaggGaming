@@ -2,12 +2,13 @@
 @inject FlaggGaming.Entity.DatosContext contextoDatos
 @using FlaggGaming.Pages.componentesProducto
 @using FlaggGaming.Model
+@using Microsoft.EntityFrameworkCore;
 
 <DatosComprar unProducto=@unProducto />
 
 <DescripcionProducto unProducto=@unProducto />
 
-<Grafico />
+<Grafico unProducto="@unProducto" />
 
 @functions{
     [Parameter] public string idProducto { get; set; }
@@ -15,6 +16,10 @@
 
     protected override void OnInitialized()
     {   
-        unProducto = contextoDatos.Productos.Where(producto => producto.IdInternoProducto == Convert.ToInt32(idProducto)).FirstOrDefault();
+        unProducto = contextoDatos.Productos
+            .Include(producto => producto.IdTiendaNavigation)
+            .Include(producto => producto.IdCategoriaNavigation)
+            .Where(producto => producto.IdInternoProducto == Convert.ToInt32(idProducto))
+            .FirstOrDefault();
     }
 }

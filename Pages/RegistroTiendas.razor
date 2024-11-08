@@ -1,7 +1,35 @@
 ﻿@page "/registrotiendas"
 @using FlaggGaming.Pages.componentesRegistroTiendas
+@using FlaggGaming.Services.ServicioUsuario
 
-<RecuadroRegistroTiendas/>
+@if (ServicioUsurioLogin.rolTienda)
+{
+    <div class="continer">
+        <div class="row my-5 justify-content-center">
+            <div class="col-7 text-center">
+                <p class="fs-2 text-success">Usted ya posee una tienda, no puede registrarse como tienda nuevamente.</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    if (ServicioUsurioLogin.nombre != "")
+    {
+        <RecuadroRegistroTiendas />
+    }
+    else
+    {
+        <div class="continer">
+            <div class="row my-5 justify-content-center">
+                <div class="col-7 text-center">
+                    <p class="fs-2 text-success">Debe loguearse para poder registrarse como tienda.</p>
+                </div>
+            </div>
+        </div>
+    }
+    
+}
 
 @code {
 

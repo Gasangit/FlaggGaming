@@ -63,7 +63,7 @@
             listaProductos = contextoDatos.Productos
                 .Include(producto => producto.IdCategoriaNavigation)
                 .Include(producto => producto.IdTiendaNavigation)
-                .Where(producto => producto.Estatus != false)
+                .Where(producto => producto.Estatus != false && producto.Estatus == true )
                 .ToList();
 
             filteredProductos = listaProductos;

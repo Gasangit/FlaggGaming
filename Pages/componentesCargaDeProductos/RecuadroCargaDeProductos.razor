@@ -6,23 +6,29 @@
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Components.Forms
+@*using DocumentFormat.OpenXml.Packaging
+@using DocumentFormat.OpenXml.Spreadsheet*@
 
+<div class="row justify-content-center formulario-carga-producto">
 
-    
-<div class="row justify-content-center formulario-carga-producto" >
-  
-    <div class="col-12 text-center mb-4">
-        <div class="col-auto text-end mb-2">
-            <a href="" class="btn btn-primary">Carga Masiva xlsx</a>
+    @*<div class="col-12 mb-3 p-4 rounded-3 border">
+        <div class="col-6 text-end mb-12">
+            <InputFile OnChange="CargarArchivoExcel" accept=".xlsx" />
+
+            @if (mensaje != null)
+            {
+                <p>@mensaje</p>
+            }
         </div>
-     </div>
+    </div>*@
     <div class="col-6 mb-3 p-4 rounded-3 border">
         <div class="row mb-3 align-items-center">
-        <label for="skuTienda" class="col-4 col-form-label">SKU Tienda</label>
-        <div class="col-8">
-            <input @bind="producto.SkuTienda" id="SkuProducto" type="text" class="form-control" />
+            <label for="skuTienda" class="col-4 col-form-label">SKU Tienda</label>
+            <div class="col-8">
+                <input @bind="producto.SkuTienda" id="SkuProducto" type="text" class="form-control" />
+            </div>
         </div>
-    </div>
         <div class="row mb-3 align-items-center">
             <label for="descripcion" class="col-4 col-form-label">Descripción</label>
             <div class="col-8">
@@ -33,6 +39,7 @@
             <label for="categoria" class="col-4 col-form-label">Categoría</label>
             <div class="col-8">
                 <select @bind="producto.IdCategoria" id="categoria" class="form-select">
+                    <option value="">Seleccione una categoría</option>
                     @foreach (var categoria in categorias)
                     {
                         <option value="@categoria.IdCategoria">@categoria.DescCategoria</option>
@@ -52,42 +59,153 @@
                 <input @bind="producto.PrecioVta" id="precioVenta" type="text" class="form-control" />
             </div>
         </div>
-       
+
         <div class="col-12 text-center mt-4">
-            <a class="btn btn-success" @onclick="AgregarProducto"  >Agregar Producto</a>
+            <a class="btn btn-success" @onclick="AgregarProducto">Agregar Producto</a>
         </div>
+
+        @* Mensaje de confirmación *@
+        @if (guardadoExitoso)
+        {
+            <div class="alert alert-success nombre-guardado">
+                El producto '@nombreProductoGuardado' fue agregado correctamente.
+            </div>
+        }
     </div>
+
 </div>
 
 
 @code {
-    //value="@categoria.IdCategoria"
     private Producto producto = new Producto();
     private bool guardadoExitoso;
+    private string nombreProductoGuardado;
     private UsuariosTienda usuariostienda = new UsuariosTienda();
-
-    private void metodoParaProcesarElFormulario()
-    {
-
-    }
-
+    private string mensaje;
+    private string errorMessage;
+    private string successMessage;
     private List<Categoria> categorias = new List<Categoria>();
-    private string searchTerm = ""; // Variable para almacenar el término de búsqueda
+    private bool categoriaExiste;
+
 
     protected override async Task OnInitializedAsync()
-    {     
+    {
         usuariostienda = await datosService.UsuariosTiendas.FirstOrDefaultAsync(u => u.IdU == ServicioUsurioLogin.Id);
         categorias = await datosService.Categorias.ToListAsync();
     }
 
     private async Task AgregarProducto()
     {
-        // Actualizar los datos del producto en la base de datos
-        producto.IdTienda = usuariostienda.IdT;
-        producto.Estatus = bool.Parse("True");
-        datosService.Productos.AddAsync(producto);
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+        categoriaExiste = false;
+
+        foreach (var categoria in categorias)
+        {
+            if (categoria.IdCategoria == producto.IdCategoria)
+            {
+                categoriaExiste = true;
+            }
+
+        }
+
+
+        if (string.IsNullOrEmpty(producto.SkuTienda))
+        {
+            errorMessage = "Por favor, ingresa los datos de SkuTienda";
+        }
+        else if (string.IsNullOrEmpty(producto.DescTienda))
+        {
+            errorMessage = "Por favor, ingresa los datos de la descripción";
+        }
+        else if (!categoriaExiste)
+        {
+            errorMessage = "Por favor, ingresa una categoria existente.";
+        }
+        else if (string.IsNullOrEmpty(producto.Marca))
+        {
+            errorMessage = "Por favor, ingresa los datos de la marca";
+        }
+        else if (producto.PrecioVta <= 0)
+        {
+            errorMessage = "Por favor, ingresa los datos del precio";
+        }
+        else if (usuariostienda == null || usuariostienda.IdT == 0)
+        {
+            errorMessage = "Por favor, usuario no registrado.";
+        }
+        else
+        {
+            producto.IdTienda = usuariostienda.IdT;
+            producto.Estatus = bool.Parse("True");
+            datosService.Productos.Add(producto);
+            await datosService.SaveChangesAsync();
+            nombreProductoGuardado = producto.SkuTienda;
+            guardadoExitoso = true; // Mostrar un mensaje de confirmación
+            producto = new Producto();
+
+        }
+    }
+
+    //Importar datos desde XLSX
+    /*private async Task CargarArchivoExcel(InputFileChangeEventArgs e)
+    {
+        var archivo = e.File;
+        if (archivo != null)
+        {
+            try
+            {
+                using var stream = archivo.OpenReadStream();
+                await ImportarProductosDesdeExcel(stream);
+                mensaje = "Importación exitosa.";
+            }
+            catch (Exception ex)
+            {
+                mensaje = $"Error al importar: {ex.Message}";
+            }
+        }
+    }
+
+    private async Task ImportarProductosDesdeExcel(Stream stream)
+    {
+        var productos = new List<Producto>();
+
+        using var document = SpreadsheetDocument.Open(stream, false);
+
+
+
+        var workbookPart = document.WorkbookPart;
+        var sheet = workbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
+        var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
+        var rows = worksheetPart.Worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+
+        foreach (var row in rows.Skip(1)) // Saltar encabezado
+        {
+            var cells = row.Elements<Cell>().ToList();
+            var producto = new Producto
+                {
+                    SkuTienda = GetCellValue(workbookPart, cells[0]),
+                    DescTienda = GetCellValue(workbookPart, cells[1]),
+                    Marca = GetCellValue(workbookPart, cells[2]),
+                    PrecioVta = decimal.Parse(GetCellValue(workbookPart, cells[3])),
+                    IdCategoria = int.Parse(GetCellValue(workbookPart, cells[4]))
+                };
+            productos.Add(producto);
+        }
+
+        // Guardar en la base de datos
+        datosService.Productos.AddRange(productos);
         await datosService.SaveChangesAsync();
-        guardadoExitoso = true; // Mostrar un mensaje de confirmación
-        NavigationManager.NavigateTo("/misproductos");
-   }
+    }
+
+    private string GetCellValue(WorkbookPart workbookPart, Cell cell)
+    {
+        var value = cell.CellValue?.Text;
+        if (cell.DataType?.Value == CellValues.SharedString)
+        {
+            var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+            return stringTable?.SharedStringTable.ElementAt(int.Parse(value)).InnerText;
+        }
+        return value;
+    }*/
 }

@@ -5,13 +5,14 @@
 @using System.Linq
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
+@using FlaggGaming.Model.usuarios
 
 <div class="row justify-content-center formulario-carga-producto">
 
-     
+
     <div class="col-6 mb-3 p-4 rounded-3 border">
         <div class="row mb-3 align-items-center">
-                <label for="idProducto" class="col-4 col-form-label">ID Producto</label>
+            <label for="idProducto" class="col-4 col-form-label">ID Producto</label>
             <div class="col-8">
                 <input @bind="producto.IdInternoProducto" id="idProducto" type="text" class="form-control" disabled />
             </div>
@@ -34,7 +35,7 @@
                 <select @bind="producto.IdCategoria" id="categoria" class="form-select">
                     @foreach (var categoria in categorias)
                     {
-                          <option value="@categoria.IdCategoria">@categoria.DescCategoria</option>
+                        <option value="@categoria.IdCategoria">@categoria.DescCategoria</option>
                     }
                 </select>
             </div>
@@ -60,36 +61,41 @@
                         <option value="True">Activo</option>
                         <option value="False">Inactivo</option>
                     }
-                    else{
-                     <option value="False">Inactivo</option>
-                     <option value="True">Activo</option>                        
-                     }
-                    </select>
+                    else
+                    {
+                        <option value="False">Inactivo</option>
+                        <option value="True">Activo</option>
+                    }
+                </select>
             </div>
         </div>
         <div class="col-12 text-center mt-4">
-                <a class="btn btn-success" @onclick="ModificarProducto" href="">Modificar Producto</a>
+            <a class="btn btn-success" @onclick="ModificarProducto">Modificar Producto</a>
         </div>
+        @* Mensaje de confirmación *@
+        @if (guardadoExitoso)
+        {
+            <div class="alert alert-success nombre-guardado">
+                El producto '@nombreProductoGuardado' se modificó correctamente.
+            </div>
+        }
     </div>
-        
+
 </div>
 
 @code {
-   
+
     [Parameter] public int IdProducto { get; set; }
 
     private Producto producto { get; set; } = new Producto();
     private bool guardadoExitoso;
-
-    private void metodoParaProcesarElFormulario()
-    {
-
-    }
-        
     private List<Categoria> categorias = new List<Categoria>();
-  
+    private UsuariosTienda usuariostienda = new UsuariosTienda();
+    private string nombreProductoGuardado;
+
     protected override async Task OnInitializedAsync()
     {
+        usuariostienda = await datosService.UsuariosTiendas.FirstOrDefaultAsync(u => u.IdU == ServicioUsurioLogin.Id);
         categorias = await datosService.Categorias.ToListAsync();
         producto = await datosService.Productos.FirstOrDefaultAsync(p => p.IdInternoProducto == IdProducto);
 
@@ -97,14 +103,18 @@
 
     private async Task ModificarProducto()
     {
+
         // Actualizar los datos del producto en la base de datos
         datosService.Productos.Update(producto);
         await datosService.SaveChangesAsync();
+        nombreProductoGuardado = producto.SkuTienda;
         guardadoExitoso = true; // Mostrar un mensaje de confirmación
+        producto = new Producto();
+        NavigationManager.NavigateTo($"/misproductos");
     }
 
     private void OnStatusChange(ChangeEventArgs e)
     {
         producto.Estatus = bool.Parse(e.Value.ToString());
-    }        
+    }
 }
