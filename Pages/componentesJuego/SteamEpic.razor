@@ -33,6 +33,7 @@
                 </div>
             </div>
         </div>
+        <a href="@unJuegoFlagg.urlEpic">
         <div class="row mt-3 border border-danger border-3 rounded">
             <div class="col-4 py-2 text-center">
                 <img src="/imagenes/logoEpic.jpg" class="img-fluid" /> @*EPIC*@
@@ -50,13 +51,16 @@
                 </div>
                 <div class="row p-2">
                     <div class="col text-center d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio Pare de Sufrir (Prox. mes): $ @if (valorInflacion != 0.0M) { precioPareDeSufrirEpic.ToString("N2"); }
-                            else{<p>"El servicio ha fallado."</p>}
+                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">
+                            Precio Pare de Sufrir (Prox. mes): $ @if (valorInflacion != 0.0M) 
+                            { @precioPareDeSufrirEpic.ToString("N2"); }
+                            else{<span>"El servicio ha fallado."</span>}
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+        </a>
     </div>
 </div>
 

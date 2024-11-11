@@ -71,6 +71,6 @@ public class ServicioIPC
 
             return tareaIPC.Result;
         }
-        catch(TaskCanceledException ex){ return inflacion; }
+        catch(Exception ex){ return inflacion; }
     }
 }
