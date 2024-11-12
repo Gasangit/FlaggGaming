@@ -16,7 +16,7 @@ namespace FlaggGaming.Model.tienda
 
         public string Mail { get; set; } = null!;
 
-        public string Password { get; set; } = null!;
+        public string Password { get; set; } = "";
 
         public string Dir { get; set; } = null!;
 

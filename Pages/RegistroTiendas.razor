@@ -1,6 +1,8 @@
 ﻿@page "/registrotiendas"
+@using FlaggGaming.Model.usuarios
 @using FlaggGaming.Pages.componentesRegistroTiendas
 @using FlaggGaming.Services.ServicioUsuario
+@inject FlaggGaming.Entity.DatosContext contextoDatos
 
 @if (ServicioUsurioLogin.rolTienda)
 {
@@ -14,10 +16,27 @@
 }
 else
 {
-    if (ServicioUsurioLogin.nombre != "")
-    {
-        <RecuadroRegistroTiendas />
-    }
+        UsuariosTienda usuarioTienda = new UsuariosTienda();
+        if (ServicioUsurioLogin.nombre != "")
+
+            usuarioTienda = contextoDatos.UsuariosTiendas.Where(ustienda => ustienda.IdU == ServicioUsurioLogin.Id).FirstOrDefault();
+
+        if (usuarioTienda.IdU != null)
+        {
+            <RecuadroRegistroTiendas />
+        }
+        else
+        {
+            <div class="continer">
+                <div class="row my-5 justify-content-center">
+                    <div class="col-7 text-center">
+                        <p class="fs-2 text-success">Ya tiene una solicitud de Tienda en curso</p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        }
     else
     {
         <div class="continer">

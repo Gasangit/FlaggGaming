@@ -33,16 +33,14 @@
                 </div>
             </div>
         </div>
-        <a href="@unJuegoFlagg.urlEpic">
+        <a href="@unJuegoFlagg.urlEpic" target="_blank">
         <div class="row mt-3 border border-danger border-3 rounded">
             <div class="col-4 py-2 text-center">
                 <img src="/imagenes/logoEpic.jpg" class="img-fluid" /> @*EPIC*@
             </div>
             <div class="col-8 my-auto">
                 <div class="row p-2 mb-1">
-                    <div class="col text-center d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio: U$D @precioEpicDolares.ToString()</a>
-                    </div>
+                        <p class="text-decoration-none">Precio: U$D @precioEpicDolares.ToString()</p>
                 </div>
                 <div class="row p-2">
                     <div class="col text-center d-grid gap-2">
@@ -63,6 +61,10 @@
         </a>
     </div>
 </div>
+
+@*<div class="col text-center d-grid gap-2">
+    <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio: U$D @precioEpicDolares.ToString()</a>
+</div>*@
 
 @code {
     [Parameter] public JuegoFlagg unJuegoFlagg { get; set; }

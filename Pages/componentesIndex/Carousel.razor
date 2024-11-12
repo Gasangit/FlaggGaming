@@ -9,13 +9,19 @@
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner active">
                 <div class="carousel-item">
-                    <img src=@listaCarousel[0].imagen class="d-block w-100" alt="..." width="600" height="300">
+                    <a href="/juego/@listaCarousel[0].idFlagg">
+                        <img src=@listaCarousel[0].imagen class="d-block w-100" alt="..." width="600" height="300">
+                    </a>
                 </div>
                 <div class="carousel-item active">
-                    <img src=@listaCarousel[1].imagen class="d-block w-100" alt="..." width="600" height="300">
+                    <a href="/juego/@listaCarousel[1].idFlagg">
+                        <img src=@listaCarousel[1].imagen class="d-block w-100" alt="..." width="600" height="300">
+                    </a>
                 </div>
                 <div class="carousel-item">
-                    <img src=@listaCarousel[2].imagen class="d-block w-100" alt="..." width="600" height="300">
+                    <a href="/juego/@listaCarousel[2].idFlagg">
+                        <img src=@listaCarousel[2].imagen class="d-block w-100" alt="..." width="600" height="300">
+                    </a>
                 </div>
             </div>
             <a id="myCarousel-prev" class="carousel-control-prev" role="button" data-bs-slide="prev">
@@ -30,7 +36,7 @@
     </div>
 </div>
 
-@functions {
+@code {
     public JuegoFlagg[] listaCarousel = new JuegoFlagg[3];
     public JuegoFlagg[] juegosBaseDatos;
     Random objetoRandom = new Random();
@@ -63,14 +69,9 @@
     window.initializeCarousel = () => {
         $('#myCarousel').carousel({ interval: 2000 });
 
-        //see step 2 to understand these news id's:
         $('#myCarousel-prev').click(
             () => $('#myCarousel').carousel('prev'));
         $('#myCarousel-next').click(
             () => $('#myCarousel').carousel('next'));
     }
 </script>
-
-
-       
-

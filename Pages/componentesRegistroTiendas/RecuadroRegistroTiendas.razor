@@ -90,12 +90,29 @@
             }
 
             //tienda.UsuariosTienda = usuarioId;
-
             _context.Tiendas.Add(tienda);
-            await _context.SaveChangesAsync();
+
+            int resultado = await _context.SaveChangesAsync();
+
+            if (resultado > 0)
+            {
+                Tienda tiendaCreada = _context.Tiendas.Where(unaTienda => unaTienda.Mail == tienda.Mail).FirstOrDefault();
+
+                UsuariosTienda usuarioTienda = new UsuariosTienda();
+                usuarioTienda.IdU = usuarioId;
+                usuarioTienda.IdT = tiendaCreada.Id;
+                _context.UsuariosTiendas.Add(usuarioTienda);
+                _context.SaveChanges();
+                Navigation.NavigateTo("/");
+            }
+            else { 
+                errorMessage = $"No se ha podido crear la tienda, vuelva a intentarlo más tarde.";
+                Navigation.NavigateTo("/");
+            }
 
             successMessage = "Tienda registrada exitosamente.";
             tienda = new Tienda();
+            Navigation.NavigateTo("/");
         }
         catch (Exception ex)
         {

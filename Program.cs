@@ -27,7 +27,7 @@ builder.Services.AddDbContext<DatosContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("UserContext"));
 });
 
-builder.Logging.ClearProviders(); //limpia la consola de los mensajes internos de .net
+//builder.Logging.ClearProviders(); //limpia la consola de los mensajes internos de .net
 
 // Add services to the container.
 builder.Services.AddRazorPages();

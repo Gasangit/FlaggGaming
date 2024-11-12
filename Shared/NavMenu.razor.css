@@ -18,6 +18,22 @@
     top: -2px;
 }
 
+.nombre-usuario {
+    padding: 5px;
+    border: solid;
+    margin-right: 30px;
+    text-decoration: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50px;
+    border-color: black;
+    border-width: 1px;
+    background-color: white;
+    color: black;
+}
+
+
 /*.nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
@@ -57,12 +73,12 @@
 
     .collapse {
         /* Never collapse the sidebar for wide screens */
-        /*display: block;
+/*display: block;
     }
     
     .nav-scrollable {
-        /* Allow sidebar to scroll for tall menus*/ 
-        /*height: calc(100vh - 3.5rem);
+        /* Allow sidebar to scroll for tall menus*/
+/*height: calc(100vh - 3.5rem);
         overflow-y: auto;
     }
 }*/
