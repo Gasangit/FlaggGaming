@@ -6,58 +6,88 @@
 @inject FlaggGaming.Services.ServiciosParaCalculos.ServicioIPC servicioIPC
 
 <div class="row">
-    <div class="col mx-2">
-        <div class="row border border-danger border-3 rounded">
+    <div class="col ms-2">
+        <a href="@unJuegoFlagg.urlTienda" target="_blank" class="row text-decoration-none text-reset border border-danger border-3 rounded">
             <div class="col-4 py-3 text-center">
-                <img src="/imagenes/logoSteam.jpg" class="img-fluid" /> @*STEAM*@
+                <img src="/imagenes/steamic2.jpg" class="img-fluid" /> @*STEAM*@
             </div>
             <div class="col-8 my-auto">
                 <div class="row p-2 mb-1">
-                    <div class="col text-center rounded d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">Precio: U$D @precioSteamDolares.ToString()</a>
+                    <div class="col-7 d-grid gap-2 fw-semibold">
+                        Precio:
+                    </div>
+                    <div class="col">U$D</div>
+                    <div class="col d-grid gap-2">
+                        @precioSteamDolares.ToString()
                     </div>
                 </div>
+                <hr class="border border-danger border-1 opacity-50 my-0">
                 <div class="row p-2">
-                    <div class="col text-center rounded d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaSteam.ToString("N2")</a>
+                    <div class="col-7 d-grid gap-2 fw-semibold">
+                        Precio Posta (ARS):
+                    </div>
+                    <div class="col">$</div>
+                    <div class="col d-grid gap-2">
+                        @precioPostaSteam.ToString("N2")
                     </div>
                 </div>
+                <hr class="border border-danger border-1 opacity-50 my-0">
                 <div class="row p-2">
-                    <div class="col text-center rounded d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlTienda" class="btn btn-primary">
-                            Precio Pare de Sufrir (Prox. mes): $ @if (valorInflacion != 0.0M)
-                            {@precioPareDeSufrirSteam.ToString("N2");}
-                            else{<span>"El servicio ha fallado."</span>}
-                        </a>
+                    <div class="col-7 d-grid gap-2 fw-semibold">
+                        Precio Pare de Sufrir (Prox. mes):
+                    </div>
+                    <div class="col">$</div>
+                    <div class="col d-grid gap-2">
+                        @if (valorInflacion != 0.0M)
+                        {
+                            @precioPareDeSufrirSteam.ToString("N2")
+                        }
+                        else
+                        {<span>"El servicio ha fallado."</span>}
                     </div>
                 </div>
             </div>
-        </div>
-        <a href="@unJuegoFlagg.urlEpic" target="_blank">
-        <div class="row mt-3 border border-danger border-3 rounded">
-            <div class="col-4 py-2 text-center">
-                <img src="/imagenes/logoEpic.jpg" class="img-fluid" /> @*EPIC*@
+        </a>
+        
+        <a href="@unJuegoFlagg.urlEpic" target="_blank" class="row text-decoration-none text-reset mt-3 border border-danger border-3 rounded">
+            <div class="col-4 py-2 text-center d-flex align-items-center">
+                <img src="/imagenes/epicic.jpg" class="img-fluid" /> @*EPIC*@
             </div>
-            <div class="col-8 my-auto">
-                <div class="row p-2 mb-1">
-                        <p class="text-decoration-none">Precio: U$D @precioEpicDolares.ToString()</p>
-                </div>
+            <div class="col my-auto py-3">
                 <div class="row p-2">
+                    <div class="col-7 d-grid gap-2 fw-semibold">
+                        Precio:
+                    </div>
+                    <div class="col">U$D</div>
                     <div class="col text-center d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio Posta (ARS): $ @precioPostaEpic.ToString("N2")</a>
+                        @precioEpicDolares.ToString()
                     </div>
                 </div>
+                <hr class="border border-danger border-1 opacity-50 my-0">
                 <div class="row p-2">
-                    <div class="col text-center d-grid gap-2">
-                        <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">
-                            Precio Pare de Sufrir (Prox. mes): $ @if (valorInflacion != 0.0M) 
-                            { @precioPareDeSufrirEpic.ToString("N2"); }
-                            else{<span>"El servicio ha fallado."</span>}
-                        </a>
+                    <div class="col-7 d-grid gap-2 fw-semibold">
+                        Precio Posta (ARS): 
+                    </div>
+                    <div class="col">$</div>
+                    <div class="col d-grid gap-2">
+                        @precioPostaEpic.ToString("N2")
+                    </div>
+                </div>
+                <hr class="border border-danger border-1 opacity-50 my-0">
+                <div class="row p-2">
+                    <div class="col-7 d-grid gap-2 fw-semibold">
+                        <span>Precio Pare de Sufrir (Prox. mes):</span>
+                    </div>
+                    <div class="col">$</div>
+                    <div class="col d-grid gap-2">
+                        @if (valorInflacion != 0.0M)
+                        {
+                            @precioPareDeSufrirEpic.ToString("N2")
+                        }
+                        else{<span>"El servicio ha fallado."</span>}
                     </div>
                 </div>
             </div>
-        </div>
         </a>
     </div>
 </div>
