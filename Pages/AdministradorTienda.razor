@@ -2,83 +2,117 @@
 @inject NavigationManager Navigation
 @using FlaggGaming.Pages.componentesLogin
 @using FlaggGaming.Services.ServicioUsuario
+@inject Services.TiendaService TiendaService
+@using FlaggGaming.Model.tienda
+@using FlaggGaming.Model.Usuarios
 
+@code {
+    private Tienda tienda = new Tienda();
+    private bool guardadoExitoso;
+    private string mensajeError = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        tienda = await TiendaService.ObtenerTiendaAsync();
+    }
+
+    private async Task GuardarCambios()
+    {
+        try
+        {
+            await TiendaService.ActualizarTiendaAsync(tienda);
+            guardadoExitoso = true;
+            mensajeError = ""; // Limpiamos el mensaje de error si la operación fue exitosa
+        }
+        catch (Exception ex)
+        {
+            guardadoExitoso = false;
+            mensajeError = "Hubo un error al guardar los cambios: " + ex.Message;
+        }
+    }
+}
 
 @if (!ServicioUsurioLogin.rolTienda)
 {
-    <div class="continer">
-        <div class="row my-5 justify-content-center">
-            <div class="col-7 text-center">
-                <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
+        <div class="continer">
+            <div class="row my-5 justify-content-center">
+                <div class="col-7 text-center">
+                    <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
+                </div>
             </div>
         </div>
-    </div>
 }
 else
 {
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <form>
-                    <h1 class="text-center">PERFIL TIENDA</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <EditForm Model="@tienda" OnValidSubmit="GuardarCambios">
+                        <h1 class="text-center">PERFIL TIENDA</h1>
 
-                    <!-- Usuario -->
-                    <div class="form-group">
-                        <label for="username">Usuario</label>
-                        <input type="text" class="form-control" id="username" placeholder="Admin" disabled>
-                    </div>
+                        <!-- Usuario (Deshabilitado) -->
+                        <div class="form-group">
+                            <label for="username">Usuario</label>
+                            <input type="text" class="form-control" id="username" @bind="@tienda.Id" disabled>
+                        </div>
 
-                    <!-- Nombre de Tienda -->
-                    <div class="form-group">
-                        <label for="name">Nombre</label>
-                        <input type="text" class="form-control" id="name" placeholder="FlaggGaming">
-                    </div>
+                        <!-- Nombre de Tienda -->
+                        <div class="form-group">
+                            <label for="name">Nombre</label>
+                            <input type="text" class="form-control" id="name" @bind="@tienda.Name">
+                        </div>
 
-                    <!-- Correo Electrónico -->
-                    <div class="form-group">
-                        <label for="email">Mail</label>
-                        <input type="email" class="form-control" id="email" placeholder="flaggaming@mail.com">
-                    </div>
+                        <!-- Correo Electrónico -->
+                        <div class="form-group">
+                            <label for="email">Mail</label>
+                            <input type="email" class="form-control" id="email" @bind="@tienda.Mail">
+                        </div>
 
-                    <!-- Ubicacion -->
-                    <div class="form-group">
-                        <label for="location">Ubicacion</label>
-                        <input type="text" class="form-control" id="location" placeholder="Capital Federal">
-                    </div>
+                        <!-- Ubicación -->
+                        <div class="form-group">
+                            <label for="location">Direccion</label>
+                            <input type="text" class="form-control" id="location" @bind="@tienda.Dir">
+                        </div>
 
-                    <!-- Direccion -->
-                    <div class="form-group">
-                        <label for="adress">Direccion</label>
-                        <input type="text" class="form-control" id="addres" placeholder="Calle Falsa 123">
-                    </div>
+                        <!-- Instagram -->
+                        <div class="form-group">
+                            <label for="address">Instagram</label>
+                            <input type="text" class="form-control" id="address" @bind="@tienda.Insta">
+                        </div>
 
-                    <!-- Horario -->
-                    <div class="form-group">
-                        <label for="time">Horarios</label>
-                        <input type="text" class="form-control" id="time" placeholder="Lunes a Sabados 9:00hs a 17:00hs">
-                    </div>
+                        <!-- Horarios -->
+                        <div class="form-group">
+                            <label for="time">Horarios</label>
+                            <input type="text" class="form-control" id="time" @bind="@tienda.Hr">
+                        </div>
 
-                    <!-- Contacto -->
-                    <div class="form-group">
-                        <label for="contact">Contacto</label>
-                        <input type="text" class="form-control" id="contact" placeholder="15-7777-3333">
-                    </div>
+                        <!-- Contacto -->
+                        <div class="form-group">
+                            <label for="contact">Contacto</label>
+                            <input type="text" class="form-control" id="contact" @bind="@tienda.Tel">
+                        </div>
 
-                    <!-- Contraseña -->
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" class="form-control" id="password" placeholder="********">
-                    </div>
-
-                    <div class="col">
-                        <div class="text-center mt-2">
-                            <!-- Botón Guardar Cambios -->
+                        <!-- Botón Guardar Cambios -->
+                        <div class="col text-center mt-2">
                             <button type="submit" class="btn btn-danger">Guardar Cambios</button>
                         </div>
-                    </div>
-                </form>
+                    </EditForm>
+
+                    <!-- Mensaje de éxito o error -->
+                @if (guardadoExitoso)
+                {
+                            <div class="alert alert-success mt-3 text-center">
+                                Los cambios se han guardado exitosamente.
+                            </div>
+                }
+                else if (!string.IsNullOrEmpty(mensajeError))
+                {
+                            <div class="alert alert-danger mt-3 text-center">
+                        @mensajeError
+                            </div>
+                }
+                </div>
             </div>
         </div>
-    </div>
-
 }
+

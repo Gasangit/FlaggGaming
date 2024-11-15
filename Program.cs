@@ -49,6 +49,7 @@ builder.Services.AddScoped<CargaInfoJuegoEpicEnBAseDeDatos>();
 builder.Services.AddScoped<ServicioDolar>();
 builder.Services.AddScoped<ServicioIPC>();
 builder.Services.AddScoped<ServicioUsurioLogin>();
+builder.Services.AddScoped<TiendaService>();
 builder.Services.AddHttpClient("scrapWebEpic");
 
 

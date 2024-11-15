@@ -49,7 +49,7 @@
             </div>
         </a>
         
-        <a href="@unJuegoFlagg.urlEpic" target="_blank" class="row text-decoration-none text-reset mt-3 border border-danger border-3 rounded">
+        <a href="@urlEpic" target="_blank" class="row text-decoration-none text-reset mt-3 border border-danger border-3 rounded">
             <div class="col-4 py-2 text-center d-flex align-items-center">
                 <img src="/imagenes/epicic.jpg" class="img-fluid" /> @*EPIC*@
             </div>
@@ -92,10 +92,6 @@
     </div>
 </div>
 
-@*<div class="col text-center d-grid gap-2">
-    <a href="@unJuegoFlagg.urlEpic" class="btn btn-primary">Precio: U$D @precioEpicDolares.ToString()</a>
-</div>*@
-
 @code {
     [Parameter] public JuegoFlagg unJuegoFlagg { get; set; }
     public Dictionary<string, JuegoSteam> juegoSteamApi;
@@ -109,6 +105,7 @@
     public decimal precioPareDeSufrirEpic = 0.0M;
 
     public string idJuegoTienda;
+    public string urlEpic;
 
     protected override async Task OnInitializedAsync()
     {
@@ -117,6 +114,7 @@
         valorInflacion = await servicioIPC.getValoresIPC();
         juegoSteamApi = await servicioJuegoApiSteam.getJuegoSteam(idJuegoTienda);
         precioEpicDolares = await servicioJuegoEpic.getPrecioJuegoEpic(unJuegoFlagg.nombre);
+        urlEpic = unJuegoFlagg.urlEpic.Replace("%2520", "%20");
 
         while (!juegoSteamApi.ContainsKey(idJuegoTienda))
         {
@@ -142,7 +140,6 @@
         {
             precioPareDeSufrirSteam = (precioPostaSteam * valorInflacion) + precioPostaSteam;
             precioPareDeSufrirEpic = (precioPostaEpic * valorInflacion) + precioPostaEpic;
-        }
-        
+        } 
     }
 }
