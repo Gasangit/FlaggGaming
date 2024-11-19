@@ -37,14 +37,6 @@
                         Sobre Nosotros
                     </a>
                 </li>
-                @if (ServicioUsurioLogin.rolTienda)
-                {
-                    <li>
-                        <a class="nav-link" href="/misproductos" role="button" aria-expanded="false">
-                            Mi tienda
-                        </a>
-                    </li>
-                }
             </ul>
         </div>
 
@@ -63,7 +55,7 @@
                     {
 
                         <li><a class="dropdown-item" href="/listatiendas/@ServicioUsurioLogin.Id">Perfil tienda</a></li>
-
+                        <li><a class="nav-link" href="/misproductos" role="button" aria-expanded="false">Mis Productos</a></li>
                         
                     }
                     @if (!ServicioUsurioLogin.rolTienda)
