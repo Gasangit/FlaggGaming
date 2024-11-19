@@ -1,5 +1,6 @@
 ﻿@using FlaggGaming.Model.tienda
 @inject FlaggGaming.Entity.DatosContext contextoDatos
+@inject NavigationManager Navigation
 
 <div class="row mb-3 align-items-center bg-white">
     <div class="col-3 text-center">
@@ -15,11 +16,16 @@
             <h4>@unProducto.IdCategoriaNavigation.DescCategoria</h4>
         </div>
         <div class="">
-            <NavLink href="" class="btn btn-primary">Visitar tienda</NavLink> //esto va a la vista de información de la tienda
+            <button @onclick="NavigateToTienda" class="btn btn-primary">Visitar tienda</button>
         </div>
     </div>
 </div>
 
 @code {
-    [Parameter] public FlaggGaming.Model.tienda.Producto unProducto{ get; set; }    
+    [Parameter] public FlaggGaming.Model.tienda.Producto unProducto { get; set; }
+
+    private void NavigateToTienda()
+    {
+        Navigation.NavigateTo($"/detalleTienda/{unProducto.IdTienda}");
+    }
 }

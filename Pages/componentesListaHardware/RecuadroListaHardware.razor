@@ -1,19 +1,20 @@
-﻿@inject FlaggGaming.Entity.DatosContext contextoDatos
+﻿@page "/listahardware/{idTienda:int?}"
+@inject FlaggGaming.Entity.DatosContext contextoDatos
 @using FlaggGaming.Model.tienda
-@using Microsoft.EntityFrameworkCore;
+@using Microsoft.EntityFrameworkCore
 
 <div class="container">
     <div class="header-row">
         <div class="search-container">
             <input type="text" class="search-box" placeholder="Buscar productos" style="width: 100%; font-size: 18px;" @oninput="OnSearchInput" />
-        </div>        
+        </div>
     </div>
     <div class="product-grid">
         @foreach (Producto unProducto in paginatedProductos)
         {
             <a href="/producto/@unProducto.IdInternoProducto" class="text-decoration-none">
                 <div class="card clickable-card">
-                    <img class="card-img w-50" src=@("imagenes/" + unProducto.IdCategoriaNavigation.DescCategoria + ".png") alt="@unProducto.DescTienda"> <!-- imagenes/memorias.jpg-->
+                    <img class="card-img w-50" src=@($"imagenes/{unProducto.IdCategoriaNavigation.DescCategoria}.png") alt="@unProducto.DescTienda">
                     <div class="card-body">
                         <div class="card-info">
                             <p class="product-name">@unProducto.DescTienda</p>
@@ -33,20 +34,12 @@
     </div>
 </div>
 
-<script>
-    document.querySelectorAll('.clickable-card').forEach(card => {
-        card.addEventListener('click', () => {
-            window.location.href = /detalle/${ card.dataset.productId };
-        });
-    });
-</script>
-
-@functions{
-    List<Producto> listaProductos = new List<Producto>();
+@code {
+    [Parameter] public int? idTienda { get; set; }
+    private List<Producto> listaProductos = new List<Producto>();
     private List<Producto> filteredProductos = new List<Producto>();
     private List<Producto> paginatedProductos = new List<Producto>();
     private string searchQuery = string.Empty;
-    private bool isLoading = true;
 
     private int currentPage = 1;
     private int pageSize = 8;
@@ -59,31 +52,33 @@
     {
         try
         {
-            isLoading = true; // Indicamos que estamos cargando
-            listaProductos = contextoDatos.Productos
-                .Include(producto => producto.IdCategoriaNavigation)
-                .Include(producto => producto.IdTiendaNavigation)
-                .Where(producto => producto.Estatus != false && producto.Estatus == true )
-                .ToList();
+            if (idTienda.HasValue)
+            {
+                listaProductos = contextoDatos.Productos
+                    .Include(producto => producto.IdCategoriaNavigation)
+                    .Where(producto => producto.IdTienda == idTienda.Value && producto.Estatus)
+                    .ToList();
+            }
+            else
+            {
+                listaProductos = contextoDatos.Productos
+                    .Include(producto => producto.IdCategoriaNavigation)
+                    .Where(producto => producto.Estatus)
+                    .ToList();
+            }
 
             filteredProductos = listaProductos;
             UpdatePagination();
         }
         catch (Exception ex)
         {
-            // Manejo de errores (opcional)
-            Console.WriteLine($"Error cargando los juegos: {ex.Message}");
+            Console.WriteLine($"Error cargando los productos: {ex.Message}");
         }
-        finally
-        {
-            isLoading = false; // Indicamos que la carga terminó
-        }
-        
     }
 
     private void OnSearchInput(ChangeEventArgs e)
     {
-        searchQuery = e.Value.ToString().ToLower(); // Guardamos el valor de búsqueda
+        searchQuery = e.Value.ToString().ToLower();
         FilterProductos();
     }
 
@@ -91,23 +86,21 @@
     {
         if (string.IsNullOrEmpty(searchQuery))
         {
-            filteredProductos = listaProductos; // Si no hay búsqueda, mostramos todos los juegos
+            filteredProductos = listaProductos;
         }
         else
         {
             filteredProductos = listaProductos
-                .Where(producto => producto.DescTienda.ToLower().Contains(searchQuery)) // Filtramos por el nombre del juego
+                .Where(producto => producto.DescTienda.ToLower().Contains(searchQuery))
                 .ToList();
         }
 
-        // Reseteamos a la primera página tras la búsqueda
         currentPage = 1;
         UpdatePagination();
     }
 
     private void UpdatePagination()
     {
-        // Calculamos qué juegos se mostrarán en la página actual
         paginatedProductos = filteredProductos
             .Skip((currentPage - 1) * pageSize)
             .Take(pageSize)
@@ -131,5 +124,4 @@
             UpdatePagination();
         }
     }
-
 }

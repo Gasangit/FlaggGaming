@@ -17,13 +17,10 @@
     @foreach (var tienda in tiendasFiltradas)
     {
         <div class="col-md-4 mb-4">
-            <div class="card h-100">
+            <div class="card h-100" @onclick="() => NavigateToDetalleTienda(tienda.Id)">
                 <div class="card-body">
-                    <!-- Resalto el título del card -->
-                    <h5 class="card-title text-primary font-weight-bold">@tienda.Name</h5>
+                    <h5 class="card-title text-primary font-weight-bold text-center">@tienda.Name</h5>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><strong>Dirección:</strong> @tienda.Dir</li>
-                        <li class="list-group-item"><strong>Días:</strong> @tienda.Days</li>
                         <li class="list-group-item"><strong>Email:</strong> @tienda.Mail</li>
                         <li class="list-group-item"><strong>Instagram:</strong> @tienda.Insta</li>
                         <li class="list-group-item"><strong>Teléfono:</strong> @tienda.Tel</li>
@@ -36,14 +33,21 @@
 
 @code {
     private List<Tienda> tiendas = new List<Tienda>();
-    private string searchTerm = ""; // Variable para almacenar el término de búsqueda
+    private string searchTerm = "";
 
-    // Propiedad que devuelve la lista de tiendas filtradas según el término de búsqueda
     private IEnumerable<Tienda> tiendasFiltradas =>
         tiendas.Where(t => string.IsNullOrEmpty(searchTerm) || t.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
 
     protected override async Task OnInitializedAsync()
     {
         tiendas = await datosService.Tiendas.ToListAsync();
+    }
+
+
+    [Inject] private NavigationManager Navigation { get; set; }
+
+    private void NavigateToDetalleTienda(int tiendaId)
+    {
+        Navigation.NavigateTo($"/detalleTienda/{tiendaId}");
     }
 }

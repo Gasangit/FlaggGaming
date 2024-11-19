@@ -1,10 +1,80 @@
-﻿@page "/detalleTienda/{idTienda}"
+﻿@page "/detalleTienda/{idTienda:int}"
+@using FlaggGaming.Model.tienda
+@inject FlaggGaming.Entity.DatosContext datosService
+@inject IJSRuntime JS
 
-<h3>Detalle tienda</h3>
+<h3 class="text-center">Detalle tienda</h3>
 
+@if (tienda != null)
+{
+    <div class="row mb-3 align-items-center bg-white rounded">
+        <div class="col-3 text-center">
+            <img src="imagenes/Tarjetas Gráficas.jpg" class="img-fluid" alt="Imagen de tienda">
+        </div>
+        <div class="col-9 d-flex justify-content-between align-items-center p-3">
+            <h2 class="fw-bold mb-0">@tienda.Name</h2>
+            <NavLink href="@($"/listahardware/{idTienda}")" class="btn btn-primary">Lista de Hardware</NavLink>
+        </div>
+    </div>
 
+    <div class="row bg-white rounded">
+        <div class="col-12">
+            <h2 class="fs-3">Información Tienda</h2>
+        </div>
+        <hr />
+        <div class="col-12 mb-3"><h3 class="fs-5 fw-bold">@tienda.Name</h3></div>
+        <div class="col-4">
+            <div class="row">
+                <span class="fw-semibold">Dirección:</span><p class="fs-6">@tienda.Dir</p>
+            </div>
+            <div class="row">
+                <span class="fw-semibold">Teléfono de tienda:</span><p class="fs-6">@tienda.Tel</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <span class="fw-semibold">Días de atención:</span><p class="fs-6">@tienda.Days</p>
+            </div>
+            <div class="row">
+                <span class="fw-semibold">Horario de atención:</span><p class="fs-6">@tienda.Hr</p>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="row">
+                <span class="fw-semibold">Mail:</span><p class="fs-6">@tienda.Mail</p>
+            </div>
+            <div class="row">
+                <span class="fw-semibold">Instagram:</span><p class="fs-6">@tienda.Insta</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-6 align-items-center bg-white">
+        <div id="map" style="width:100%; height:400px;"></div>
+    </div>
+}
+else
+{
+    <p>No se encontró ninguna tienda</p>
+}
 
 @code {
-
     [Parameter] public int idTienda { get; set; }
+    private Tienda tienda;
+
+    protected override async Task OnInitializedAsync()
+    {
+        tienda = await datosService.Tiendas.FindAsync(idTienda);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && tienda != null && !string.IsNullOrEmpty(tienda.Dir))
+        {
+            await JS.InvokeVoidAsync("initMap", tienda.Dir);
+        }
+    }
 }
+
+
+<script src="map.js"></script>
