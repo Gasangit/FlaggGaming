@@ -1,0 +1,6 @@
+@startuml
+class Seller {
+    + name : string <<get>> <<set>>
+    + Seller()
+}
+@enduml

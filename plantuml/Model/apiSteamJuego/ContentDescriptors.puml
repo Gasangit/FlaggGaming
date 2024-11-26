@@ -1,0 +1,5 @@
+@startuml
+class ContentDescriptors {
+    + notes : string? <<get>> <<set>>
+}
+@enduml

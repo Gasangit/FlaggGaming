@@ -1,0 +1,5 @@
+@startuml
+class ConsultaApiEpic {
+    + {static} armarConsultaEpic(keyword:string, cantidad:int, sortBy:string, sortDir:string, start:int) : string
+}
+@enduml

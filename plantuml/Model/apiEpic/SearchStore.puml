@@ -1,0 +1,8 @@
+@startuml
+class SearchStore {
+    + SearchStore()
+}
+class "List`1"<T> {
+}
+SearchStore --> "elements<Element>" "List`1"
+@enduml

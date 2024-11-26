@@ -1,0 +1,7 @@
+@startuml
+class KeyImage {
+    + type : string <<get>> <<set>>
+    + url : string <<get>> <<set>>
+    + KeyImage()
+}
+@enduml

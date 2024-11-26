@@ -1,0 +1,8 @@
+@startuml
+class ReleaseDate <<partial>> {
+    + ComingSoon : bool <<get>> <<set>>
+}
+ReleaseDate --> "IdFlagg" Guid
+ReleaseDate --> "Date" DateTime
+ReleaseDate o-> "IdFlaggNavigation" JuegoFlagg
+@enduml

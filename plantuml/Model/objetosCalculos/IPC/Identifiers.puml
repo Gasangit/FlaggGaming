@@ -1,0 +1,7 @@
+@startuml
+class Identifiers {
+    + id : string <<get>> <<set>>
+    + distribution : string <<get>> <<set>>
+    + dataset : string <<get>> <<set>>
+}
+@enduml

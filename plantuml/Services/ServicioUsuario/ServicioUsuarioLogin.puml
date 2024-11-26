@@ -1,0 +1,14 @@
+@startuml
+class ServicioUsurioLogin {
+    + {static} Id : int <<get>> <<set>> = 0
+    + {static} nombre : string <<get>> <<set>> = ""
+    + nombreServicio : string <<get>> <<set>> = ""
+    + {static} apellido : string <<get>> <<set>> = ""
+    + {static} mail : string <<get>> <<set>> = ""
+    + {static} password : string <<get>> <<set>> = ""
+    + {static} rolTienda : bool <<get>> <<set>> = false
+    +  <<event>> OnUsuarioLogin : Action 
+    + setUsuarioLoginData(idParam:int, nombreParam:string, apellidoParam:string, mailParam:string, rolParam:bool) : void
+    + setUsuarioLogOut() : void
+}
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+class InfoIPC {
+    + count : int <<get>> <<set>>
+}
+class "List`1"<T> {
+}
+InfoIPC --> "data<List<object>>" "List`1"
+InfoIPC --> "meta<Meta>" "List`1"
+InfoIPC --> "paramsRequest" ParamsIPC
+@enduml

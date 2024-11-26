@@ -1,0 +1,5 @@
+@startuml
+class juegosIndexService {
+    + <<async>> obtenerJuegosDestacados() : Task<Juego[]>
+}
+@enduml

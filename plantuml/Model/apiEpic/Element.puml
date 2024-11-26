@@ -1,0 +1,13 @@
+@startuml
+class Element {
+    + title : string <<get>> <<set>>
+    + description : string <<get>> <<set>>
+    + Element()
+}
+class "List`1"<T> {
+}
+Element --> "keyImages<KeyImage>" "List`1"
+Element --> "seller" Seller
+Element --> "categories<Category>" "List`1"
+Element --> "price" Price
+@enduml

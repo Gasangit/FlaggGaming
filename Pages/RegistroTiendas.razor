@@ -6,7 +6,7 @@
 
 @if (ServicioUsurioLogin.rolTienda)
 {
-    <div class="continer">
+    <div class="container">
         <div class="row my-5 justify-content-center">
             <div class="col-7 text-center">
                 <p class="fs-2 text-success">Usted ya posee una tienda, no puede registrarse como tienda nuevamente.</p>
@@ -16,18 +16,21 @@
 }
 else
 {
-        UsuariosTienda usuarioTienda = new UsuariosTienda();
-        if (ServicioUsurioLogin.nombre != "")
+    UsuariosTienda usuarioTienda = null; // Inicializar como null
 
-            usuarioTienda = contextoDatos.UsuariosTiendas.Where(ustienda => ustienda.IdU == ServicioUsurioLogin.Id).FirstOrDefault();
+    if (!string.IsNullOrEmpty(ServicioUsurioLogin.nombre))
+    {
+        usuarioTienda = contextoDatos.UsuariosTiendas
+            .FirstOrDefault(ustienda => ustienda.IdU == ServicioUsurioLogin.Id);
 
-        if (usuarioTienda.IdU != null)
+        // Invertimos la condición para mostrar RecuadroRegistroTiendas solo si usuarioTienda es nulo
+        if (usuarioTienda == null)
         {
             <RecuadroRegistroTiendas />
         }
         else
         {
-            <div class="continer">
+            <div class="container">
                 <div class="row my-5 justify-content-center">
                     <div class="col-7 text-center">
                         <p class="fs-2 text-success">Ya tiene una solicitud de Tienda en curso</p>
@@ -35,11 +38,10 @@ else
                 </div>
             </div>
         }
-
-        }
+    }
     else
     {
-        <div class="continer">
+        <div class="container">
             <div class="row my-5 justify-content-center">
                 <div class="col-7 text-center">
                     <p class="fs-2 text-success">Debe loguearse para poder registrarse como tienda.</p>
@@ -47,9 +49,8 @@ else
             </div>
         </div>
     }
-    
 }
 
 @code {
-
+    // No es necesario código adicional aquí en este caso
 }

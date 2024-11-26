@@ -1,0 +1,18 @@
+@startuml
+class DatosContext {
+    + DatosContext()
+    + DatosContext(optionsBuilder:DbContextOptions<DatosContext>)
+}
+class "DbSet`1"<T> {
+}
+DbContext <|-- DatosContext
+DatosContext --> "listaJuegos<ItemListaJuegoSteam>" "DbSet`1"
+DatosContext --> "listaJuegosData<JuegoFlagg>" "DbSet`1"
+DatosContext --> "listaOfertas<Oferta>" "DbSet`1"
+DatosContext --> "Usuarios<Usuario>" "DbSet`1"
+DatosContext --> "Categorias<Categoria>" "DbSet`1"
+DatosContext --> "Productos<Producto>" "DbSet`1"
+DatosContext --> "ReleaseDates<Model.juegoFlagg.ReleaseDate>" "DbSet`1"
+DatosContext --> "Tiendas<Tienda>" "DbSet`1"
+DatosContext --> "UsuariosTiendas<UsuariosTienda>" "DbSet`1"
+@enduml

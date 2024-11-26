@@ -1,0 +1,22 @@
+@startuml
+class JuegoFlagg {
+    + idJuegoTienda : int? <<get>> <<set>>
+    + nombre : string? <<get>> <<set>>
+    + descripcionCorta : string? <<get>> <<set>>
+    + tienda : string? <<get>> <<set>>
+    + imagen : string? <<get>> <<set>>
+    + imagenMini : string? <<get>> <<set>>
+    + urlTienda : string? <<get>> <<set>>
+    + urlEpic : string? <<get>> <<set>>
+    + contadorVistas : int? <<get>> <<set>>
+    + estudio : string? <<get>> <<set>>
+    + requisitos : string? <<get>> <<set>>
+    + idOferta : string? <<get>> <<set>>
+    + JuegoFlagg()
+    + JuegoFlagg(_idJuegoTienda:int, _nombre:string, _descripcionCorta:string, _tienda:string, _imagen:string, _imagenMini:string, _urlTienda:string, _estudio:string, _requisitos:string)
+    + JuegoFlagg(_descripcionCorta:string, _imagen:string, _imagenMini:string, _urlTienda:string, _requisitos:string)
+}
+JuegoFlagg --> "idFlagg" Guid
+JuegoFlagg --> "oferta" Oferta
+JuegoFlagg --> "ofertaidOferta" Guid
+@enduml

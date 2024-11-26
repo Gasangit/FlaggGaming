@@ -1,0 +1,5 @@
+@startuml
+class tablajuegoFlagg <<partial>> {
+}
+Migration <|-- tablajuegoFlagg
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class JuegoSteam {
+    + success : bool <<get>> <<set>>
+}
+JuegoSteam --> "data" JuegoSteamData
+@enduml

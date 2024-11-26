@@ -1,0 +1,5 @@
+@startuml
+class RotadorDeUserAgentsForScrap {
+    + {static} obtenerUserAgentParaScrap() : string
+}
+@enduml

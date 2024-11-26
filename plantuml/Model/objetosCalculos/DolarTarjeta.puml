@@ -1,0 +1,10 @@
+@startuml
+class DolarTarjeta {
+    + moneda : string <<get>> <<set>>
+    + casa : string <<get>> <<set>>
+    + nombre : string <<get>> <<set>>
+    + compra : decimal <<get>> <<set>>
+    + venta : decimal <<get>> <<set>>
+}
+DolarTarjeta --> "fechaActualizacion" DateTime
+@enduml

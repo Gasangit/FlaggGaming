@@ -1,0 +1,8 @@
+@startuml
+class TiendaService {
+    + TiendaService(context:DatosContext)
+    + <<async>> ObtenerTiendaAsync() : Task<Tienda>
+    + <<async>> GetTiendaAsync(id:int) : Task<Tienda>
+    + <<async>> ActualizarTiendaAsync(tienda:Tienda) : Task
+}
+@enduml

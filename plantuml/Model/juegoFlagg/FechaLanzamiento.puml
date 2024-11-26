@@ -1,0 +1,8 @@
+@startuml
+class FechaLanzamiento {
+    + ComingSoon : bool <<get>> <<set>>
+}
+FechaLanzamiento --> "IdFlagg" Guid
+FechaLanzamiento --> "Date" DateTime
+FechaLanzamiento o-> "IdFlaggNavigation" JuegoFlagg
+@enduml

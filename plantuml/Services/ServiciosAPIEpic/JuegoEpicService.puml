@@ -1,0 +1,6 @@
+@startuml
+class JuegoEpicService {
+    + JuegoEpicService(httpClientFactory:IHttpClientFactory)
+    + <<async>> getPrecioJuegoEpic(nombreJuego:string) : Task<decimal>
+}
+@enduml

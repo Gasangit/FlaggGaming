@@ -1,0 +1,7 @@
+@startuml
+class CargaListaSteamEnBaseDeDatos {
+    + CargaListaSteamEnBaseDeDatos()
+    + CargaListaSteamEnBaseDeDatos(context:DatosContext, listaTotal:JuegosListaTotalService)
+    + <<async>> insertListaSteamEnBD(state:object?) : Task
+}
+@enduml

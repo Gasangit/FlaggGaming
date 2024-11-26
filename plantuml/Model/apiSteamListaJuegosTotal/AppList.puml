@@ -1,0 +1,7 @@
+@startuml
+class AppList {
+}
+class "List`1"<T> {
+}
+AppList o-> "apps<ItemListaJuegoSteam>" "List`1"
+@enduml

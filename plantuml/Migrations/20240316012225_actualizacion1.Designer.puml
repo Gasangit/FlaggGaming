@@ -1,0 +1,4 @@
+@startuml
+class actualizacion1 <<partial>> {
+}
+@enduml

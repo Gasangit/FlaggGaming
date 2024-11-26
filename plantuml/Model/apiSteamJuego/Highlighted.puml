@@ -1,0 +1,6 @@
+@startuml
+class Highlighted {
+    + name : string? <<get>> <<set>>
+    + path : string? <<get>> <<set>>
+}
+@enduml

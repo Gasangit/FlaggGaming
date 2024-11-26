@@ -1,0 +1,4 @@
+@startuml
+class inicialVersion6 <<partial>> {
+}
+@enduml

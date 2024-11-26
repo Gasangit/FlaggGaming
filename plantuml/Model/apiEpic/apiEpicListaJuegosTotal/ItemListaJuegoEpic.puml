@@ -1,0 +1,7 @@
+@startuml
+class ItemListaJuegoEpic {
+    + appid : int <<get>> <<set>>
+    + name : string <<get>> <<set>>
+}
+ItemListaJuegoEpic --> "created_at" DateTime
+@enduml

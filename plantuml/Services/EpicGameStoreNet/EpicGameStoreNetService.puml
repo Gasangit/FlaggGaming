@@ -1,0 +1,5 @@
+@startuml
+class EpicGameStoreNetService {
+    + <<async>> obtenerJuegosEpic(consultaJuego:string) : Task<Element[]>
+}
+@enduml

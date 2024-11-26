@@ -1,0 +1,7 @@
+@startuml
+class JuegosEpicListaParcialService {
+    + JuegosEpicListaParcialService(httpClientFactory:IHttpClientFactory)
+    + JuegosEpicListaParcialService()
+    + <<async>> getListaJuegosEpic() : Task<List<JuegoFlagg>>
+}
+@enduml

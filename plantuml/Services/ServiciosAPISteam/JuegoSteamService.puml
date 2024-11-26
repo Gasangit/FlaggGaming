@@ -1,0 +1,6 @@
+@startuml
+class JuegoSteamService {
+    + JuegoSteamService(httpClientFactory:IHttpClientFactory)
+    + <<async>> getJuegoSteam(gameId:string) : Task<Dictionary<string, JuegoSteam>>
+}
+@enduml

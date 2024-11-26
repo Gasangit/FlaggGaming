@@ -1,0 +1,5 @@
+@startuml
+class Category {
+    + path : string <<get>> <<set>>
+}
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class Producto <<partial>> {
+    + IdInternoProducto : int <<get>> <<set>>
+    + IdTienda : int <<get>> <<set>>
+    + IdCategoria : int <<get>> <<set>>
+    + SkuTienda : string <<get>> <<set>>
+    + DescTienda : string <<get>> <<set>>
+    + Marca : string <<get>> <<set>>
+    + PrecioVta : decimal <<get>> <<set>>
+    + Estatus : bool <<get>> <<set>>
+}
+Producto o-> "IdCategoriaNavigation" Categoria
+Producto o-> "IdTiendaNavigation" Tienda
+@enduml

@@ -1,0 +1,30 @@
+@startuml
+class JuegoSteamData {
+    + type : string? <<get>> <<set>>
+    + name : string? <<get>> <<set>>
+    + steam_appid : int? <<get>> <<set>>
+    + required_age : int? <<get>> <<set>>
+    + is_free : bool? <<get>> <<set>>
+    + detailed_description : string? <<get>> <<set>>
+    + about_the_game : string? <<get>> <<set>>
+    + short_description : string? <<get>> <<set>>
+    + supported_lenguages : string? <<get>> <<set>>
+    + header_image : string? <<get>> <<set>>
+    + capsule_image : string? <<get>> <<set>>
+    + capsule_imagev5 : string? <<get>> <<set>>
+    + website : string? <<get>> <<set>>
+    + background : string? <<get>> <<set>>
+    + background_raw : string? <<get>> <<set>>
+}
+JuegoSteamData --> "pc_requirements<PcRequirements>" "List`1"
+JuegoSteamData --> "mac_requirements<MacRequirements>" "List`1"
+JuegoSteamData --> "linux_requirements<LinuxRequirements>" "List`1"
+JuegoSteamData --> "platforms" Platforms
+JuegoSteamData --> "recommendations" Recommendations
+JuegoSteamData --> "achievements" Achievements
+JuegoSteamData --> "release_date" ReleaseDate
+JuegoSteamData --> "support_info" SupportInfo
+JuegoSteamData --> "content_descriptors" ContentDescriptors
+JuegoSteamData --> "ratings" Ratings
+JuegoSteamData --> "price_overview" PriceOverview
+@enduml

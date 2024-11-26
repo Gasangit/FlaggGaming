@@ -1,0 +1,6 @@
+@startuml
+class ServicioDolar {
+    + ServicioDolar(httpClientFactory:IHttpClientFactory)
+    + <<async>> getValorDolarTarjeta() : Task<decimal>
+}
+@enduml

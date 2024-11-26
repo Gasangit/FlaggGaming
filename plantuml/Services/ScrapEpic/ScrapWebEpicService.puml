@@ -1,0 +1,8 @@
+@startuml
+class ScrapWebEpicService {
+    + ScrapWebEpicService()
+    + ScrapWebEpicService(httpClientFactory:IHttpClientFactory)
+    + <<async>> getHtmlEpicStore(fullUrl:string) : Task<string>
+    + getListaJuegosEpic() : List<string>
+}
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class Webm {
+    + quality480 : string? <<get>> <<set>>
+    + max : string? <<get>> <<set>>
+}
+@enduml

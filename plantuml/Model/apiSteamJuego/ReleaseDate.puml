@@ -1,0 +1,6 @@
+@startuml
+class ReleaseDate {
+    + coming_soon : bool? <<get>> <<set>>
+    + date : string? <<get>> <<set>>
+}
+@enduml

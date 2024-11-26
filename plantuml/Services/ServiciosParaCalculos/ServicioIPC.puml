@@ -1,0 +1,6 @@
+@startuml
+class ServicioIPC {
+    + ServicioIPC(httpClientFactory:IHttpClientFactory)
+    + <<async>> getValoresIPC() : Task<decimal>
+}
+@enduml

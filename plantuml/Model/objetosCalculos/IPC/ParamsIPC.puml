@@ -1,0 +1,10 @@
+@startuml
+class ParamsIPC {
+    + ids : string <<get>> <<set>>
+    + limit : string <<get>> <<set>>
+    + format : string <<get>> <<set>>
+}
+class "IList`1"<T> {
+}
+ParamsIPC --> "identifiers<Identifiers>" "IList`1"
+@enduml

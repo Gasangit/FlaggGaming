@@ -1,0 +1,10 @@
+@startuml
+class Categoria {
+    + IdCategoria : int <<get>> <<set>>
+    + DescCategoria : string <<get>> <<set>>
+    + ImagenUrl : string? <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Categoria o-> "Productos<Producto>" "ICollection`1"
+@enduml

@@ -1,0 +1,9 @@
+@startuml
+class UsuariosTienda <<partial>> {
+    + IdU : int <<get>> <<set>>
+    + IdT : int <<get>> <<set>>
+    + Active : bool <<get>> <<set>>
+}
+UsuariosTienda o-> "IdTNavigation" Tienda
+UsuariosTienda o-> "IdUNavigation" Usuario
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class CargaInfoJuegoEpicEnBAseDeDatos {
+    + CargaInfoJuegoEpicEnBAseDeDatos(context:DatosContext, juegosEpic:JuegosEpicListaParcialService)
+    + <<async>> insertJuegosEpicEnBD(state:object?) : Task
+}
+@enduml

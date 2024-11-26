@@ -7,21 +7,17 @@
 @using Microsoft.EntityFrameworkCore
 @inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Components.Forms
-@*using DocumentFormat.OpenXml.Packaging
-@using DocumentFormat.OpenXml.Spreadsheet*@
 
-<div class="row justify-content-center formulario-carga-producto">
-
-    @*<div class="col-12 mb-3 p-4 rounded-3 border">
+<div class="row d-flex justify-content-center formulario-carga-producto">
+    <div class="col-12 mb-3 p-4 rounded-3 border">
         <div class="col-6 text-end mb-12">
-            <InputFile OnChange="CargarArchivoExcel" accept=".xlsx" />
 
-            @if (mensaje != null)
+            @if (errorMessage != null)
             {
-                <p>@mensaje</p>
+                <p>@errorMessage</p>
             }
         </div>
-    </div>*@
+    </div>
     <div class="col-6 mb-3 p-4 rounded-3 border">
         <div class="row mb-3 align-items-center">
             <label for="skuTienda" class="col-4 col-form-label">SKU Tienda</label>
@@ -86,11 +82,18 @@
     private string successMessage;
     private List<Categoria> categorias = new List<Categoria>();
     private bool categoriaExiste;
+    private bool tiendaPremium;
+    private int cantidadProductos;
 
 
     protected override async Task OnInitializedAsync()
     {
         usuariostienda = await datosService.UsuariosTiendas.FirstOrDefaultAsync(u => u.IdU == ServicioUsurioLogin.Id);
+        cantidadProductos = await datosService.Productos
+        .Where(p => p.IdTienda == usuariostienda.IdT)
+        .CountAsync();
+        tiendaPremium = await datosService.Tiendas
+        .Where(t => t.Id == usuariostienda.IdT).Select(t => t.Premium).FirstOrDefaultAsync();
         categorias = await datosService.Categorias.ToListAsync();
     }
 
@@ -136,76 +139,22 @@
         }
         else
         {
-            producto.IdTienda = usuariostienda.IdT;
-            producto.Estatus = bool.Parse("True");
-            datosService.Productos.Add(producto);
-            await datosService.SaveChangesAsync();
-            nombreProductoGuardado = producto.SkuTienda;
-            guardadoExitoso = true; // Mostrar un mensaje de confirmación
-            producto = new Producto();
-
-        }
-    }
-
-    //Importar datos desde XLSX
-    /*private async Task CargarArchivoExcel(InputFileChangeEventArgs e)
-    {
-        var archivo = e.File;
-        if (archivo != null)
-        {
-            try
+            if (cantidadProductos >= 10 && tiendaPremium == false)
             {
-                using var stream = archivo.OpenReadStream();
-                await ImportarProductosDesdeExcel(stream);
-                mensaje = "Importación exitosa.";
+                errorMessage = "Llegaste al limite de productos gratuitos. Adquiera la suscripcion Premium";
             }
-            catch (Exception ex)
+            else
+
             {
-                mensaje = $"Error al importar: {ex.Message}";
+                producto.IdTienda = usuariostienda.IdT;
+                producto.Estatus = bool.Parse("True");
+                datosService.Productos.Add(producto);
+                await datosService.SaveChangesAsync();
+                nombreProductoGuardado = producto.SkuTienda;
+                guardadoExitoso = true; // Mostrar un mensaje de confirmación
+                producto = new Producto();
+
             }
         }
     }
-
-    private async Task ImportarProductosDesdeExcel(Stream stream)
-    {
-        var productos = new List<Producto>();
-
-        using var document = SpreadsheetDocument.Open(stream, false);
-
-
-
-        var workbookPart = document.WorkbookPart;
-        var sheet = workbookPart.Workbook.Sheets.GetFirstChild<Sheet>();
-        var worksheetPart = (WorksheetPart)workbookPart.GetPartById(sheet.Id);
-        var rows = worksheetPart.Worksheet.GetFirstChild<SheetData>().Descendants<Row>();
-
-        foreach (var row in rows.Skip(1)) // Saltar encabezado
-        {
-            var cells = row.Elements<Cell>().ToList();
-            var producto = new Producto
-                {
-                    SkuTienda = GetCellValue(workbookPart, cells[0]),
-                    DescTienda = GetCellValue(workbookPart, cells[1]),
-                    Marca = GetCellValue(workbookPart, cells[2]),
-                    PrecioVta = decimal.Parse(GetCellValue(workbookPart, cells[3])),
-                    IdCategoria = int.Parse(GetCellValue(workbookPart, cells[4]))
-                };
-            productos.Add(producto);
-        }
-
-        // Guardar en la base de datos
-        datosService.Productos.AddRange(productos);
-        await datosService.SaveChangesAsync();
-    }
-
-    private string GetCellValue(WorkbookPart workbookPart, Cell cell)
-    {
-        var value = cell.CellValue?.Text;
-        if (cell.DataType?.Value == CellValues.SharedString)
-        {
-            var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-            return stringTable?.SharedStringTable.ElementAt(int.Parse(value)).InnerText;
-        }
-        return value;
-    }*/
 }

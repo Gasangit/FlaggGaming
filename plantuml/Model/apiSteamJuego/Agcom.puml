@@ -1,0 +1,6 @@
+@startuml
+class Agcom {
+    + rating : string <<get>> <<set>>
+    + descriptors : string <<get>> <<set>>
+}
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+class Usuario {
+    + Id : int <<get>> <<set>>
+    + nombre : string <<get>> <<set>>
+    + apellido : string <<get>> <<set>>
+    + mail : string <<get>> <<set>>
+    + password : string <<get>> <<set>>
+    + rolTienda : bool <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Usuario o-> "UsuariosTienda<UsuariosTienda>" "ICollection`1"
+@enduml

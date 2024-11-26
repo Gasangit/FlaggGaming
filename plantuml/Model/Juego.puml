@@ -1,0 +1,7 @@
+@startuml
+class Juego {
+    + nombre : string
+    + descripcion : string
+    + imagen : string
+}
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+class Hardware {
+    + Name : string <<get>> <<set>>
+    + Description : string <<get>> <<set>>
+    + Price : double <<get>> <<set>>
+    + urlImagen : string <<get>> <<set>>
+    + href : string <<get>> <<set>>
+    + Hardware()
+    + Hardware(nombre:string, url:string)
+    + Hardware(name:string, url:string, price:double)
+    + Hardware(name:string, url:string, href:string)
+}
+IProducto <|-- Hardware
+@enduml

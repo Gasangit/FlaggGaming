@@ -1,0 +1,20 @@
+@startuml
+class Tienda {
+    + Id : int <<get>> <<set>>
+    + RazonSocial : string <<get>> <<set>>
+    + Cuit : string <<get>> <<set>>
+    + Name : string <<get>> <<set>>
+    + Mail : string <<get>> <<set>>
+    + Password : string <<get>> <<set>> = ""
+    + Dir : string <<get>> <<set>>
+    + Hr : string <<get>> <<set>>
+    + Days : string <<get>> <<set>>
+    + Tel : string <<get>> <<set>>
+    + Insta : string <<get>> <<set>>
+    + Premium : bool <<get>> <<set>>
+}
+class "ICollection`1"<T> {
+}
+Tienda o-> "Productos<Producto>" "ICollection`1"
+Tienda o-> "UsuariosTienda<UsuariosTienda>" "ICollection`1"
+@enduml

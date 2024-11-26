@@ -1,0 +1,7 @@
+@startuml
+class Meta {
+    + frequency : string <<get>> <<set>>
+    + start_date : string <<get>> <<set>>
+    + end_date : string <<get>> <<set>>
+}
+@enduml

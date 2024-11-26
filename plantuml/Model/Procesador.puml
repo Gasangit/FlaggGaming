@@ -1,0 +1,13 @@
+@startuml
+class Procesador {
+    + Id : int <<get>> <<set>>
+    + urlImagen : string <<get>> <<set>>
+    + fechaLanzamiento : string <<get>> <<set>>
+    + nucleos : string <<get>> <<set>>
+    + frecuenciaTurbo : string <<get>> <<set>>
+    + cache : string <<get>> <<set>>
+    + graficos : string <<get>> <<set>>
+    + Procesador()
+    + Procesador(url:string, fecha:string, nucleos:string, frecuencia:string, cache:string, graficos:string)
+}
+@enduml

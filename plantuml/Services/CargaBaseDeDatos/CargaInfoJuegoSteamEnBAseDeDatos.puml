@@ -1,0 +1,6 @@
+@startuml
+class CargaInfoJuegoSteamEnBAseDeDatos {
+    + CargaInfoJuegoSteamEnBAseDeDatos(context:DatosContext, juegoSteamService:JuegoSteamService, juegosListaTotalService:JuegosListaTotalService)
+    + <<async>> insertJuegosSteamEnBD(state:object?) : Task
+}
+@enduml

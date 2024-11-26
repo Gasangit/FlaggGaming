@@ -1,0 +1,7 @@
+@startuml
+class JuegosListaTotalService {
+    + JuegosListaTotalService()
+    + JuegosListaTotalService(httpClientFactory:IHttpClientFactory)
+    + <<async>> getListaJuegosSteam() : Task<ObjetoJsonListaJuegos>
+}
+@enduml

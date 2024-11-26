@@ -1,0 +1,12 @@
+@startuml
+class Package {
+    + packageid : int? <<get>> <<set>>
+    + percent_savings_text : string? <<get>> <<set>>
+    + percent_savings : int? <<get>> <<set>>
+    + option_text : string? <<get>> <<set>>
+    + option_description : string? <<get>> <<set>>
+    + can_get_free_license : string? <<get>> <<set>>
+    + is_free_license : bool <<get>> <<set>>
+    + price_in_cents_with_discount : int? <<get>> <<set>>
+}
+@enduml

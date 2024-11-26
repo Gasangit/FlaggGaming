@@ -1,0 +1,11 @@
+@startuml
+class PriceOverview {
+    + currency : string <<get>> <<set>>
+    + initial : int <<get>> <<set>>
+    + final : int <<get>> <<set>>
+    + discount_percent : int <<get>> <<set>>
+    + nitial_formatted : string <<get>> <<set>>
+    + final_formatted : string <<get>> <<set>>
+    + PriceOverview()
+}
+@enduml

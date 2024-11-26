@@ -1,0 +1,7 @@
+@startuml
+class TimerDescargaListaTotalEpic {
+    + TimerDescargaListaTotalEpic(serviceProvider:IServiceProvider)
+    + <<override>> <<async>> StopAsync(stoppingToken:CancellationToken) : Task
+}
+BackgroundService <|-- TimerDescargaListaTotalEpic
+@enduml

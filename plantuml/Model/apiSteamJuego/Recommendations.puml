@@ -1,0 +1,5 @@
+@startuml
+class Recommendations {
+    + total : int? <<get>> <<set>>
+}
+@enduml

@@ -1,0 +1,11 @@
+@startuml
+class PackageGroups {
+    + name : string? <<get>> <<set>>
+    + title : string? <<get>> <<set>>
+    + description : string? <<get>> <<set>>
+    + selection_text : string? <<get>> <<set>>
+    + save_text : string? <<get>> <<set>>
+    + display_type : int? <<get>> <<set>>
+    + is_recurring_subscription : string <<get>> <<set>>
+}
+@enduml

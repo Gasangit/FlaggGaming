@@ -1,0 +1,8 @@
+@startuml
+class ItemListaJuegoSteam {
+    + appid : int <<get>> <<set>>
+    + name : string <<get>> <<set>>
+    + ItemListaJuegoSteam()
+}
+ItemListaJuegoSteam --> "created_at" DateTime
+@enduml

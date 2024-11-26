@@ -1,0 +1,10 @@
+@startuml
+class Oferta {
+    + discount_percent : int <<get>> <<set>>
+    + Oferta()
+}
+class "ICollection`1"<T> {
+}
+Oferta --> "idOferta" Guid
+Oferta --> "juegos<JuegoFlagg>" "ICollection`1"
+@enduml

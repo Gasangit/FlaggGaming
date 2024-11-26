@@ -1,0 +1,7 @@
+@startuml
+class TimerDescargaInfoJuegoSteam {
+    + TimerDescargaInfoJuegoSteam(serviceProvider:IServiceProvider)
+    + <<override>> <<async>> StopAsync(stoppingToken:CancellationToken) : Task
+}
+BackgroundService <|-- TimerDescargaInfoJuegoSteam
+@enduml

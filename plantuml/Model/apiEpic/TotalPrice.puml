@@ -1,0 +1,5 @@
+@startuml
+class TotalPrice {
+}
+TotalPrice --> "fmtPrice" FmtPrice
+@enduml

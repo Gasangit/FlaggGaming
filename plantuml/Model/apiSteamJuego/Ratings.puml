@@ -1,0 +1,8 @@
+@startuml
+class Ratings {
+}
+Ratings --> "usk" Usk
+Ratings --> "agcom" Agcom
+Ratings --> "cadpa" Cadpa
+Ratings --> "dejus" Dejus
+@enduml

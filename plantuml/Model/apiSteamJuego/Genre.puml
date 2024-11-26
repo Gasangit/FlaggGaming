@@ -1,0 +1,6 @@
+@startuml
+class Genre {
+    + id : string? <<get>> <<set>>
+    + description : string? <<get>> <<set>>
+}
+@enduml

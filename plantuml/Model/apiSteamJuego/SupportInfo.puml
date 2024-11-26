@@ -1,0 +1,6 @@
+@startuml
+class SupportInfo {
+    + url : string? <<get>> <<set>>
+    + email : string? <<get>> <<set>>
+}
+@enduml

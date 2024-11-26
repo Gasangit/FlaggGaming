@@ -1,0 +1,7 @@
+@startuml
+class Platforms {
+    + windows : bool? <<get>> <<set>>
+    + mac : bool? <<get>> <<set>>
+    + linux : bool? <<get>> <<set>>
+}
+@enduml

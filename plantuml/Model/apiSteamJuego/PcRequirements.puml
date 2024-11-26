@@ -1,0 +1,6 @@
+@startuml
+class PcRequirements {
+    + minimum : string? <<get>> <<set>>
+    + recommended : string? <<get>> <<set>>
+}
+@enduml

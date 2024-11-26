@@ -1,0 +1,7 @@
+@startuml
+class ObjetoJsonEpicGraphql {
+    + ObjetoJsonEpicGraphql()
+}
+ObjetoJsonEpicGraphql --> "data" Data
+ObjetoJsonEpicGraphql --> "extensions" Extensions
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+class UserAgent {
+    + mozilla : string <<get>> <<set>>
+    + platform : string <<get>> <<set>>
+}
+@enduml

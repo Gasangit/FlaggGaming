@@ -1,0 +1,7 @@
+@startuml
+class Screenshot {
+    + id : int? <<get>> <<set>>
+    + path_thumbnail : string? <<get>> <<set>>
+    + path_full : string? <<get>> <<set>>
+}
+@enduml
