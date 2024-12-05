@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.Web
 @namespace FlaggGaming.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioLoginUsuario
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,11 +17,15 @@
     <link href="FlaggGaming.styles.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="imagenes/logoflagg.png"/>
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3298412419703616"
+     crossorigin="anonymous"></script>
+     <script async custom-element="amp-ad" src="https://cdn.ampproject.org/v0/amp-ad-0.1.js"></script>
+
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
-
-    <div id="blazor-error-ui">
+    <div id="blazor-
+-ui">
         <environment include="Staging,Production">
             An error has occurred. This application may no longer respond until reloaded.
         </environment>

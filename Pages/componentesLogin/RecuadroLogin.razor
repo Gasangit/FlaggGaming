@@ -3,6 +3,7 @@
 @inject NavigationManager Navigation
 @inject DatosContext _context
 @inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioLoginUsuario
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 <div class="container">
     <div class="row">
@@ -69,7 +70,7 @@
             {
                 successMessage = "Inicio de sesión exitoso.";
                 servicioLoginUsuario.setUsuarioLoginData(usuarioExistente.Id, usuarioExistente.nombre, usuarioExistente.apellido, usuarioExistente.mail, usuarioExistente.rolTienda);
-                Navigation.NavigateTo("/"); //Falta agregar ruta una vez logueado el usuario
+                Navigation.NavigateTo("/");
             }
             else
             {

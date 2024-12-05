@@ -3,43 +3,12 @@
 @using FlaggGaming.Pages.componentesRegistroTiendas
 @using FlaggGaming.Services.ServicioUsuario
 @inject FlaggGaming.Entity.DatosContext contextoDatos
+@inject ProtectedSessionStorage ProtectedSessionStore
 
-@if (ServicioUsurioLogin.rolTienda)
+
+@if (isConnected)
 {
-    <div class="container">
-        <div class="row my-5 justify-content-center">
-            <div class="col-7 text-center">
-                <p class="fs-2 text-success">Usted ya posee una tienda, no puede registrarse como tienda nuevamente.</p>
-            </div>
-        </div>
-    </div>
-}
-else
-{
-    UsuariosTienda usuarioTienda = null; // Inicializar como null
-
-    if (!string.IsNullOrEmpty(ServicioUsurioLogin.nombre))
-    {
-        usuarioTienda = contextoDatos.UsuariosTiendas
-            .FirstOrDefault(ustienda => ustienda.IdU == ServicioUsurioLogin.Id);
-
-        // Invertimos la condición para mostrar RecuadroRegistroTiendas solo si usuarioTienda es nulo
-        if (usuarioTienda == null)
-        {
-            <RecuadroRegistroTiendas />
-        }
-        else
-        {
-            <div class="container">
-                <div class="row my-5 justify-content-center">
-                    <div class="col-7 text-center">
-                        <p class="fs-2 text-success">Ya tiene una solicitud de Tienda en curso</p>
-                    </div>
-                </div>
-            </div>
-        }
-    }
-    else
+    @if (usuarioActual == null)
     {
         <div class="container">
             <div class="row my-5 justify-content-center">
@@ -49,8 +18,62 @@ else
             </div>
         </div>
     }
+    else
+    {
+        @if (usuarioActual.rolTienda)
+        {
+            <div class="container">
+                <div class="row my-5 justify-content-center">
+                    <div class="col-7 text-center">
+                        <p class="fs-2 text-success">Usted ya posee una tienda, no puede registrarse como tienda nuevamente.</p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            UsuariosTienda usuarioTienda = null; // Inicializar como null
+
+            if (!string.IsNullOrEmpty(usuarioActual.nombre))
+            {
+                usuarioTienda = contextoDatos.UsuariosTiendas
+                    .FirstOrDefault(ustienda => ustienda.IdU == usuarioActual.Id);
+
+                // Invertimos la condición para mostrar RecuadroRegistroTiendas solo si usuarioTienda es nulo
+                if (usuarioTienda == null)
+                {
+                    <RecuadroRegistroTiendas />
+                }
+                else
+                {
+                    <div class="container">
+                        <div class="row my-5 justify-content-center">
+                            <div class="col-7 text-center">
+                                <p class="fs-2 text-success">Ya tiene una solicitud de Tienda en curso</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        }
+    }
 }
 
 @code {
-    // No es necesario código adicional aquí en este caso
+
+    private bool isConnected;
+    UsuarioLogueado usuarioActual;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isConnected = true;
+            var result = await ProtectedSessionStore.GetAsync<UsuarioLogueado>("usuarioLogueado");
+            if (result.Success) { usuarioActual = result.Value; }
+            StateHasChanged();
+
+        }
+
+    }
 }

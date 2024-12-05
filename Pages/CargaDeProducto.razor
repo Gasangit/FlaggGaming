@@ -1,25 +1,55 @@
 ﻿@page "/cargarproductos"
 @using FlaggGaming.Pages.componentesCargaDeProductos
 @using FlaggGaming.Services.ServicioUsuario
+@using FlaggGaming.Model.usuarios
+@inject ProtectedSessionStorage ProtectedSessionStore
 
-@if (!ServicioUsurioLogin.rolTienda)
+
+@if (isConnected)
 {
-    <div class="continer">
-        <div class="row my-5 justify-content-center">
-            <div class="col-7 text-center">
-                <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
+    @if (usuarioActual == null)
+    {
+        <div class="continer">
+            <div class="row my-5 justify-content-center">
+                <div class="col-7 text-center">
+                    <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
+                </div>
             </div>
         </div>
-    </div>
-}
-else
-{
-    <Encabezado/>
-    <RecuadroCargaDeProductos/>    
+    }
+    else
+    {
+        @if (!usuarioActual.rolTienda)
+        {
+            <div class="continer">
+                <div class="row my-5 justify-content-center">
+                    <div class="col-7 text-center">
+                        <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <Encabezado/>
+            <RecuadroCargaDeProductos/>    
+        }    
+    }
 }
 
+@code {
 
-@code 
-{
-   
+    private bool isConnected;
+    UsuarioLogueado usuarioActual;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isConnected = true;
+            var result = await ProtectedSessionStore.GetAsync<UsuarioLogueado>("usuarioLogueado");
+            if (result.Success) { usuarioActual = result.Value; }
+            StateHasChanged();
+        }
+    }
 }

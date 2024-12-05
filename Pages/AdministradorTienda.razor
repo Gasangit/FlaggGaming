@@ -5,6 +5,10 @@
 @inject Services.TiendaService TiendaService
 @using FlaggGaming.Model.tienda
 @using FlaggGaming.Model.Usuarios
+@using FlaggGaming.Model.usuarios
+@inject FlaggGaming.Entity.DatosContext contextoDatos
+@inject ProtectedSessionStorage ProtectedSessionStore
+
 
 @code {
     private Tienda tienda = new Tienda();
@@ -32,8 +36,96 @@
     }
 }
 
-@if (!ServicioUsurioLogin.rolTienda)
+@if (isConnected)
 {
+    @if (usuarioActual != null)
+    {
+        @if (!usuarioActual.rolTienda)
+        {
+            <div class="continer">
+                <div class="row my-5 justify-content-center">
+                    <div class="col-7 text-center">
+                        <p class="fs-1 text-success">Error de acceso, pruebe con otra url.</p>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <EditForm Model="@tienda" OnValidSubmit="GuardarCambios">
+                            <h1 class="text-center">PERFIL TIENDA</h1>
+
+                            <!-- Usuario (Deshabilitado) -->
+                            <div class="form-group">
+                                <label for="username">Usuario</label>
+                                <input type="text" class="form-control" id="username" @bind="@tienda.Id" disabled>
+                            </div>
+
+                            <!-- Nombre de Tienda -->
+                            <div class="form-group">
+                                <label for="name">Nombre</label>
+                                <input type="text" class="form-control" id="name" @bind="@tienda.Name">
+                            </div>
+
+                            <!-- Correo Electrónico -->
+                            <div class="form-group">
+                                <label for="email">Mail</label>
+                                <input type="email" class="form-control" id="email" @bind="@tienda.Mail">
+                            </div>
+
+                            <!-- Ubicación -->
+                            <div class="form-group">
+                                <label for="location">Direccion</label>
+                                <input type="text" class="form-control" id="location" @bind="@tienda.Dir">
+                            </div>
+
+                            <!-- Instagram -->
+                            <div class="form-group">
+                                <label for="address">Instagram</label>
+                                <input type="text" class="form-control" id="address" @bind="@tienda.Insta">
+                            </div>
+
+                            <!-- Horarios -->
+                            <div class="form-group">
+                                <label for="time">Horarios</label>
+                                <input type="text" class="form-control" id="time" @bind="@tienda.Hr">
+                            </div>
+
+                            <!-- Contacto -->
+                            <div class="form-group">
+                                <label for="contact">Contacto</label>
+                                <input type="text" class="form-control" id="contact" @bind="@tienda.Tel">
+                            </div>
+
+                            <!-- Botón Guardar Cambios -->
+                            <div class="col text-center mt-2">
+                                <button type="submit" class="btn btn-danger">Guardar Cambios</button>
+                            </div>
+                        </EditForm>
+
+                        <!-- Mensaje de éxito o error -->
+                        @if (guardadoExitoso)
+                        {
+                            <div class="alert alert-success mt-3 text-center">
+                                Los cambios se han guardado exitosamente.
+                            </div>
+                        }
+                        else if (!string.IsNullOrEmpty(mensajeError))
+                        {
+                            <div class="alert alert-danger mt-3 text-center">
+                                @mensajeError
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
         <div class="continer">
             <div class="row my-5 justify-content-center">
                 <div class="col-7 text-center">
@@ -41,78 +133,24 @@
                 </div>
             </div>
         </div>
-}
-else
-{
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <EditForm Model="@tienda" OnValidSubmit="GuardarCambios">
-                        <h1 class="text-center">PERFIL TIENDA</h1>
-
-                        <!-- Usuario (Deshabilitado) -->
-                        <div class="form-group">
-                            <label for="username">Usuario</label>
-                            <input type="text" class="form-control" id="username" @bind="@tienda.Id" disabled>
-                        </div>
-
-                        <!-- Nombre de Tienda -->
-                        <div class="form-group">
-                            <label for="name">Nombre</label>
-                            <input type="text" class="form-control" id="name" @bind="@tienda.Name">
-                        </div>
-
-                        <!-- Correo Electrónico -->
-                        <div class="form-group">
-                            <label for="email">Mail</label>
-                            <input type="email" class="form-control" id="email" @bind="@tienda.Mail">
-                        </div>
-
-                        <!-- Ubicación -->
-                        <div class="form-group">
-                            <label for="location">Direccion</label>
-                            <input type="text" class="form-control" id="location" @bind="@tienda.Dir">
-                        </div>
-
-                        <!-- Instagram -->
-                        <div class="form-group">
-                            <label for="address">Instagram</label>
-                            <input type="text" class="form-control" id="address" @bind="@tienda.Insta">
-                        </div>
-
-                        <!-- Horarios -->
-                        <div class="form-group">
-                            <label for="time">Horarios</label>
-                            <input type="text" class="form-control" id="time" @bind="@tienda.Hr">
-                        </div>
-
-                        <!-- Contacto -->
-                        <div class="form-group">
-                            <label for="contact">Contacto</label>
-                            <input type="text" class="form-control" id="contact" @bind="@tienda.Tel">
-                        </div>
-
-                        <!-- Botón Guardar Cambios -->
-                        <div class="col text-center mt-2">
-                            <button type="submit" class="btn btn-danger">Guardar Cambios</button>
-                        </div>
-                    </EditForm>
-
-                    <!-- Mensaje de éxito o error -->
-                @if (guardadoExitoso)
-                {
-                            <div class="alert alert-success mt-3 text-center">
-                                Los cambios se han guardado exitosamente.
-                            </div>
-                }
-                else if (!string.IsNullOrEmpty(mensajeError))
-                {
-                            <div class="alert alert-danger mt-3 text-center">
-                        @mensajeError
-                            </div>
-                }
-                </div>
-            </div>
-        </div>
+    }
 }
 
+
+@code {
+
+    private bool isConnected;
+    UsuarioLogueado usuarioActual;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isConnected = true;
+            var result = await ProtectedSessionStore.GetAsync<UsuarioLogueado>("usuarioLogueado");
+            if (result.Success) { usuarioActual = result.Value; }
+            StateHasChanged();
+
+        }
+    }
+}

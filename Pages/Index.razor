@@ -1,16 +1,25 @@
 ﻿@page "/"
 @using FlaggGaming.Pages.componentesIndex
 @using FlaggGaming.Model.juegoFlagg
+@using FlaggGaming.Model.usuarios
 @inject FlaggGaming.Entity.DatosContext datosService
 @inject FlaggGaming.Services.ServicioUsuario.ServicioUsurioLogin servicioLoginUsuario
 @using Microsoft.EntityFrameworkCore
 @using FlaggGaming.Services.ServicioUsuario
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 <PageTitle>Flagg</PageTitle>
 <Carousel/>
+@*usuarioActual.nombre
+@usuarioActual.apellido
+@usuarioActual.mail
+@usuarioActual.rolTienda*@
 <MasBuscados arrayMasBuscados="@arrayMasBuscados"/>
 <Ofertas arrayOfertasSeleccionadas="@arrayOfertasSeleccionadas" />
 <Destacados />
+
+
+
 
 @code{
     public List<JuegoFlagg> listaJuegosBaseDeDatos = new List<JuegoFlagg>();
@@ -20,6 +29,8 @@
     Random objetoRandom = new Random();
     int randIndex;
     JuegoFlagg? juegoRandom;
+    public string nombreActual = "";
+    public UsuarioLogueado usuarioActual;
 
     protected override async Task OnInitializedAsync()
     {
@@ -40,7 +51,14 @@
             arrayOfertasSeleccionadas[indice] = juegoRandom;
         }
         datosService.SaveChanges();
+        //var result = await ProtectedSessionStore.GetAsync<UsuarioLogueado>("usuarioLogueado");
+        //usuarioActual = result.Value;
+        //nombreSesion();
+    }
 
-
+    private async Task nombreSesion()
+    {
+        var result = await ProtectedSessionStore.GetAsync<string>("nombreSesion");
+        nombreActual = result.Value;
     }
 }
